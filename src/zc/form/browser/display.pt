@@ -1,0 +1,89 @@
+<html metal:use-macro="context/@@standard_macros/page">
+  <body>
+  <div metal:fill-slot="body">
+
+  <div metal:define-macro="addform">
+
+<form action="." metal:define-macro="master"
+      tal:attributes="action request/URL" method="POST"
+      class="display-form" enctype="multipart/form-data"
+      tal:define="status view/update_status">
+
+  <h1
+       tal:condition="view/label"
+       tal:content="view/label"
+       metal:define-slot="heading"
+       >Do something</h1>
+
+  <div class="form-status"
+     tal:condition="status">
+
+    <div class="summary" tal:content="status">
+      Form status summary
+    </div>
+
+    <ul class="errors" tal:condition="view/errors">
+       <li tal:repeat="error view/error_views">
+          <span tal:replace="structure error">Error Type</span>
+       </li>
+    </ul>
+  </div>
+
+  <div metal:define-slot="extra_info" tal:replace="nothing">
+  </div>
+
+  <div class="row">
+    <div class="controls">
+      <div tal:repeat="button view/button_views"
+        tal:replace="structure button">
+        <input type="submit" name="...submit name..."
+            value="Submit" class="submit" />
+      </div>
+    </div>
+  </div>
+
+  <table class="display-fields">
+  <tr class="row" metal:define-slot="extra_top" tal:replace="nothing">
+      <td class="label">Extra top</td>
+      <td class="label"><input type="text" /></td>
+  </tr>
+  <tbody metal:define-slot="formbody" tal:omit-tag="">
+    <tal:block tal:repeat="widget view/widgets">
+      <tr tal:define="value widget" tal:condition="value">
+        <td class="label" valign="top">
+          <label tal:attributes="for widget/name"
+                 tal:content="widget/label">
+            label
+          </label>
+        </td>
+        <td class="field" tal:content="structure value">
+          Value
+        </td>
+      </tr>
+    </tal:block>
+  </tbody>
+  <tr class="row" metal:define-slot="extra_bottom" tal:replace="nothing">
+      <td class="label">Extra top</td>
+      <td class="label"><input type="text" /></td>
+  </tr>
+  </table>
+
+  <div class="row">
+    <div class="controls">
+      <div tal:repeat="button view/button_views"
+        tal:replace="structure button">
+        <input type="submit" name="...submit name..."
+            value="Submit" class="submit" />
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+  </div>
+
+  </div>
+  </body>
+
+</html>

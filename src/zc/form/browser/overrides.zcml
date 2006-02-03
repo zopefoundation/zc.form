@@ -1,0 +1,13 @@
+<configure xmlns='http://namespaces.zope.org/zope'>
+
+  <!-- Wire up our widget to replace the default one. -->
+  <view
+      type="zope.publisher.interfaces.browser.IBrowserRequest"
+      for="zope.schema.interfaces.IChoice
+           zope.schema.interfaces.ISource"
+      provides="zope.app.form.interfaces.IInputWidget"
+      factory=".mruwidget.MruSourceInputWidget"
+      permission="zope.Public"
+      />
+
+</configure>

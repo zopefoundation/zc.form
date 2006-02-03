@@ -1,0 +1,65 @@
+<configure
+    xmlns='http://namespaces.zope.org/zope'
+    xmlns:browser='http://namespaces.zope.org/browser'
+    xmlns:event='http://namespaces.zope.org/event'
+    i18n_domain='zc-schema'
+>
+
+  <view
+      type="zope.publisher.interfaces.browser.IBrowserRequest"
+      for="zc.form.interfaces.IUnionField"
+      provides="zope.app.form.interfaces.IInputWidget"
+      factory=".unionwidget.UnionWidget"
+      permission="zope.Public"
+      />
+  <adapter factory=".unionwidget.default_template" name="default" />
+
+  <view
+      type="zope.publisher.interfaces.browser.IBrowserRequest"
+      for="zc.form.interfaces.ICombinationField"
+      provides="zope.app.form.interfaces.IInputWidget"
+      factory=".combinationwidget.CombinationWidget"
+      permission="zope.Public"
+      />
+  <adapter factory=".combinationwidget.default_template" name="default" />
+
+  <!-- we have Invariant exceptions for which we want to register a "snippet"
+       view -->
+
+  <adapter
+      permission="zope.Public"
+      factory=".exceptionviews.ValidationErrorView"
+      />
+
+  <adapter
+      permission="zope.Public"
+      factory=".exceptionviews.ConversionErrorView"
+      />
+
+  <adapter
+      permission="zope.Public"
+      factory=".exceptionviews.UserErrorView"
+      />
+
+  <resourceLibrary name="zc.form.mruwidget">
+    <directory source="mruwidget_resources" include="mruwidget.js" />
+  </resourceLibrary>
+
+  <!-- set up the mruwidget
+  For some reason this doesn't work here.  Should investigate. :-/
+  <includeOverrides package="zc.form.browser" file="overrides.zcml" />
+   -->
+
+  <!-- set up time zone widget -->
+  <view
+      type="zope.publisher.interfaces.browser.IBrowserRequest"
+      for="zope.schema.interfaces.IChoice
+           zc.form.interfaces.AvailableTimeZones"
+      provides="zope.app.form.interfaces.IInputWidget"
+      factory=".tzwidget.TimeZoneWidget"
+      permission="zope.Public"
+      />
+  
+  <adapter factory=".tzwidget.TimeZoneQueryView" />
+
+</configure>

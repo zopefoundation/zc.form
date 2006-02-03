@@ -1,0 +1,10 @@
+<configure
+    xmlns='http://namespaces.zope.org/zope'>
+
+    <adapter
+      permission="zope.Public"
+      factory=".interfaces.TimeZoneTerms"
+      />
+
+    <include package=".browser"/>
+</configure>

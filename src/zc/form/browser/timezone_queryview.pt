@@ -1,0 +1,18 @@
+<div i18n:domain="zc.form">
+  <div class="inner">
+    <span class="label">
+      <label for="" tal:attributes="for options/field_name"
+             i18n:translate="source_query_view_search"
+             >Browse</label>
+    </span>
+    <span class="field">
+      <input type="text" name="" tal:attributes="
+             name options/field_name; id options/field_name;
+             value python: request.get(options['field_name'], nothing)" />
+      <input type="submit" name="" value="Search"
+             tal:attributes="name options/button_name"
+             i18n:attributes="value search_button" class="submit" />
+    </span>
+  </div>
+</div>
+

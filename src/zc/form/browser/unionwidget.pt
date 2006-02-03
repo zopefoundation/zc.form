@@ -1,0 +1,77 @@
+    <table class="unionFieldWidget">
+      <tal:block repeat="choice options/choices">
+        <tr tal:define="
+            widget nocall:choice/widget;
+            rendered widget;
+            selected choice/selected;
+            identifier choice/identifier;
+            value choice/value;
+            hint widget/hint;
+            label widget/label"
+            tal:attributes="
+            onclick string:document.getElementById('${identifier}').checked=true">
+          <td valign='top'>
+            <input type='radio' name="" id="" value="" checked='checked'
+                tal:condition="selected"
+                tal:attributes="
+                name view/name;
+                id identifier;
+                value value;"
+                />
+            <input type='radio' name="" id="" value=""
+                tal:condition="not: selected"
+                tal:attributes="
+                name view/name;
+                id identifier;
+                value value;"
+                />
+          </td>
+          <tal:block condition="label">
+            <tal:block condition="rendered">
+              <td class="label" tal:condition="hint"
+                onmousedown="toggleFormFieldHelp(this,1)"
+                onmouseup="toggleFormFieldHelp(this,0)"
+                onmouseout="toggleFormFieldHelp(this,0)">
+                <label style="cursor: help" tal:attributes="for widget/name;">
+                  <span class="required" tal:condition="widget/required"
+                  >*</span><span i18n:translate=""
+                                 tal:content="label">label</span>
+                </label>
+              </td>
+              <td class="label" tal:condition="not:hint">
+                <label tal:attributes="for widget/name;">
+                  <span class="required" tal:condition="widget/required"
+                  >*</span><span i18n:translate=""
+                                 tal:content="label">label</span>
+                </label>
+              </td>
+            </tal:block>
+            <td condition="not:rendered" colspan="2">
+              <label><span i18n:translate="" tal:content="label">label</span>
+              </label>
+            </td>
+          </tal:block>
+          <td tal:condition="not: label"></td>
+          <td class="field" tal:define="error widget/error"
+              tal:condition="rendered">
+            <div class="form-fields-help"
+                 i18n:translate=""
+                 tal:content="hint"
+                 tal:condition="hint"
+                 onclick="this.style.visibility='hidden';"
+                 >Title of this content object.</div>
+            <div class="widget" tal:content="structure rendered">
+            <input type="text" /></div>
+            <div class="error"
+                 tal:condition="error"
+                 >
+              <!-- XXX Put this back, the Zope3 way.
+              <img src="alert.gif" alt="Error"
+              tal:replace="structure context/alert.gif" />
+              -->
+              <span tal:replace="structure error">error</span>
+            </div>
+          </td>
+        </tr>
+      </tal:block>
+    </table>
