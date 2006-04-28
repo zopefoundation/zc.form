@@ -21,7 +21,7 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from cgi import escape
 from zope.schema.interfaces import ValidationError
 from zope.app.form.interfaces import ConversionError
-from zope.app.exception.interfaces import UserError
+from zope.exceptions.interfaces import UserError
 
 class AbstractErrorView(object):
     interface.implements(IWidgetInputErrorView)

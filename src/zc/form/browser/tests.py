@@ -20,13 +20,13 @@ import re
 
 from zope.testing import doctest, module
 from zope.app.testing import placelesssetup
-import zope.app.traversing.adapters
+import zope.traversing.adapters
 
 from zope.interface import implements
 from zope.schema.interfaces import ValidationError
 from zope.schema import TextLine, Int
 from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.app.tests import ztapi
+from zope.app.testing import ztapi
 from zope.app.form.browser.textwidgets import TextWidget, IntWidget
 from zope.schema.interfaces import ITextLine, IInt
 from zope.app.form.interfaces import IInputWidget
@@ -57,7 +57,7 @@ class TestUnionWidget(placelesssetup.PlacelessSetup, unittest.TestCase):
         from zc.form.browser.unionwidget import default_template
         component.provideAdapter(default_template, name='default')
         component.provideAdapter(
-            zope.app.traversing.adapters.DefaultTraversable,
+            zope.traversing.adapters.DefaultTraversable,
             [None],
             )
 
@@ -128,7 +128,7 @@ def zcml(s, execute=True):
 def pageSetUp(test):
     placelesssetup.setUp(test)
     component.provideAdapter(
-        zope.app.traversing.adapters.DefaultTraversable,
+        zope.traversing.adapters.DefaultTraversable,
         [None],
         )
 

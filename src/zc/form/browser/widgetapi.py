@@ -20,7 +20,6 @@ provide a simpler API that derived classes are expected to implement.
 from xml.sax.saxutils import escape, quoteattr
 
 from zope.interface import implements
-from zope.component import getService
 from zope.schema.interfaces import ValidationError
 
 from zope.app import zapi
