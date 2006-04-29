@@ -25,6 +25,7 @@ import zope.app.form.browser.interfaces
 from zope.app import zapi 
 from zope.app.form.browser.source import SourceInputWidget
 from zope.schema.interfaces import ISourceQueriables, ValidationError
+import zope.annotation.interfaces
 
 import zc.resourcelibrary
 
@@ -39,7 +40,7 @@ class MruSourceInputWidget(SourceInputWidget):
         """
         key = self.name # TODO should the key be more specific?
         principal = self.request.principal
-        annotations = zope.app.annotation.interfaces.IAnnotations(principal)
+        annotations = zope.annotation.interfaces.IAnnotations(principal)
 
         annotation = annotations.get(self.ANNOTATION_KEY)
         if annotation is None:
