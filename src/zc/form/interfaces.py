@@ -112,7 +112,7 @@ class TimeZoneTerms:
         return pytz.timezone(token)
 
 class IHTMLSnippet(zope.schema.interfaces.IText):
-    """HTML excerpt that can be placed within an HTML documents body element.
+    """HTML excerpt that can be placed within an HTML document's body element.
     
     Snippet should have no dangling open tags.
     
