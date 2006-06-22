@@ -189,6 +189,17 @@ class Union(BaseField):
     ...     print "Not a field"
     ... 
     Not a field
+
+    Binding a union field also takes care of binding the contained fields:
+
+    >>> context = object()
+    >>> bound_f = f.bind(context)
+    >>> bound_f.context is context
+    True
+    >>> bound_f.fields[0].context is context
+    True
+    >>> bound_f.fields[1].context is context
+    True
     """
     
     interface.implements(interfaces.IUnionField)
@@ -204,7 +215,17 @@ class Union(BaseField):
             field.__name__ = "unioned_%02d" % ix
         self.fields = tuple(fields)
         super(Union, self).__init__(**kw)
-    
+
+    def bind(self, object):
+        clone = super(Union, self).bind(object)
+        # We need to bind the fields too
+        clone_fields = []
+        for field in clone.fields:
+            clone_fields.append(field.bind(object))
+        clone_fields = tuple(clone_fields)
+        clone.fields = clone_fields
+        return clone
+
     def validField(self, value):
         "returns first valid field, or None"
         for field in self.fields:
