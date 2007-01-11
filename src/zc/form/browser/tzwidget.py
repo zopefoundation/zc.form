@@ -33,6 +33,7 @@ from zope.security.checker import NamesChecker
 from zope.interface.common.idatetime import ITZInfo
 names = set(ITZInfo.names(all=True))
 names.add('zone')
+names.add('localize')
 checker = NamesChecker(names)
 pytz.UTC.__Security_checker__ = checker
 pytz.tzinfo.BaseTzInfo.__Security_checker__ = checker
