@@ -1,10 +1,10 @@
 The combinationwidget collects two or more subfields to provide a convenient
 way to specify a sequence of values.
 
-Rendering the widget returns a table with the subfields.
+Rendering the widget returns a table with the subfields::
 
     >>> from zc.form.browser.combinationwidget import (
-    ...     CombinationWidget, default_template)
+    ...     CombinationWidget, CombinationDisplayWidget, default_template)
     >>> from zope import component, interface
     >>> component.provideAdapter(default_template, name='default')
     >>> from zc.form.field import Combination, OrderedCombinationConstraint
@@ -63,9 +63,8 @@ Rendering the widget returns a table with the subfields.
       </tr>
     </table>
 
-
 Setting the appropriate values in the Request lets the widget correctly read
-the specified value.
+the specified value::
 
     >>> request.form['field.acceptable_count-marker'] = 'x'
     >>> request.form['field.acceptable_count.combination_00'] = '10'
@@ -83,7 +82,8 @@ the specified value.
               name="field.acceptable_count.combination_01" size="10" type="text"
               value="" />...
 
-The field is fine with empty values, because it is not required.
+
+The field is fine with empty values, because it is not required::
 
     >>> request.form['field.acceptable_count-marker'] = 'x'
     >>> request.form['field.acceptable_count.combination_00'] = ''
@@ -105,7 +105,7 @@ The field is fine with empty values, because it is not required.
     False
 
 If the optional value is filled in and the required one is not, though, there
-are errors.
+are errors::
 
     >>> request.form['field.acceptable_count-marker'] = 'x'
     >>> request.form['field.acceptable_count.combination_00'] = ''
@@ -146,7 +146,7 @@ are errors.
     >>> widget.widgets[0].error()
     u'Required input is missing.'
 
-Similarly, if the field's constraints are not met, the widget shows errors.
+Similarly, if the field's constraints are not met, the widget shows errors::
 
     >>> request.form['field.acceptable_count-marker'] = 'x'
     >>> request.form['field.acceptable_count.combination_00'] = '20'
@@ -167,3 +167,42 @@ Similarly, if the field's constraints are not met, the widget shows errors.
               type="text" value="10" />...
     >>> widget.error()
     u'${minimum} must be less than or equal to ${maximum}.'
+
+
+There's also a display version of the widget::
+
+    >>> request = TestRequest()
+    >>> from zope.app.form.browser.widget import DisplayWidget
+    >>> from zope.app.form.interfaces import IDisplayWidget
+    >>> ztapi.provideView(
+    ...     IInt, IBrowserRequest, IDisplayWidget, '', DisplayWidget)
+    >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)
+    >>> widget.setPrefix('field')
+    >>> widget.setRenderedValue(('10', '2'))
+    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    <input type='hidden' name='field.acceptable_count-marker' value='x' />
+        <table class="combinationFieldWidget">
+          <tr>
+                  <td class="label">
+                    <label for="field.acceptable_count.combination_00">
+                      <span>Minimum</span>
+                    </label>
+                  </td>
+              <td class="field">
+                <div class="widget">10
+                </div>
+              </td>
+          </tr>
+          <tr>
+                  <td class="label">
+                    <label for="field.acceptable_count.combination_01">
+                      <span>Maximum</span>
+                    </label>
+                  </td>
+              <td class="field">
+                <div class="widget">2
+                </div>
+              </td>
+          </tr>
+        </table>
+

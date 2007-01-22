@@ -23,6 +23,14 @@
       />
   <adapter factory=".combinationwidget.default_template" name="default" />
 
+  <view
+      type="zope.publisher.interfaces.browser.IBrowserRequest"
+      for="zc.form.interfaces.ICombinationField"
+      provides="zope.app.form.interfaces.IDisplayWidget"
+      factory=".combinationwidget.CombinationDisplayWidget"
+      permission="zope.Public"
+      />
+
   <!-- we have Invariant exceptions for which we want to register a "snippet"
        view -->
 

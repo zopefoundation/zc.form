@@ -23,7 +23,7 @@ from zope import component
 import zope.schema.interfaces
 import zope.cachedescriptors.property
 from zope.app.form.interfaces import WidgetInputError
-from zope.app.form.interfaces import IInputWidget
+from zope.app.form.interfaces import IInputWidget, IDisplayWidget
 from zope.app.pagetemplate import ViewPageTemplateFile
 
 from zope.formlib import namedtemplate
@@ -33,13 +33,16 @@ from zc.form.browser.widgetapi import BaseWidget
 
 class CombinationWidget(BaseWidget):
 
+    widget_interface = IInputWidget
+
     @zope.cachedescriptors.property.Lazy
     def widgets(self):
         field = self.context
         res = []
         for f in field.fields:
             f = f.bind(self.context)
-            w = component.getMultiAdapter((f, self.request,), IInputWidget)
+            w = component.getMultiAdapter((f, self.request,),
+                                          self.widget_interface)
             w.setPrefix(self.name + ".")
             res.append(w)
         return res
@@ -48,7 +51,7 @@ class CombinationWidget(BaseWidget):
         super(CombinationWidget, self).setPrefix(prefix)
         for w in self.widgets:
             w.setPrefix(self.name + ".")
-    
+
     def loadValueFromRequest(self):
         # the lack of an API to get the input value regardless of validation
         # is a significant problem.  The inability to clear errors is a
@@ -91,9 +94,9 @@ class CombinationWidget(BaseWidget):
         else:
             values = tuple(values)
         return values
-    
+
     template = namedtemplate.NamedTemplate('default')
-    
+
     def render(self, value):
         field = self.context
         missing_value = field.missing_value
@@ -119,3 +122,8 @@ class CombinationWidget(BaseWidget):
 
 default_template = namedtemplate.NamedTemplateImplementation(
     ViewPageTemplateFile('combinationwidget.pt'), CombinationWidget)
+
+
+class CombinationDisplayWidget(CombinationWidget):
+
+    widget_interface = IDisplayWidget
