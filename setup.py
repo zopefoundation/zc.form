@@ -7,6 +7,6 @@ setup(
     package_dir={'':'src'},
     namespace_packages=['zc'],
     include_package_data=True,
-    install_requirements = ['setuptools'],
-    zip_safe = False
+    install_requires=['setuptools'],
+    zip_safe=False
     )
