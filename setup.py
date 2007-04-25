@@ -7,6 +7,9 @@ setup(
     package_dir={'':'src'},
     namespace_packages=['zc'],
     include_package_data=True,
-    install_requires=['setuptools'],
+    install_requires=[
+        'setuptools',
+        'zope.app.catalog',
+        ],
     zip_safe=False
     )
