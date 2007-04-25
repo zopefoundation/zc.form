@@ -51,6 +51,33 @@ class MessageValidationError(ValidationError):
         return self.message
 
 class BaseField(schema.Field):
+    """Field with a callable as default and a tuple of constraints.
+
+    >>> def secure_password(field, value):
+    ...     if len(value) < 8:
+    ...         raise schema.ValidationError, 'Password too short.'
+    ...
+    >>> class IDummy(interface.Interface):
+    ...     suggested_password = BaseField(
+    ...         title=u'Suggested Password',
+    ...         default_getter=lambda context: u'asdf',
+    ...         constraints=(secure_password, ))
+    ... 
+    >>> f = IDummy['suggested_password'].bind(None) # use None as context
+    >>> interfaces.IExtendedField.providedBy(f)
+    True
+    >>> f.__name__
+    'suggested_password'
+    >>> f.title
+    u'Suggested Password'
+    >>> f.default
+    u'asdf'
+    >>> f.validate(u'123456789')
+    >>> f.validate(u'asdf')
+    Traceback (most recent call last):
+    ...
+    ValidationError: Password too short.
+    """
 
     interface.implements(interfaces.IExtendedField)
 
@@ -62,8 +89,8 @@ class BaseField(schema.Field):
         if default_getter is not None and 'default' in kw:
             raise TypeError(
                 'may not specify both a default and a default_getter')
-        self.default_getter = default_getter
         super(BaseField, self).__init__(**kw)
+        self.default_getter = default_getter
 
     def _validate(self, value):
         super(BaseField, self)._validate(value)
