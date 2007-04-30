@@ -1,0 +1,36 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="zc.catalog"
+    >
+
+  <include package="zope.component" file="meta.zcml" />
+  <include package="zope.app.security" file="meta.zcml" />
+  <include package="zope.app.component" file="meta.zcml" />
+  <include package="zope.app.publisher" file="meta.zcml" />
+  <include package="zope.app.publication" file="meta.zcml" />
+  <include package="zope.app.pagetemplate" file="meta.zcml" />
+  <include package="zc.resourcelibrary" file="meta.zcml" />
+
+  <include package="zope.component" />
+  <include package="zope.app.security" />
+  <include package="zope.app.component" />
+  <include package="zope.app.container" />
+  <include package="zope.publisher" />
+  <include package="zope.app.publisher" />
+  <include package="zope.app.publication" />
+  <include package="zope.app.pagetemplate" file="meta.zcml" />
+  <include package="zope.app.appsetup" />
+  <include package="zope.app.form.browser" />
+  <include package="zope.formlib" />
+  <include package="zope.traversing" />
+  <include package="zope.app.basicskin" />
+  <include package="zope.app.zcmlfiles" file="menus.zcml" />
+  <include package="zc.resourcelibrary" />
+  <include package="zope.annotation" />
+  <include package="zope.app.principalannotation" />
+  <include package="zc.form" />
+  <includeOverrides package="zc.form.browser" file="overrides.zcml" />
+
+</configure>

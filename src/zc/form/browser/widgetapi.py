@@ -51,6 +51,8 @@ class BaseWidget(BrowserWidget, InputWidget):
 
     _initialized = False
     _error = None
+    _display = False # set this to True if you are using this for a display
+                     # widget
 
     # Form management methods.
     # Subclasses should not need to override these.
@@ -79,6 +81,8 @@ class BaseWidget(BrowserWidget, InputWidget):
         return value
 
     def hasInput(self):
+        if self._display:
+            return False
         marker_name = self.name + "-marker"
         return marker_name in self.request.form
 
@@ -216,6 +220,8 @@ class BaseVocabularyWidget(BaseWidget):
 
 
 class BaseVocabularyDisplay(BaseVocabularyWidget):
+    
+    _display = True
 
     def render(self, value):
         if value in (NullValue, None):
