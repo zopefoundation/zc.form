@@ -46,7 +46,7 @@
                 </label>
               </td>
             </tal:block>
-            <td condition="not:rendered" colspan="2">
+            <td tal:condition="not:rendered" colspan="2">
               <label><span i18n:translate="" tal:content="label">label</span>
               </label>
             </td>
