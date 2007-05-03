@@ -232,8 +232,9 @@ class Union(BaseField):
     interface.implements(interfaces.IUnionField)
     
     fields = ()
+    use_default_for_not_selected = False
     
-    def __init__(self, fields, **kw):
+    def __init__(self, fields, use_default_for_not_selected=False, **kw):
         if len(fields) < 2:
             raise ValueError(_("union must combine two or more fields"))
         for ix, field in enumerate(fields):
@@ -241,6 +242,7 @@ class Union(BaseField):
                 raise DoesNotImplement(IField)
             field.__name__ = "unioned_%02d" % ix
         self.fields = tuple(fields)
+        self.use_default_for_not_selected = use_default_for_not_selected
         super(Union, self).__init__(**kw)
 
     def bind(self, object):

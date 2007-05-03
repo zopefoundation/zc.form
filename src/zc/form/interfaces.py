@@ -40,6 +40,10 @@ class IExtendedField(zope.schema.interfaces.IField):
         otherwise returns whatever value has been set as the default.""")
 
 class IOptionField(IExtendedField):
+    """Field with excatly one predefined value
+
+    Caution: The value will not get displayed by the widget of this field.
+    """
 
     value = interface.Attribute(
         """the value for this field; one and only one of value and
@@ -65,6 +69,17 @@ class IUnionField(IExtendedField):
         title=_("Composite Fields"),
         description=_("""\
             The possible schema fields that may describe the data"""))
+
+    use_default_for_not_selected = schema.Bool(
+        description=_(
+            """When displaying the Union field in the browser the fields
+            which are not selected will have no value (i. e. the field's
+            missing_value.
+
+            With this attribute set the default value of the field will
+            be displayed instead.
+
+            Default: False"""))
     
     def validField(value):
         u"returns first valid field for the given value, or None"

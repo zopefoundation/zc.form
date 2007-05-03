@@ -36,6 +36,7 @@ from zope.configuration import xmlconfig
 import zope.app.security
 import zc.form.browser
 from zc.form.field import Union
+import zc.form.field 
 from zc.form.browser.unionwidget import UnionWidget
 from zope.testing.doctestunit import pprint
 
@@ -103,6 +104,40 @@ class TestUnionWidget(placelesssetup.PlacelessSetup, unittest.TestCase):
             '''id=["']field.identifier-02['"]''', output))
         self.failUnless(re.search(
             '''checked\s*=\s*['"]checked['"]''', output))
+
+    def test_use_default_for_not_selected(self):
+        # test use_default_for_not_selected = True
+        request = TestRequest()
+        # the default selection shoud be the the option field which has the
+        # value of None
+        field = Union(
+            (zc.form.field.TextLine(
+                    title=u"New Password", missing_value=u'',
+                    default_getter=lambda x: u'secret password'),
+             zc.form.field.Option(
+                    title=u"No Change", value_getter=lambda x: None)),
+            title=u"Change Password",
+            missing_value=u'',
+            use_default_for_not_selected=True,
+            __name__='identifier')
+        widget = UnionWidget(field, request)
+        widget.setPrefix('field')
+        output = widget()
+        # remove double whitespaces
+        normalized_output = " ".join(output.split())
+        
+        # the value of the textline field should be the default_getter's
+        # result
+        value_attr_of_textline = re.search(
+            '<input.*id="field.identifier.unioned_00".*(value=".*").*></div>',
+            normalized_output).groups()[0]
+        self.failUnless('secret password' in value_attr_of_textline)
+        
+        # the radio button of the option field should be selected
+        radio_option_field = re.search(
+            '<input.*id="field.identifier-01"(.*)/> </td>',
+            normalized_output).groups()[0]
+        self.failUnless('checked="checked"' in radio_option_field)
 
     def test_evaluate(self):
         request = TestRequest()

@@ -109,7 +109,10 @@ class UnionWidget(BaseWidget):
                 if selected:
                     widget.setRenderedValue(value)
                 elif self._renderedValueSet():
-                    widget.setRenderedValue(inner.missing_value)
+                    if field.use_default_for_not_selected:
+                        widget.setRenderedValue(inner.default)
+                    else:
+                        widget.setRenderedValue(inner.missing_value)
             widget.setPrefix(self.name)
             choices.append(
                 {'selected': selected, 'identifier': identifier,

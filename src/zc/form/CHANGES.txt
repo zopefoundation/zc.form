@@ -1,0 +1,9 @@
+======================================================================
+CHANGES in zc.form
+======================================================================
+
+2007-05-03
+----------
+
+- Added use_default_for_not_selected to Union field to use default
+  value even if sub field is not selected.
