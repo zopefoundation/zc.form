@@ -32,18 +32,10 @@ class AbstractErrorView(object):
         self.context, self.request = context, request
 
     def snippet(self):
-        """Convert an invariant error to an html snippet.
-
-        >>> from zope.schema.interfaces import ValidationError
-        >>> err = ValidationError(
-        ... "Bad error!  Bad!")
-        >>> view = ValidationErrorView(err, None)
-        >>> view.snippet()
-        '<span class="error">Bad error!  Bad!</span>'
-        """
+        """Convert an invariant error to an html snippet."""
         msg = self.context.args[0]
         msg = i18n.translate(msg, context=self.request, default=msg)
-        return '<span class="error">%s</span>' % escape(str(msg))
+        return u'<span class="error">%s</span>' % escape(msg)
 
 
 class ValidationErrorView(AbstractErrorView):

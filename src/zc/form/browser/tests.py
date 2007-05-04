@@ -169,8 +169,8 @@ def pageSetUp(test):
 
 def test_suite():
     suite = unittest.makeSuite(TestUnionWidget)
-    suite.addTest(doctest.DocTestSuite(
-        'zc.form.browser.exceptionviews',
+    suite.addTest(doctest.DocFileSuite(
+        'exceptionviews.txt',
         setUp=placelesssetup.setUp, tearDown=placelesssetup.tearDown))
     suite.addTest(
         doctest.DocFileSuite(

@@ -1,0 +1,20 @@
+===============
+Exception Views
+===============
+
+Convert an invariant error to an html snippet::
+
+    >>> from zope.schema.interfaces import ValidationError
+    >>> from zc.form.browser.exceptionviews import ValidationErrorView
+    >>> err = ValidationError(
+    ... "Bad error!  Bad!")
+    >>> view = ValidationErrorView(err, None)
+    >>> view.snippet()
+    u'<span class="error">Bad error!  Bad!</span>'
+
+This also works with unicode characters::
+
+    >>> err = ValidationError(u"F\xe4lscher!")
+    >>> view = ValidationErrorView(err, None)
+    >>> view.snippet()
+    u'<span class="error">F\xe4lscher!</span>'
