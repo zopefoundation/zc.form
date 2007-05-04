@@ -35,7 +35,7 @@ class AbstractErrorView(object):
         """Convert an invariant error to an html snippet."""
         msg = self.context.args[0]
         msg = i18n.translate(msg, context=self.request, default=msg)
-        return u'<span class="error">%s</span>' % escape(msg)
+        return u'<span class="error">%s</span>' % escape(unicode(msg))
 
 
 class ValidationErrorView(AbstractErrorView):
