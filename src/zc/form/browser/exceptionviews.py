@@ -15,6 +15,7 @@
 
 $Id: exceptionviews.py 3629 2005-10-06 21:01:27Z gary $
 """
+
 from zope import interface, component, i18n
 from zope.app.form.browser.interfaces import IWidgetInputErrorView
 from zope.publisher.interfaces.browser import IBrowserRequest
@@ -23,15 +24,16 @@ from zope.schema.interfaces import ValidationError
 from zope.app.form.interfaces import ConversionError
 from zope.exceptions.interfaces import UserError
 
+
 class AbstractErrorView(object):
     interface.implements(IWidgetInputErrorView)
-    
+
     def __init__(self, context, request):
         self.context, self.request = context, request
-    
+
     def snippet(self):
         """Convert an invariant error to an html snippet.
-        
+
         >>> from zope.schema.interfaces import ValidationError
         >>> err = ValidationError(
         ... "Bad error!  Bad!")
@@ -43,11 +45,14 @@ class AbstractErrorView(object):
         msg = i18n.translate(msg, context=self.request, default=msg)
         return '<span class="error">%s</span>' % escape(str(msg))
 
+
 class ValidationErrorView(AbstractErrorView):
     component.adapts(ValidationError, IBrowserRequest)
 
+
 class ConversionErrorView(AbstractErrorView):
     component.adapts(ConversionError, IBrowserRequest)
+
 
 class UserErrorView(AbstractErrorView):
     component.adapts(UserError, IBrowserRequest)
