@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="zc.form",
-    version="0.1.2",
+    version="0.1.3",
     packages=find_packages('src'),
     package_dir={'':'src'},
     namespace_packages=['zc'],
