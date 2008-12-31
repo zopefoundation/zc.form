@@ -71,6 +71,7 @@ class UnionWidget(BaseWidget):
                     return active.getValue()
                 widget = component.getMultiAdapter(
                     (active, self.request), IInputWidget)
+                widget.required = widget.context.required = self.required
                 widget.setPrefix(self.name)
                 try:
                     return widget.getInputValue()
@@ -80,7 +81,7 @@ class UnionWidget(BaseWidget):
                         self.context.__name__,
                         self.label,
                         e.errors)
-        return value
+        return missing_value
     
     template = namedtemplate.NamedTemplate('default')
     
