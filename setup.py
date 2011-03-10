@@ -7,6 +7,7 @@ setup(
     package_dir={'':'src'},
     namespace_packages=['zc'],
     include_package_data=True,
+    license="ZPL 2.1",
     install_requires=[
         'pytz',
         'setuptools',
