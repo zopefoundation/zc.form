@@ -17,7 +17,7 @@ import os
 
 from zope import interface, component
 from zope.app.testing.functional import FunctionalDocFileSuite, ZCMLLayer
-from zope.testing import doctest
+import doctest
 import zope.schema.interfaces
 
 colors = ['red', 'green', 'cerulean blue']
@@ -79,13 +79,14 @@ here = os.path.dirname(os.path.realpath(__file__))
 ZCFormLayer = ZCMLLayer(
     os.path.join(here, "ftesting.zcml"), __name__, "ZCFormLayer")
 
+
 def setUp(test):
     component.provideAdapter(ColorTerms)
     component.provideAdapter(SimpleColorSourceQueryView)
-    
+
 
 def test_suite():
-    suite = FunctionalDocFileSuite("mruwidget.txt", 
+    suite = FunctionalDocFileSuite("mruwidget.txt",
             globs={'AvailableColors': AvailableColors()},
             optionflags=doctest.NORMALIZE_WHITESPACE+doctest.ELLIPSIS,
             setUp=setUp,

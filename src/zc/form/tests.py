@@ -11,18 +11,9 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""tests
+"""tests"""
+import doctest
 
-$Id: tests.py 621 2005-02-15 19:40:07Z jim $
-"""
-
-from unittest import TestCase, TestSuite, main, makeSuite
-from zope.testing.doctestunit import DocTestSuite
 
 def test_suite():
-    return TestSuite((
-        DocTestSuite("zc.form.field"),
-        ))
-
-if __name__ == '__main__':
-    main(defaultTest='test_suite')
+    return doctest.DocTestSuite("zc.form.field")

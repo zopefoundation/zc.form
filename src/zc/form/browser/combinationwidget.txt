@@ -114,9 +114,9 @@ are errors::
     >>> widget.setPrefix('field')
     >>> widget.getInputValue() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
-    ...
     WidgetInputError: ('acceptable_count', u'Acceptable Count',
-    <zope.app.form.interfaces.WidgetInputError instance at ...>)
+    WidgetInputError('combination_00', u'Minimum',
+    RequiredMissing('combination_00')))
     >>> import zope.app.form.browser.interfaces
     >>> import zope.app.form.interfaces
     >>> import zope.publisher.interfaces.browser
@@ -153,10 +153,10 @@ Similarly, if the field's constraints are not met, the widget shows errors::
     >>> request.form['field.acceptable_count.combination_01'] = '10'
     >>> widget = CombinationWidget(IDemo['acceptable_count'], request)
     >>> widget.setPrefix('field')
-    >>> widget.getInputValue() # doctest: +ELLIPSIS
+    >>> widget.getInputValue() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
-    ...
-    WidgetInputError: ('acceptable_count', u'Acceptable Count', ${minimum} ...
+    WidgetInputError: ('acceptable_count', u'Acceptable Count',
+    MessageValidationError(u'${minimum} ...
     >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     <...
     ...<input class="textType" id="field.acceptable_count.combination_00"

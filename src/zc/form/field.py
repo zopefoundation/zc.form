@@ -62,7 +62,7 @@ class BaseField(schema.Field):
     ...         title=u'Suggested Password',
     ...         default_getter=lambda context: u'asdf',
     ...         constraints=(secure_password, ))
-    ... 
+    ...
     >>> f = IDummy['suggested_password'].bind(None) # use None as context
     >>> interfaces.IExtendedField.providedBy(f)
     True
@@ -83,7 +83,7 @@ class BaseField(schema.Field):
 
     constraints = ()
     _default = default_getter = None
-    
+
     def __init__(self, constraints=(), default_getter=None, **kw):
         self.constraints = constraints
         if default_getter is not None and 'default' in kw:
@@ -114,7 +114,7 @@ class Option(BaseField):
 
     interface.implements(interfaces.IOptionField)
 
-    def __init__(self, value=None, value_getter=None, 
+    def __init__(self, value=None, value_getter=None,
                  identity_comparison=False, **kw):
         self.value = value
         self.value_getter = value_getter
@@ -140,24 +140,24 @@ class Option(BaseField):
 
 class Union(BaseField):
     """
-    The Union field allows a schema field to hold one of many other field 
+    The Union field allows a schema field to hold one of many other field
     types.  For instance, you might want to make a field that can hold
-    a duration *or* a date, if you are working with a PIM app.  Or perhaps 
+    a duration *or* a date, if you are working with a PIM app.  Or perhaps
     you want to have a field that can hold a string from a vocabulary *or* a
     custom string.  Both of these examples can be accomplished in a variety of
     ways--the union field is one option.
-    
+
     The second example is more easily illustrated.  Here is a union field that
-    is a simple way of allowing "write-ins" in addition to selections from a 
+    is a simple way of allowing "write-ins" in addition to selections from a
     choice.  We'll be very explicit about imports, in part so this can be
     trivially moved to a doc file test.
-    
+
     Notice as you look through the example that field order does matter: the
     first field as entered in the field list that validates is chosen as the
-    validField; thus, even though the options in the Choice field would also 
+    validField; thus, even though the options in the Choice field would also
     validate in a TextLine, the Choice field is identified as the "validField"
     because it is first.
-    
+
     >>> class IDummy(interface.Interface):
     ...     cartoon_character = Union((
     ...         schema.Choice(
@@ -170,7 +170,7 @@ class Union(BaseField):
     ...         required=True,
     ...         title=u'Cartoon Character',
     ...         description=u'Your favorite cartoon character')
-    ... 
+    ...
     >>> f = IDummy['cartoon_character']
     >>> interfaces.IUnionField.providedBy(f)
     True
@@ -208,13 +208,13 @@ class Union(BaseField):
     ValueError: union must combine two or more fields
 
     And, unsurprisingly, they must actually be fields:
-    
+
     >>> from zope.interface.exceptions import DoesNotImplement
     >>> try:
     ...     f = Union(('I am not a number.', 'I am a free man!'), title=u'Bar')
     ... except DoesNotImplement:
     ...     print "Not a field"
-    ... 
+    ...
     Not a field
 
     Binding a union field also takes care of binding the contained fields:
@@ -228,12 +228,12 @@ class Union(BaseField):
     >>> bound_f.fields[1].context is context
     True
     """
-    
+
     interface.implements(interfaces.IUnionField)
-    
+
     fields = ()
     use_default_for_not_selected = False
-    
+
     def __init__(self, fields, use_default_for_not_selected=False, **kw):
         if len(fields) < 2:
             raise ValueError(_("union must combine two or more fields"))
@@ -264,10 +264,10 @@ class Union(BaseField):
                 pass
             else:
                 return field
-    
+
     def _validate(self, value):
         if self.validField(value) is None:
-            raise MessageValidationError(_no_unioned_field_validates, 
+            raise MessageValidationError(_no_unioned_field_validates,
                                          {'value': value})
 
 class OrderedCombinationConstraint(object):
@@ -302,16 +302,16 @@ class OrderedCombinationConstraint(object):
                                 _range_less_error,
                                 {'minimum': last, 'maximum': v})
                 last = v
-        
+
 
 class Combination(BaseField):
     """a combination of two or more fields, all of which may be completed.
-    
+
     It accepts two or more fields.  It also accepts a 'constraints' argument.
     Unlike the usual 'constraint' argument (which is also available), the
     constraints should be a sequence of callables that take a field and a
     value, and they should raise an error if there is a problem.
-    
+
     >>> from zc.form.field import Combination, OrderedCombinationConstraint
     >>> from zope import schema, interface
     >>> class IDemo(interface.Interface):
@@ -343,11 +343,11 @@ class Combination(BaseField):
     >>> f.validate((datetime.date(2005, 6, 22), None))
     Traceback (most recent call last):
     ...
-    RequiredMissing
+    RequiredMissing: combination_01
     >>> f.validate(('foo', datetime.date(2005, 6, 22)))
     Traceback (most recent call last):
     ...
-    WrongType: ('foo', <type 'datetime.date'>)
+    WrongType: ('foo', <type 'datetime.date'>, 'combination_00')
     >>> f.validate('foo') # doctest: +ELLIPSIS
     Traceback (most recent call last):
     ...
@@ -366,7 +366,7 @@ class Combination(BaseField):
     interface.implements(interfaces.ICombinationField)
 
     fields = constraints = ()
-    
+
     def __init__(self, fields, **kw):
         if len(fields) < 2:
             raise ValueError(_("combination must combine two or more fields"))
@@ -448,7 +448,7 @@ class TextLine(BaseField, schema.TextLine):
     >>> field.validate('cow') # non-unicode fails, as usual with TextLine
     Traceback (most recent call last):
     ...
-    WrongType: ('cow', <type 'unicode'>)
+    WrongType: ('cow', <type 'unicode'>, 'query')
     """
 
 class HTMLSnippet(BaseField, schema.Text):

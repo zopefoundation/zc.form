@@ -28,7 +28,7 @@ setup(
         'zope.index',
         'zope.interface',
         'zope.publisher',
-        'zope.schema',
+        'zope.schema >= 3.6',
         # extras
         'zope.app.security',
         'zope.app.appsetup',

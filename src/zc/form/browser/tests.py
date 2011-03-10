@@ -11,14 +11,12 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""tests of custom widgets defined in Schema
-
-$Id: tests.py 3629 2005-10-06 21:01:27Z gary $
-"""
-import unittest
+"""tests of custom widgets defined in Schema"""
+import doctest
 import re
+import unittest
 
-from zope.testing import doctest, module
+from zope.testing import module
 from zope.app.testing import placelesssetup
 import zope.traversing.adapters
 
@@ -36,9 +34,8 @@ from zope.configuration import xmlconfig
 import zope.app.security
 import zc.form.browser
 from zc.form.field import Union
-import zc.form.field 
+import zc.form.field
 from zc.form.browser.unionwidget import UnionWidget
-from zope.testing.doctestunit import pprint
 
 from zope import component
 import zope.app.form.interfaces
@@ -125,14 +122,14 @@ class TestUnionWidget(placelesssetup.PlacelessSetup, unittest.TestCase):
         output = widget()
         # remove double whitespaces
         normalized_output = " ".join(output.split())
-        
+
         # the value of the textline field should be the default_getter's
         # result
         value_attr_of_textline = re.search(
             '<input.*id="field.identifier.unioned_00".*(value=".*").*></div>',
             normalized_output).groups()[0]
         self.failUnless('secret password' in value_attr_of_textline)
-        
+
         # the radio button of the option field should be selected
         radio_option_field = re.search(
             '<input.*id="field.identifier-01"(.*)/> </td>',
@@ -155,10 +152,12 @@ class TestUnionWidget(placelesssetup.PlacelessSetup, unittest.TestCase):
         output = widget() # to initialize
         self.assertEquals(widget.loadValueFromRequest(), u'Foo Bar')
 
+
 def zcml(s, execute=True):
     context = xmlconfig.file('meta.zcml',
                              package=zc.form.browser)
     return xmlconfig.string(s, context, execute=execute)
+
 
 def pageSetUp(test):
     placelesssetup.setUp(test)
@@ -166,6 +165,7 @@ def pageSetUp(test):
         zope.traversing.adapters.DefaultTraversable,
         [None],
         )
+
 
 def test_suite():
     suite = unittest.makeSuite(TestUnionWidget)
@@ -178,6 +178,3 @@ def test_suite():
             setUp=pageSetUp,
             tearDown=placelesssetup.tearDown),)
     return suite
-
-if __name__ == "__main__":
-    unittest.main(defaultTest='test_suite')
