@@ -1,5 +1,6 @@
-Most Recently Used (MRU) Source Widget
-======================================
+========================================
+ Most Recently Used (MRU) Source Widget
+========================================
 
 The MRU widget keeps track of the last few values selected (on a per-principal
 basis) and allows quickly selecting from that list instead of using a query
@@ -113,7 +114,7 @@ Process the request and the list of MRU values is in the form::
     <select name="form.color" id="form.color">
       <option value="red_token" selected="selected">Red</option>
     </select>
-    ... 
+    ...
 
 And the query view is hidden because we have an MRU list::
 
@@ -142,7 +143,7 @@ the top, and it is selected::
       <option value="green_token" selected="selected">Green</option>
       <option value="red_token">Red</option>
     </select>
-    ... 
+    ...
 
 Clean up a bit::
 

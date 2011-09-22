@@ -1,3 +1,7 @@
+===================
+ CombinationWidget
+===================
+
 The combinationwidget collects two or more subfields to provide a convenient
 way to specify a sequence of values.
 

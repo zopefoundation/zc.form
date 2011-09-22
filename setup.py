@@ -1,4 +1,10 @@
 from setuptools import setup, find_packages
+import os.path
+
+
+def read(filepath):
+    return file(os.path.join(*filepath.split('/'))).read()
+
 
 setup(
     name="zc.form",
@@ -7,6 +13,14 @@ setup(
     package_dir={'':'src'},
     namespace_packages=['zc'],
     include_package_data=True,
+    long_description='\n\n'.join([
+        read('src/zc/form/README.txt'),
+        read('CHANGES.txt'),
+        '.. contents::',
+        read('src/zc/form/TODO.txt'),
+        read('src/zc/form/browser/combinationwidget.txt'),
+        read('src/zc/form/browser/mruwidget.txt'),
+        read('src/zc/form/browser/exceptionviews.txt')]),
     license="ZPL 2.1",
     install_requires=[
         'pytz',
