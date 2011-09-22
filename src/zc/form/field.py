@@ -19,7 +19,7 @@ from zope import interface, i18n, schema, component
 from zope.schema.interfaces import (
     ValidationError, WrongType, IField, IVocabularyTokenized)
 from zope.interface.exceptions import DoesNotImplement
-import zope.app.catalog.interfaces
+import zope.catalog.interfaces
 import zope.index.text.queryparser
 import zope.index.text.parsetree
 
@@ -405,7 +405,7 @@ class QueryTextLineConstraint(BaseField, schema.TextLine):
             index = self.index_getter(self.context)
         else:
             catalog = component.getUtility(
-                zope.app.catalog.interfaces.ICatalog,
+                zope.catalog.interfaces.ICatalog,
                 self.catalog_name,
                 field.context)
             index = catalog[self.index_name]

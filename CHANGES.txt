@@ -7,6 +7,8 @@ Changes
 
 - Got rid of ``zope.app.zapi`` dependency.
 
+- Depending on ``zope.catalog`` instead of ``zope.app.catalog``.
+
 - Fixed tests to run with ``zope.schema`` >= 3.6.
 
 - Using Python's ``doctest`` module instead of depreacted

@@ -30,7 +30,7 @@ setup(
         'ZODB3',
         'zope.annotation',
         'zope.app.principalannotation',
-        'zope.app.catalog',
+        'zope.catalog',
         'zope.app.form',
         'zope.app.pagetemplate',
         'zope.cachedescriptors',
