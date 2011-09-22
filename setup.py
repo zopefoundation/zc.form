@@ -19,7 +19,6 @@ setup(
         'zope.app.catalog',
         'zope.app.form',
         'zope.app.pagetemplate',
-        'zope.app.zapi',
         'zope.cachedescriptors',
         'zope.component',
         'zope.exceptions',

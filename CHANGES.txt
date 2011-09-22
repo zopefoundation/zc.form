@@ -5,11 +5,12 @@ CHANGES in zc.form
 0.2 (unreleased)
 ----------------
 
+- Got rid of ``zope.app.zapi`` dependency.
+
 - Fixed tests to run with ``zope.schema`` >= 3.6.
 
 - Using Python's ``doctest`` module instead of depreacted
   ``zope.testing.doctest``.
-
 
 
 0.1

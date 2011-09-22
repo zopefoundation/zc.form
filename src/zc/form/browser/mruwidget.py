@@ -11,23 +11,18 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""source input widget with most recently used (MRU) value support
-
-$Id: mruwidget.py 3677 2005-10-19 07:10:22Z fred $
-"""
-import cgi
-
-import persistent.list
+"""source input widget with most recently used (MRU) value support"""
 from BTrees import OOBTree
-
-import zope.app.form.interfaces
-import zope.app.form.browser.interfaces
-from zope.app import zapi 
 from zope.app.form.browser.source import SourceInputWidget
 from zope.schema.interfaces import ISourceQueriables, ValidationError
-import zope.annotation.interfaces
-
+import cgi
+import persistent.list
 import zc.resourcelibrary
+import zope.annotation.interfaces
+import zope.app.form.browser.interfaces
+import zope.app.form.interfaces
+import zope.component
+
 
 class MruSourceInputWidget(SourceInputWidget):
     ANNOTATION_KEY = 'zc.form.browser.mruwidget'
@@ -51,13 +46,13 @@ class MruSourceInputWidget(SourceInputWidget):
             tokens = annotation[key] = persistent.list.PersistentList()
 
         return tokens
-        
+
     def getMostRecentlyUsedTerms(self):
         """Get a sequence of the most recently used terms (most recent first).
         """
         tokens = self.getMostRecentlyUsedTokens()
-        terms = zapi.getMultiAdapter((self.source, self.request),
-                                     zope.app.form.browser.interfaces.ITerms)
+        terms = zope.component.getMultiAdapter(
+            (self.source, self.request), zope.app.form.browser.interfaces.ITerms)
         mru = []
         for token in tokens:
             try:
@@ -88,7 +83,7 @@ class MruSourceInputWidget(SourceInputWidget):
         for name, queryview in self.queryviews:
             if name+'.apply' in self.request:
                 return True
-    
+
     def __call__(self):
         zc.resourcelibrary.need('zc.form.mruwidget')
         result = ['<div class="value">']
@@ -116,7 +111,7 @@ class MruSourceInputWidget(SourceInputWidget):
             queries_visible = 'no'
 
         result.append('<input type="hidden" name="%s.visible" '
-                      'id="%s.visible" value="%s">' 
+                      'id="%s.visible" value="%s">'
                       % (queries_id, queries_id, queries_visible))
 
         if mru_terms:
@@ -128,8 +123,8 @@ class MruSourceInputWidget(SourceInputWidget):
                 else:
                     selected = ''
                 result.append('  <option value="%s"%s>%s</option>'
-                              % (cgi.escape(mru_term.token), 
-                                 selected, 
+                              % (cgi.escape(mru_term.token),
+                                 selected,
                                  cgi.escape(mru_term.title)))
 
             result.append('</select>')
@@ -141,7 +136,7 @@ class MruSourceInputWidget(SourceInputWidget):
 
         result.append('  <input type="hidden" name="%s.displayed" value="y">'
                       % self.name)
-        
+
         result.append('  <div class="queries" id="%s" style="%s">'
                       % (queries_id, queries_style))
         for name, queryview in self.queryviews:
@@ -159,3 +154,4 @@ class MruSourceInputWidget(SourceInputWidget):
         result.append('  </div> <!-- queries -->')
         result.append('</div> <!-- value -->')
         return '\n'.join(result)
+

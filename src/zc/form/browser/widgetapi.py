@@ -22,7 +22,6 @@ from xml.sax.saxutils import escape, quoteattr
 from zope.interface import implements
 from zope.schema.interfaces import ValidationError
 
-from zope.app import zapi
 from zope.app.form import InputWidget
 from zope.app.form.browser.widget import BrowserWidget
 from zope.app.form.browser.interfaces import IBrowserWidget
@@ -114,7 +113,7 @@ class BaseWidget(BrowserWidget, InputWidget):
             self._initialize()
         marker = self._get_marker()
         return marker + self.render(self._data)
-    
+
     def hidden(self):
         if not self._initialized:
             self._initialize()
@@ -220,7 +219,7 @@ class BaseVocabularyWidget(BaseWidget):
 
 
 class BaseVocabularyDisplay(BaseVocabularyWidget):
-    
+
     _display = True
 
     def render(self, value):
