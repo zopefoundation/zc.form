@@ -16,8 +16,8 @@ Rendering the widget returns a table with the subfields::
     >>> from zope.schema import Int
     >>> from zope.schema.interfaces import IInt
     >>> from zope.publisher.interfaces.browser import IBrowserRequest
-    >>> from zope.app.form.interfaces import IInputWidget
-    >>> from zope.app.form.browser.textwidgets import IntWidget
+    >>> from zope.formlib.interfaces import IInputWidget
+    >>> from zope.formlib.textwidgets import IntWidget
     >>> ztapi.provideView(
     ...     IInt, IBrowserRequest, IInputWidget, '', IntWidget)
     >>> from zope import interface
@@ -121,13 +121,11 @@ are errors::
     WidgetInputError: ('acceptable_count', u'Acceptable Count',
     WidgetInputError('combination_00', u'Minimum',
     RequiredMissing('combination_00')))
-    >>> import zope.app.form.browser.interfaces
-    >>> import zope.app.form.interfaces
+    >>> import zope.formlib.interfaces
     >>> import zope.publisher.interfaces.browser
     >>> class SnippetView(object):
-    ...     interface.implements(
-    ...         zope.app.form.browser.interfaces.IWidgetInputErrorView)
-    ...     component.adapts(zope.app.form.interfaces.WidgetInputError,
+    ...     interface.implements(zope.formlib.interfaces.IWidgetInputErrorView)
+    ...     component.adapts(zope.formlib.interfaces.WidgetInputError,
     ...         zope.publisher.interfaces.browser.IBrowserRequest)
     ...     def __init__(self, context, request):
     ...         self.context = context
@@ -176,8 +174,8 @@ Similarly, if the field's constraints are not met, the widget shows errors::
 There's also a display version of the widget::
 
     >>> request = TestRequest()
-    >>> from zope.app.form.browser.widget import DisplayWidget
-    >>> from zope.app.form.interfaces import IDisplayWidget
+    >>> from zope.formlib.widget import DisplayWidget
+    >>> from zope.formlib.interfaces import IDisplayWidget
     >>> ztapi.provideView(
     ...     IInt, IBrowserRequest, IDisplayWidget, '', DisplayWidget)
     >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)

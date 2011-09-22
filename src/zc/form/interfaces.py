@@ -11,17 +11,14 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""interfaces.py: interfaces for the package
-
-$Id: interfaces.py 4634 2006-01-06 20:21:15Z fred $"""
+from zc.form.i18n import _
+from zope import interface, component, schema
 import datetime
 import pytz
-
-from zope import interface, component, schema
+import zope.browser.interfaces
 import zope.publisher.interfaces.browser
 import zope.schema.interfaces
-import zope.app.form.browser.interfaces
-from zc.form.i18n import _
+
 
 class IExtendedField(zope.schema.interfaces.IField):
 
@@ -48,23 +45,23 @@ class IOptionField(IExtendedField):
     value = interface.Attribute(
         """the value for this field; one and only one of value and
         value_getter must be non-None""")
-    
+
     value_getter = interface.Attribute(
         """a callable, taking a context, return the option's value; or None.
         one and only one of value and value_getter must be non-None""")
-    
+
     identity_comparison = schema.Bool(
         description=_("""Whether validation comparison should be identity
         (as opposed to equality) based"""))
-    
+
     def getValue():
         "return value for option field"
 
 class IUnionField(IExtendedField):
-    u"""A field that may have one of many field types of values.  
+    u"""A field that may have one of many field types of values.
     Order is important, in that the first field from left to right that
     validates a value is considered to be the "active" field."""
-    
+
     fields = schema.Tuple(
         title=_("Composite Fields"),
         description=_("""\
@@ -80,7 +77,7 @@ class IUnionField(IExtendedField):
             be displayed instead.
 
             Default: False"""))
-    
+
     def validField(value):
         u"returns first valid field for the given value, or None"
 
@@ -111,7 +108,7 @@ class Term:
 class TimeZoneTerms:
     """Term and value support needed by query widgets."""
 
-    interface.implements(zope.app.form.browser.interfaces.ITerms)
+    interface.implements(zope.browser.interfaces.ITerms)
     component.adapts(AvailableTimeZones,
                      zope.publisher.interfaces.browser.IBrowserRequest)
 
@@ -128,14 +125,14 @@ class TimeZoneTerms:
 
 class IHTMLSnippet(zope.schema.interfaces.IText):
     """HTML excerpt that can be placed within an HTML document's body element.
-    
+
     Snippet should have no dangling open tags.
-    
+
     XHTML preferred; field may have version attribute in future.
     """
 
 class IHTMLDocument(zope.schema.interfaces.IText):
     """HTML Document.
-    
+
     XHTML preferred; field may have version attribute in future.
     """

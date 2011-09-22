@@ -11,16 +11,18 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""functional test harness for zc.mruwidget
-"""
-import os
-
+"""functional test harness for zc.mruwidget"""
 from zope import interface, component
 from zope.app.testing.functional import FunctionalDocFileSuite, ZCMLLayer
 import doctest
+import os
+import zope.browser.interfaces
+import zope.formlib.interfaces
 import zope.schema.interfaces
 
+
 colors = ['red', 'green', 'cerulean blue']
+
 
 class AvailableColors(object):
     interface.implements(zope.schema.interfaces.ISource)
@@ -40,7 +42,7 @@ class Term(object):
 class ColorTerms(object):
     """Term and value support needed by query widgets."""
 
-    interface.implements(zope.app.form.browser.interfaces.ITerms)
+    interface.implements(zope.browser.interfaces.ITerms)
     component.adapts(zope.schema.interfaces.ISource,
                      zope.publisher.interfaces.browser.IBrowserRequest)
 
@@ -56,7 +58,7 @@ class ColorTerms(object):
         return token.split('_')[0]
 
 class SimpleColorSourceQueryView(object):
-    interface.implements(zope.app.form.browser.interfaces.ISourceQueryView)
+    interface.implements(zope.formlib.interfaces.ISourceQueryView)
     component.adapts(zope.schema.interfaces.ISource,
                      zope.publisher.interfaces.browser.IBrowserRequest)
 

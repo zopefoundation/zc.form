@@ -22,10 +22,10 @@ from xml.sax.saxutils import escape, quoteattr
 from zope.interface import implements
 from zope.schema.interfaces import ValidationError
 
-from zope.app.form import InputWidget
-from zope.app.form.browser.widget import BrowserWidget
-from zope.app.form.browser.interfaces import IBrowserWidget
-from zope.app.form.interfaces import IWidget, IInputWidget, WidgetInputError
+from zope.formlib.widget import InputWidget
+from zope.formlib.widget import BrowserWidget
+from zope.formlib.interfaces import IBrowserWidget
+from zope.formlib.interfaces import IWidget, IInputWidget, WidgetInputError
 
 from zc.form.i18n import _
 
@@ -44,7 +44,7 @@ class BaseWidget(BrowserWidget, InputWidget):
     # Note to previous users of widgetapi:
     # .translate -> ._translate; .__prefix -> ._prefix;  NullValue ->
     # ._data_marker; .__initial_value and .__calculated_value -> replaced
-    # with ._data (because zope.app.form.utility.setUpWidget behavior changed
+    # with ._data (because zope.formlib.utility.setUpWidget behavior changed
     # for the better)
     implements(IBrowserWidget, IInputWidget)
 

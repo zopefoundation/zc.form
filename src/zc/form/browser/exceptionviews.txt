@@ -18,8 +18,8 @@ This also works with unicode characters::
     >>> view = ValidationErrorView(err, None)
     >>> view.snippet()
     u'<span class="error">F\xe4lscher!</span>'
-    
-HTML characters are quoted correctly::   
+
+HTML characters are quoted correctly::
 
     >>> err = ValidationError(u"The <error> & me.")
     >>> view = ValidationErrorView(err, None)
@@ -29,7 +29,7 @@ HTML characters are quoted correctly::
 
 The ConversionError has an exception as argument which is converted as well::
 
-    >>> from zope.app.form.interfaces import ConversionError
+    >>> from zope.formlib.interfaces import ConversionError
     >>> err = ConversionError(ValidationError("not valid"))
     >>> view = ValidationErrorView(err, None)
     >>> view.snippet()

@@ -25,9 +25,9 @@ from zope.schema.interfaces import ValidationError
 from zope.schema import TextLine, Int
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.app.testing import ztapi
-from zope.app.form.browser.textwidgets import TextWidget, IntWidget
+from zope.formlib.textwidgets import TextWidget, IntWidget
 from zope.schema.interfaces import ITextLine, IInt
-from zope.app.form.interfaces import IInputWidget
+from zope.formlib.interfaces import IInputWidget
 from zope.publisher.browser import TestRequest
 
 from zope.configuration import xmlconfig
@@ -38,8 +38,6 @@ import zc.form.field
 from zc.form.browser.unionwidget import UnionWidget
 
 from zope import component
-import zope.app.form.interfaces
-import zope.app.form.browser
 import zope.schema.interfaces
 import zope.publisher.interfaces.browser
 

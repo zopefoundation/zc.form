@@ -22,7 +22,6 @@
   <include package="zope.app.publication" />
   <include package="zope.app.pagetemplate" file="meta.zcml" />
   <include package="zope.app.appsetup" />
-  <include package="zope.app.form.browser" />
   <include package="zope.formlib" />
   <include package="zope.traversing" />
   <include package="zope.app.basicskin" />

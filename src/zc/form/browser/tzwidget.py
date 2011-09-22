@@ -15,15 +15,15 @@
 
 $Id: tzwidget.py 3872 2005-11-05 04:41:55Z gary $
 """
-import pytz
-
 from zope import interface, component
-import zope.publisher.interfaces.browser
 from zope.app import pagetemplate
-import zope.interface.common.idatetime
-
+import pytz
 import zc.form.browser.mruwidget
 import zc.form.interfaces
+import zope.formlib.interfaces
+import zope.interface.common.idatetime
+import zope.publisher.interfaces.browser
+
 
 ALL_TIMEZONES = frozenset(pytz.all_timezones)
 
@@ -40,7 +40,7 @@ pytz.tzinfo.BaseTzInfo.__Security_checker__ = checker
 # end argh.
 
 class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
-        
+
     def getMostRecentlyUsedTerms(self):
         mru = super(TimeZoneWidget, self).getMostRecentlyUsedTerms()
         # add ones from locale
@@ -58,8 +58,7 @@ class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
         return mru
 
 class TimeZoneQueryView(object):
-    interface.implements(
-            zope.app.form.browser.interfaces.ISourceQueryView)
+    interface.implements(zope.formlib.interfaces.ISourceQueryView)
 
     component.adapts(zc.form.interfaces.AvailableTimeZones,
                      zope.publisher.interfaces.browser.IBrowserRequest)

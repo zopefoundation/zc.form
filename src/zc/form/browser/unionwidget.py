@@ -17,10 +17,10 @@ $Id: unionwidget.py 4634 2006-01-06 20:21:15Z fred $
 """
 
 from zope import component
-from zope.app.form.interfaces import WidgetInputError
+from zope.formlib.interfaces import WidgetInputError
 
 from widgetapi import BaseWidget
-from zope.app.form.interfaces import IInputWidget
+from zope.formlib.interfaces import IInputWidget
 from zope.app.pagetemplate import ViewPageTemplateFile
 
 from zope.formlib import namedtemplate
@@ -46,12 +46,12 @@ class NotChosenWidget(object):
         return None
 
 class UnionWidget(BaseWidget):
-    
+
     _field_index = None
-    
+
     no_value_label = _('union_field_label-no_value', "Not specified")
     no_value_hint = _('union_field_hint-no_value', '')
-    
+
     def loadValueFromRequest(self):
         field = self.context
         missing_value = field.missing_value
@@ -82,9 +82,9 @@ class UnionWidget(BaseWidget):
                         self.label,
                         e.errors)
         return missing_value
-    
+
     template = namedtemplate.NamedTemplate('default')
-    
+
     def render(self, value):
         # choices = ({selected, identifier, widget},)
         # widget may be None, name may be None.

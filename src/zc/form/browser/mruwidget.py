@@ -13,15 +13,15 @@
 ##############################################################################
 """source input widget with most recently used (MRU) value support"""
 from BTrees import OOBTree
-from zope.app.form.browser.source import SourceInputWidget
+from zope.formlib.source import SourceInputWidget
 from zope.schema.interfaces import ISourceQueriables, ValidationError
 import cgi
 import persistent.list
 import zc.resourcelibrary
 import zope.annotation.interfaces
-import zope.app.form.browser.interfaces
-import zope.app.form.interfaces
+import zope.browser.interfaces
 import zope.component
+import zope.formlib.interfaces
 
 
 class MruSourceInputWidget(SourceInputWidget):
@@ -52,7 +52,7 @@ class MruSourceInputWidget(SourceInputWidget):
         """
         tokens = self.getMostRecentlyUsedTokens()
         terms = zope.component.getMultiAdapter(
-            (self.source, self.request), zope.app.form.browser.interfaces.ITerms)
+            (self.source, self.request), zope.browser.interfaces.ITerms)
         mru = []
         for token in tokens:
             try:

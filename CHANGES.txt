@@ -7,6 +7,9 @@ Changes
 
 - Got rid of ``zope.app.zapi`` dependency.
 
+- Got rid of ``zope.app.form`` dependency by requiring at least
+  ``zope.formlib`` 4.0.
+
 - Depending on ``zope.catalog`` instead of ``zope.app.catalog``.
 
 - Fixed tests to run with ``zope.schema`` >= 3.6.

@@ -22,8 +22,8 @@ import cgi
 from zope import component
 import zope.schema.interfaces
 import zope.cachedescriptors.property
-from zope.app.form.interfaces import WidgetInputError
-from zope.app.form.interfaces import IInputWidget, IDisplayWidget
+from zope.formlib.interfaces import WidgetInputError
+from zope.formlib.interfaces import IInputWidget, IDisplayWidget
 from zope.app.pagetemplate import ViewPageTemplateFile
 
 from zope.formlib import namedtemplate

@@ -5,7 +5,7 @@
       type="zope.publisher.interfaces.browser.IBrowserRequest"
       for="zope.schema.interfaces.IChoice
            zope.schema.interfaces.ISource"
-      provides="zope.app.form.interfaces.IInputWidget"
+      provides="zope.formlib.interfaces.IInputWidget"
       factory=".mruwidget.MruSourceInputWidget"
       permission="zope.Public"
       />

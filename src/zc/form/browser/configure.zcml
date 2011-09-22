@@ -8,7 +8,7 @@
   <view
       type="zope.publisher.interfaces.browser.IBrowserRequest"
       for="zc.form.interfaces.IUnionField"
-      provides="zope.app.form.interfaces.IInputWidget"
+      provides="zope.formlib.interfaces.IInputWidget"
       factory=".unionwidget.UnionWidget"
       permission="zope.Public"
       />
@@ -17,7 +17,7 @@
   <view
       type="zope.publisher.interfaces.browser.IBrowserRequest"
       for="zc.form.interfaces.ICombinationField"
-      provides="zope.app.form.interfaces.IInputWidget"
+      provides="zope.formlib.interfaces.IInputWidget"
       factory=".combinationwidget.CombinationWidget"
       permission="zope.Public"
       />
@@ -26,7 +26,7 @@
   <view
       type="zope.publisher.interfaces.browser.IBrowserRequest"
       for="zc.form.interfaces.ICombinationField"
-      provides="zope.app.form.interfaces.IDisplayWidget"
+      provides="zope.formlib.interfaces.IDisplayWidget"
       factory=".combinationwidget.CombinationDisplayWidget"
       permission="zope.Public"
       />
@@ -63,11 +63,11 @@
       type="zope.publisher.interfaces.browser.IBrowserRequest"
       for="zope.schema.interfaces.IChoice
            zc.form.interfaces.AvailableTimeZones"
-      provides="zope.app.form.interfaces.IInputWidget"
+      provides="zope.formlib.interfaces.IInputWidget"
       factory=".tzwidget.TimeZoneWidget"
       permission="zope.Public"
       />
-  
+
   <adapter factory=".tzwidget.TimeZoneQueryView" />
 
 </configure>

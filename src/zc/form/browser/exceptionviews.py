@@ -17,11 +17,11 @@ $Id: exceptionviews.py 3629 2005-10-06 21:01:27Z gary $
 """
 
 from zope import interface, component, i18n
-from zope.app.form.browser.interfaces import IWidgetInputErrorView
+from zope.formlib.interfaces import IWidgetInputErrorView
 from zope.publisher.interfaces.browser import IBrowserRequest
 from cgi import escape
 from zope.schema.interfaces import ValidationError
-from zope.app.form.interfaces import ConversionError
+from zope.formlib.interfaces import ConversionError
 from zope.exceptions.interfaces import UserError
 
 
