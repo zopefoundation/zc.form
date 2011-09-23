@@ -33,7 +33,7 @@ setup(
         'zope.catalog',
         'zope.app.pagetemplate',
         'zope.cachedescriptors',
-        'zope.component',
+        'zope.component >= 3.8',
         'zope.exceptions',
         'zope.formlib >= 4.0',
         'zope.i18n',
@@ -49,7 +49,8 @@ setup(
         'zope.configuration',
         'zope.testing',
         'zope.traversing',
-        'zope.app.component',
+        'zope.browserpage',
+        'zope.container',
         ],
     zip_safe=False
     )

@@ -8,9 +8,16 @@ Changes
 - Got rid of ``zope.app.form`` dependency by requiring at least
   ``zope.formlib`` 4.0.
 
+- Got rid of ``zope.app.component`` dependency by requiring at least
+  ``zope.component`` 3.8.
+
+
 - Depending on ``zope.catalog`` instead of ``zope.app.catalog``.
 
 - Depending on ``zope.security`` instead of ``zope.app.security``.
+
+- Depending on ``zope.browserpage`` and ``zope.container`` instead of
+  ``zope.app.publisher``.
 
 - Got rid of the following dependencies:
 

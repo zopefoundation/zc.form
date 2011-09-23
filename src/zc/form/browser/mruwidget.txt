@@ -42,7 +42,7 @@ interface is displayed::
     >>> import zope.publisher.browser
     >>> import zope.security.interfaces
     >>> import zope.security.management
-    >>> import zope.app.component.hooks
+    >>> import zope.component.hooks
 
     >>> class DummyPrincipal(object):
     ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
@@ -68,8 +68,8 @@ switch to TestBrowser we can remove this oddity.
     >>> request.setPrincipal(principal)
     >>> zope.security.management.newInteraction(request)
 
-    >>> oldsite = zope.app.component.hooks.getSite()
-    >>> zope.app.component.hooks.setSite(getRootFolder())
+    >>> oldsite = zope.component.hooks.getSite()
+    >>> zope.component.hooks.setSite(getRootFolder())
 
 Now we can use an instance of our demo object to see that the form
 pulls the possible values from the vocabulary we've defined above::
@@ -148,4 +148,4 @@ the top, and it is selected::
 Clean up a bit::
 
     >>> zope.security.management.endInteraction()
-    >>> zope.app.component.hooks.setSite(oldsite)
+    >>> zope.component.hooks.setSite(oldsite)
