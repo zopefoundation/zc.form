@@ -18,7 +18,6 @@ Changes
 - Depending on ``zope.app.wsgi`` >=3.7 instead of ``zope.app.testing`` for
   test setup.
 
-
 - Depending on ``zope.browserpage`` and ``zope.container`` instead of
   ``zope.app.publisher``.
 
@@ -31,7 +30,9 @@ Changes
 
 - Fixed tests to run with ``zope.schema`` >= 3.6.
 
-- Using Python's ``doctest`` module instead of depreacted
+- Moved test dependencies to `test` extra.
+
+- Using Python's ``doctest`` module instead of deprecated
   ``zope.testing.doctest``.
 
 
