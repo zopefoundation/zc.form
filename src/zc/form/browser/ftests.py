@@ -13,13 +13,13 @@
 ##############################################################################
 """functional test harness for zc.mruwidget"""
 from zope import interface, component
-from zope.app.testing.functional import FunctionalDocFileSuite, ZCMLLayer
 import doctest
 import os
+import zc.form.browser
+import zope.app.wsgi.testlayer
 import zope.browser.interfaces
 import zope.formlib.interfaces
 import zope.schema.interfaces
-
 
 colors = ['red', 'green', 'cerulean blue']
 
@@ -76,10 +76,7 @@ class SimpleColorSourceQueryView(object):
         return [c for c in colors if searchstring in c]
 
 
-here = os.path.dirname(os.path.realpath(__file__))
-
-ZCFormLayer = ZCMLLayer(
-    os.path.join(here, "ftesting.zcml"), __name__, "ZCFormLayer")
+ZCFormLayer = zope.app.wsgi.testlayer.BrowserLayer(zc.form.browser)
 
 
 def setUp(test):
@@ -88,8 +85,9 @@ def setUp(test):
 
 
 def test_suite():
-    suite = FunctionalDocFileSuite("mruwidget.txt",
-            globs={'AvailableColors': AvailableColors()},
+    suite = doctest.DocFileSuite("mruwidget.txt",
+            globs={'AvailableColors': AvailableColors(),
+                   'getRootFolder': ZCFormLayer.getRootFolder},
             optionflags=doctest.NORMALIZE_WHITESPACE+doctest.ELLIPSIS,
             setUp=setUp,
             )

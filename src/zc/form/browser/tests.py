@@ -17,14 +17,13 @@ import re
 import unittest
 
 from zope.testing import module
-from zope.app.testing import placelesssetup
+import zope.component.testing
 import zope.traversing.adapters
 
 from zope.interface import implements
 from zope.schema.interfaces import ValidationError
 from zope.schema import TextLine, Int
 from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.app.testing import ztapi
 from zope.formlib.textwidgets import TextWidget, IntWidget
 from zope.schema.interfaces import ITextLine, IInt
 from zope.formlib.interfaces import IInputWidget
@@ -40,15 +39,15 @@ from zope import component
 import zope.schema.interfaces
 import zope.publisher.interfaces.browser
 
-class TestUnionWidget(placelesssetup.PlacelessSetup, unittest.TestCase):
+class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
 
     def setUp(self):
         super(TestUnionWidget, self).setUp()
         # XXX cheating: should not rely on these. :-/
-        ztapi.provideView(
-            ITextLine, IBrowserRequest, IInputWidget, '', TextWidget)
-        ztapi.provideView(
-            IInt, IBrowserRequest, IInputWidget, '', IntWidget)
+        component.provideAdapter(
+            TextWidget, (ITextLine, IBrowserRequest), IInputWidget)
+        component.provideAdapter(
+            IntWidget, (IInt, IBrowserRequest), IInputWidget)
         from zc.form.browser.unionwidget import default_template
         component.provideAdapter(default_template, name='default')
         component.provideAdapter(
@@ -157,7 +156,7 @@ def zcml(s, execute=True):
 
 
 def pageSetUp(test):
-    placelesssetup.setUp(test)
+    zope.component.testing.setUp(test)
     component.provideAdapter(
         zope.traversing.adapters.DefaultTraversable,
         [None],
@@ -168,10 +167,11 @@ def test_suite():
     suite = unittest.makeSuite(TestUnionWidget)
     suite.addTest(doctest.DocFileSuite(
         'exceptionviews.txt',
-        setUp=placelesssetup.setUp, tearDown=placelesssetup.tearDown))
+        setUp=zope.component.testing.setUp,
+        tearDown=zope.component.testing.tearDown))
     suite.addTest(
         doctest.DocFileSuite(
             'combinationwidget.txt',
             setUp=pageSetUp,
-            tearDown=placelesssetup.tearDown),)
+            tearDown=zope.component.testing.tearDown),)
     return suite

@@ -45,7 +45,7 @@ setup(
         # extras
         'zope.security',
         'zope.app.appsetup',
-        'zope.app.testing',
+        'zope.app.wsgi >= 3.7',
         'zope.configuration',
         'zope.testing',
         'zope.traversing',

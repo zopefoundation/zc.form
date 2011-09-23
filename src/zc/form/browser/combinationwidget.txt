@@ -12,14 +12,13 @@ Rendering the widget returns a table with the subfields::
     >>> from zope import component, interface
     >>> component.provideAdapter(default_template, name='default')
     >>> from zc.form.field import Combination, OrderedCombinationConstraint
-    >>> from zope.app.testing import ztapi
     >>> from zope.schema import Int
     >>> from zope.schema.interfaces import IInt
     >>> from zope.publisher.interfaces.browser import IBrowserRequest
     >>> from zope.formlib.interfaces import IInputWidget
     >>> from zope.formlib.textwidgets import IntWidget
-    >>> ztapi.provideView(
-    ...     IInt, IBrowserRequest, IInputWidget, '', IntWidget)
+    >>> component.provideAdapter(
+    ...     IntWidget, (IInt, IBrowserRequest), IInputWidget)
     >>> from zope import interface
     >>> class IDemo(interface.Interface):
     ...     acceptable_count = Combination(
@@ -176,8 +175,8 @@ There's also a display version of the widget::
     >>> request = TestRequest()
     >>> from zope.formlib.widget import DisplayWidget
     >>> from zope.formlib.interfaces import IDisplayWidget
-    >>> ztapi.provideView(
-    ...     IInt, IBrowserRequest, IDisplayWidget, '', DisplayWidget)
+    >>> component.provideAdapter(
+    ...     DisplayWidget, (IInt, IBrowserRequest), IDisplayWidget)
     >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)
     >>> widget.setPrefix('field')
     >>> widget.setRenderedValue(('10', '2'))
