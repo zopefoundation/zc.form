@@ -51,7 +51,6 @@ setup(
         'zope.testing',
         'zope.traversing',
         'zope.app.component',
-        'zope.app.zcmlfiles', # sigh
         ],
     zip_safe=False
     )

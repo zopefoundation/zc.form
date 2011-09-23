@@ -1,0 +1,3 @@
+<html metal:define-macro="page">
+  <div metal:define-slot="body" />
+</html>

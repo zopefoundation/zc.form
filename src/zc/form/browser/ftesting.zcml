@@ -24,12 +24,17 @@
   <include package="zope.app.appsetup" />
   <include package="zope.formlib" />
   <include package="zope.traversing" />
-  <include package="zope.app.basicskin" />
-  <include package="zope.app.zcmlfiles" file="menus.zcml" />
   <include package="zc.resourcelibrary" />
   <include package="zope.annotation" />
   <include package="zope.app.principalannotation" />
   <include package="zc.form" />
   <includeOverrides package="zc.form.browser" file="overrides.zcml" />
+
+  <browser:page
+      name="standard_macros"
+      for="*"
+      class="zc.form.browser.testing.DummyMacros"
+      allowed_interface="zope.interface.common.mapping.IItemMapping"
+      permission="zope.Public" />
 
 </configure>
