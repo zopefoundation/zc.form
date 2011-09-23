@@ -43,9 +43,8 @@ setup(
         'zope.publisher',
         'zope.schema >= 3.6',
         # extras
-        'zope.app.security',
+        'zope.security',
         'zope.app.appsetup',
-        'zope.app.securitypolicy',
         'zope.app.testing',
         'zope.configuration',
         'zope.testing',

@@ -31,7 +31,6 @@ from zope.formlib.interfaces import IInputWidget
 from zope.publisher.browser import TestRequest
 
 from zope.configuration import xmlconfig
-import zope.app.security
 import zc.form.browser
 from zc.form.field import Union
 import zc.form.field

@@ -10,8 +10,14 @@ Changes
 
 - Depending on ``zope.catalog`` instead of ``zope.app.catalog``.
 
-- Got rid of ``zope.app.zapi``, ``zope.app.basicskin``,
-  ``zope.app.zcmlfiles`` dependencies
+- Depending on ``zope.security`` instead of ``zope.app.security``.
+
+- Got rid of the following dependencies:
+
+  - ``zope.app.basicskin``
+  - ``zope.app.securitypolicy``
+  - ``zope.app.zapi``
+  - ``zope.app.zcmlfiles``
 
 - Fixed tests to run with ``zope.schema`` >= 3.6.
 
