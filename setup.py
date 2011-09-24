@@ -8,15 +8,15 @@ def read(filepath):
 
 setup(
     name="zc.form",
-    version="0.1.3",
+    version='0.2',
     packages=find_packages('src'),
     package_dir={'':'src'},
     namespace_packages=['zc'],
     include_package_data=True,
     long_description='\n\n'.join([
         read('src/zc/form/README.txt'),
-        read('CHANGES.txt'),
         '.. contents::',
+        read('CHANGES.txt'),
         read('src/zc/form/TODO.txt'),
         read('src/zc/form/browser/combinationwidget.txt'),
         read('src/zc/form/browser/mruwidget.txt'),

@@ -2,7 +2,7 @@
 Changes
 =======
 
-0.2 (unreleased)
+0.2 (2011-09-24)
 ----------------
 
 - Got rid of ``zope.app.form`` dependency by requiring at least
@@ -29,6 +29,8 @@ Changes
   - ``zope.app.zcmlfiles``
 
 - Fixed tests to run with ``zope.schema`` >= 3.6.
+
+- Made package fit to run on ZTK 1.1.
 
 - Moved test dependencies to `test` extra.
 
