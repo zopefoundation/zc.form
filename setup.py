@@ -12,6 +12,9 @@ setup(
     packages=find_packages('src'),
     package_dir={'':'src'},
     namespace_packages=['zc'],
+    url='http://pypi.python.org/pypi/zc.form',
+    author='Zope Corporation and Contributors',
+    author_email='zope-dev@zope.org',
     include_package_data=True,
     long_description='\n\n'.join([
         read('src/zc/form/README.txt'),
