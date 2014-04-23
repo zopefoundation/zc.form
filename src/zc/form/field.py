@@ -368,8 +368,6 @@ class Combination(BaseField):
     fields = constraints = ()
 
     def __init__(self, fields, **kw):
-        if len(fields) < 2:
-            raise ValueError(_("combination must combine two or more fields"))
         for ix, field in enumerate(fields):
             if not IField.providedBy(field):
                 raise DoesNotImplement(IField)

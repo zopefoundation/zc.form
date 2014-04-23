@@ -5,7 +5,8 @@ Changes
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Remove requirement, that ``zc.form.field.Combination`` needs at least
+  two subfields.
 
 
 0.2 (2011-09-24)
