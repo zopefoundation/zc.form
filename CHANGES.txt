@@ -2,7 +2,7 @@
 Changes
 =======
 
-0.3 (unreleased)
+0.3 (2014-04-23)
 ----------------
 
 - Remove requirement, that ``zc.form.field.Combination`` needs at least
