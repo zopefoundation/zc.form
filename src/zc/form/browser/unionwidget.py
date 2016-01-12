@@ -21,7 +21,7 @@ from zope.formlib.interfaces import WidgetInputError
 
 from widgetapi import BaseWidget
 from zope.formlib.interfaces import IInputWidget
-from zope.app.pagetemplate import ViewPageTemplateFile
+from zope.browserpage import ViewPageTemplateFile
 
 from zope.formlib import namedtemplate
 

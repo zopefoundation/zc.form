@@ -24,7 +24,7 @@ import zope.schema.interfaces
 import zope.cachedescriptors.property
 from zope.formlib.interfaces import WidgetInputError
 from zope.formlib.interfaces import IInputWidget, IDisplayWidget
-from zope.app.pagetemplate import ViewPageTemplateFile
+from zope.browserpage import ViewPageTemplateFile
 
 from zope.formlib import namedtemplate
 

@@ -11,7 +11,6 @@
   <include package="zope.browserpage" file="meta.zcml" />
   <include package="zope.security" file="meta.zcml" />
   <include package="zope.app.publication" file="meta.zcml" />
-  <include package="zope.app.pagetemplate" file="meta.zcml" />
   <include package="zc.resourcelibrary" file="meta.zcml" />
 
   <include package="zope.component" />
@@ -19,7 +18,7 @@
   <include package="zope.container" />
   <include package="zope.publisher" />
   <include package="zope.app.publication" />
-  <include package="zope.app.pagetemplate" file="meta.zcml" />
+  <include package="zope.browserpage" />
   <include package="zope.app.appsetup" />
   <include package="zope.formlib" />
   <include package="zope.traversing" />

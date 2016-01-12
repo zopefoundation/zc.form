@@ -16,10 +16,10 @@
 $Id: tzwidget.py 3872 2005-11-05 04:41:55Z gary $
 """
 from zope import interface, component
-from zope.app import pagetemplate
 import pytz
 import zc.form.browser.mruwidget
 import zc.form.interfaces
+import zope.browserpage
 import zope.formlib.interfaces
 import zope.interface.common.idatetime
 import zope.publisher.interfaces.browser
@@ -67,7 +67,8 @@ class TimeZoneQueryView(object):
         self.context = source
         self.request = request
 
-    _render = pagetemplate.ViewPageTemplateFile('timezone_queryview.pt')
+    _render = zope.browserpage.ViewPageTemplateFile('timezone_queryview.pt')
+
     def render(self, name):
         return self._render(field_name=name+'.searchstring',
                             button_name=name+'.search')
