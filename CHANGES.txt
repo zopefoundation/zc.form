@@ -2,7 +2,7 @@
 Changes
 =======
 
-0.4 (unreleased)
+0.4 (2016-01-12)
 ----------------
 
 - Get rid of the `zope.app.pagetemplate` dependency.
