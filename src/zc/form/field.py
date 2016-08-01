@@ -248,11 +248,7 @@ class Union(BaseField):
     def bind(self, object):
         clone = super(Union, self).bind(object)
         # We need to bind the fields too, e.g. for Choice fields
-        clone_fields = []
-        for field in clone.fields:
-            clone_fields.append(field.bind(object))
-        clone_fields = tuple(clone_fields)
-        clone.fields = clone_fields
+        clone.fields = tuple(field.bind(object) for field in clone.fields)
         return clone
 
     def validField(self, value):
@@ -404,11 +400,7 @@ class Combination(BaseField):
     def bind(self, object):
         clone = super(Combination, self).bind(object)
         # We need to bind the fields too, e.g. for Choice fields
-        clone_fields = []
-        for field in clone.fields:
-            clone_fields.append(field.bind(object))
-        clone_fields = tuple(clone_fields)
-        clone.fields = clone_fields
+        clone.fields = tuple(field.bind(object) for field in clone.fields)
         return clone
 
 
