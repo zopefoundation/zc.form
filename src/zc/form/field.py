@@ -38,8 +38,9 @@ _bad_query = _("Invalid query.")
 
 # Union field that accepts other fields...
 
+
 class MessageValidationError(ValidationError):
-    "ValidationError that takes a message"
+    """ValidationError that takes a message"""
 
     def __init__(self, message, mapping=None):
         if mapping is not None:
@@ -47,8 +48,10 @@ class MessageValidationError(ValidationError):
         else:
             self.message = message
         self.args = (message, mapping)
+
     def doc(self):
         return self.message
+
 
 class BaseField(schema.Field):
     """Field with a callable as default and a tuple of constraints.
@@ -105,10 +108,12 @@ class BaseField(schema.Field):
                 return self.default_getter(self.context)
             else:
                 return self._default
+
         def setter(self, value):
             assert self.default_getter is None
             self._default = value
         return property(getter, setter)
+
 
 class Option(BaseField):
 
@@ -138,10 +143,11 @@ class Option(BaseField):
         else:
             return self.value
 
+
 class Union(BaseField):
-    """
-    The Union field allows a schema field to hold one of many other field
-    types.  For instance, you might want to make a field that can hold
+    """Union field allows a schema field to hold one of many other field types.
+
+    For instance, you might want to make a field that can hold
     a duration *or* a date, if you are working with a PIM app.  Or perhaps
     you want to have a field that can hold a string from a vocabulary *or* a
     custom string.  Both of these examples can be accomplished in a variety of
@@ -227,7 +233,7 @@ class Union(BaseField):
     True
     >>> bound_f.fields[1].context is context
     True
-    """
+    """  # noqa
 
     interface.implements(interfaces.IUnionField)
 
@@ -252,7 +258,7 @@ class Union(BaseField):
         return clone
 
     def validField(self, value):
-        "returns first valid field, or None"
+        """Return first valid field, or None."""
         for field in self.fields:
             try:
                 field.validate(value)
@@ -266,7 +272,9 @@ class Union(BaseField):
             raise MessageValidationError(_no_unioned_field_validates,
                                          {'value': value})
 
+
 class OrderedCombinationConstraint(object):
+
     def __init__(self, may_be_equal=True, decreasing=False):
         self.may_be_equal = may_be_equal
         self.decreasing = decreasing
@@ -423,9 +431,10 @@ class QueryTextLineConstraint(BaseField, schema.TextLine):
             index = catalog[self.index_name]
         parser = zope.index.text.queryparser.QueryParser(index.lexicon)
         try:
-            tree = parser.parseQuery(value)
-        except zope.index.text.parsetree.ParseError, e:
+            parser.parseQuery(value)
+        except zope.index.text.parsetree.ParseError:
             raise MessageValidationError(_bad_query)
+
 
 class TextLine(BaseField, schema.TextLine):
     """An extended TextLine.
@@ -463,8 +472,10 @@ class TextLine(BaseField, schema.TextLine):
     WrongType: ('cow', <type 'unicode'>, 'query')
     """
 
+
 class HTMLSnippet(BaseField, schema.Text):
     interface.implements(interfaces.IHTMLSnippet)
+
 
 class HTMLDocument(BaseField, schema.Text):
     interface.implements(interfaces.IHTMLDocument)

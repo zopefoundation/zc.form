@@ -30,11 +30,12 @@ class IExtendedField(zope.schema.interfaces.IField):
         and has a len equal to the number of sub-fields."""))
 
     def default_getter(context):
-        "returns the default value"
+        """Return the default value."""
 
     default = interface.Attribute(
         """if default_getter has been set, returns the result of that call;
         otherwise returns whatever value has been set as the default.""")
+
 
 class IOptionField(IExtendedField):
     """Field with excatly one predefined value
@@ -55,12 +56,15 @@ class IOptionField(IExtendedField):
         (as opposed to equality) based"""))
 
     def getValue():
-        "return value for option field"
+        """Return value for option field."""
+
 
 class IUnionField(IExtendedField):
     u"""A field that may have one of many field types of values.
+
     Order is important, in that the first field from left to right that
-    validates a value is considered to be the "active" field."""
+    validates a value is considered to be the "active" field.
+    """
 
     fields = schema.Tuple(
         title=_("Composite Fields"),
@@ -79,7 +83,8 @@ class IUnionField(IExtendedField):
             Default: False"""))
 
     def validField(value):
-        u"returns first valid field for the given value, or None"
+        """Return first valid field for the given value, or None"""
+
 
 class ICombinationField(IExtendedField):
     u"""A field that describes a combination of two or more fields"""
@@ -89,8 +94,10 @@ class ICombinationField(IExtendedField):
         description=_("""\
             The schema fields that may describe the data"""))
 
+
 class IExtendedTextLineField(IExtendedField, zope.schema.interfaces.ITextLine):
-    "TextLine field extended with IExtendedField capabilities"
+    """TextLine field extended with IExtendedField capabilities"""
+
 
 class AvailableTimeZones(object):
     interface.implements(zope.schema.interfaces.ISource)
@@ -98,12 +105,14 @@ class AvailableTimeZones(object):
     def __contains__(self, value):
         return isinstance(value, datetime.tzinfo)
 
+
 class Term:
     interface.implements(zope.schema.interfaces.ITitledTokenizedTerm)
 
     def __init__(self, title, token):
         self.title = title
         self.token = token
+
 
 class TimeZoneTerms:
     """Term and value support needed by query widgets."""
@@ -123,6 +132,7 @@ class TimeZoneTerms:
     def getValue(self, token):
         return pytz.timezone(token)
 
+
 class IHTMLSnippet(zope.schema.interfaces.IText):
     """HTML excerpt that can be placed within an HTML document's body element.
 
@@ -130,6 +140,7 @@ class IHTMLSnippet(zope.schema.interfaces.IText):
 
     XHTML preferred; field may have version attribute in future.
     """
+
 
 class IHTMLDocument(zope.schema.interfaces.IText):
     """HTML Document.

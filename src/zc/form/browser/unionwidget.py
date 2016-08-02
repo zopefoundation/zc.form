@@ -11,28 +11,23 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""Union widget
-
-$Id: unionwidget.py 4634 2006-01-06 20:21:15Z fred $
-"""
-
-from zope import component
-from zope.formlib.interfaces import WidgetInputError
+"""Union widget"""
 
 from widgetapi import BaseWidget
-from zope.formlib.interfaces import IInputWidget
-from zope.browserpage import ViewPageTemplateFile
-
-from zope.formlib import namedtemplate
-
-import zc.form.interfaces
-
 from zc.form.i18n import _
+from zope import component
+from zope.browserpage import ViewPageTemplateFile
+from zope.formlib import namedtemplate
+from zope.formlib.interfaces import IInputWidget
+from zope.formlib.interfaces import WidgetInputError
+import zc.form.interfaces
 
 
 class CompositeOptionWidget(BaseWidget):
+
     def __call__(self):
         return None
+
 
 class NotChosenWidget(object):
     error = name = None
@@ -44,6 +39,7 @@ class NotChosenWidget(object):
 
     def __call__(self):
         return None
+
 
 class UnionWidget(BaseWidget):
 

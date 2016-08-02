@@ -17,7 +17,7 @@ The base classes provided here implement the IBrowserWidget API and
 provide a simpler API that derived classes are expected to implement.
 """
 
-from xml.sax.saxutils import escape, quoteattr
+from xml.sax.saxutils import quoteattr
 
 from zope.interface import implements
 from zope.schema.interfaces import ValidationError
@@ -25,17 +25,17 @@ from zope.schema.interfaces import ValidationError
 from zope.formlib.widget import InputWidget
 from zope.formlib.widget import BrowserWidget
 from zope.formlib.interfaces import IBrowserWidget
-from zope.formlib.interfaces import IWidget, IInputWidget, WidgetInputError
+from zope.formlib.interfaces import IInputWidget, WidgetInputError
 
 from zc.form.i18n import _
 
 _msg_missing_single_value_display = _(
-    _("widget-missing-single-value-for-display"),   "")
+    _("widget-missing-single-value-for-display"), "")
 _msg_missing_multiple_value_display = _(
     _("widget-missing-multiple-value-for-display"), "")
 
 _msg_missing_single_value_edit = _(
-    _("widget-missing-single-value-for-edit"),   "(no value)")
+    _("widget-missing-single-value-for-edit"), "(no value)")
 _msg_missing_multiple_value_edit = _(
     _("widget-missing-multiple-value-for-edit"), "(no value)")
 
@@ -50,8 +50,8 @@ class BaseWidget(BrowserWidget, InputWidget):
 
     _initialized = False
     _error = None
-    _display = False # set this to True if you are using this for a display
-                     # widget
+    # set `_display` to True if you are using this for a display widget:
+    _display = False
 
     # Form management methods.
     # Subclasses should not need to override these.
@@ -147,7 +147,7 @@ class BaseWidget(BrowserWidget, InputWidget):
             "BaseWidget subclasses must implement render()")
 
     def renderHidden(self, value):
-        "render a hidden widget"
+        """Render a hidden widget"""
 
 
 class BaseVocabularyWidget(BaseWidget):
@@ -163,7 +163,7 @@ class BaseVocabularyWidget(BaseWidget):
         super(BaseVocabularyWidget, self).__init__(field, request)
 
     # Helpers used by the vocabulary widget machinery;
-    # these should not be overriden.
+    # these should not be overridden.
 
     def setQuery(self, query, queryview):
         assert self.query is None

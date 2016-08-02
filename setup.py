@@ -10,7 +10,7 @@ setup(
     name="zc.form",
     version='0.5.dev0',
     packages=find_packages('src'),
-    package_dir={'':'src'},
+    package_dir={'': 'src'},
     namespace_packages=['zc'],
     url='http://pypi.python.org/pypi/zc.form',
     author='Zope Corporation and Contributors',
@@ -43,7 +43,7 @@ setup(
         'zope.publisher',
         'zope.schema >= 3.6',
         'zope.security',
-        ],
+    ],
     extras_require=dict(
         test=[
             'zope.app.appsetup',
@@ -53,6 +53,6 @@ setup(
             'zope.container',
             'zope.testing',
             'zope.traversing',
-            ]),
+        ]),
     zip_safe=False
-    )
+)

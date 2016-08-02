@@ -11,25 +11,17 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""Combination widget
+"""Combination widget"""
 
-$Id: combinationwidget.py 4634 2006-01-06 20:21:15Z fred $
-"""
-
-from xml.sax.saxutils import quoteattr
-import cgi
-
-from zope import component
-import zope.schema.interfaces
-import zope.cachedescriptors.property
-from zope.formlib.interfaces import WidgetInputError
-from zope.formlib.interfaces import IInputWidget, IDisplayWidget
-from zope.browserpage import ViewPageTemplateFile
-
-from zope.formlib import namedtemplate
-
-from zc.form.i18n import _
 from zc.form.browser.widgetapi import BaseWidget
+from zope import component
+from zope.browserpage import ViewPageTemplateFile
+from zope.formlib import namedtemplate
+from zope.formlib.interfaces import IInputWidget, IDisplayWidget
+from zope.formlib.interfaces import WidgetInputError
+import zope.cachedescriptors.property
+import zope.schema.interfaces
+
 
 class CombinationWidget(BaseWidget):
 
@@ -68,7 +60,7 @@ class CombinationWidget(BaseWidget):
                 val = w.getInputValue()
             except WidgetInputError, e:
                 if isinstance(getattr(e, 'errors'),
-                              zope.schema.interfaces.RequiredMissing): # :-(
+                              zope.schema.interfaces.RequiredMissing):  # :-(
                     required_errors.append((w, e))
                 else:
                     errors.append((w, e))
@@ -77,7 +69,7 @@ class CombinationWidget(BaseWidget):
             any = any or val != w.context.missing_value
         if field.required or any or errors:
             errors.extend(required_errors)
-        else: # remove the required errors in the sub widgets
+        else:  # remove the required errors in the sub widgets
             for w, e in required_errors:
                 w.error = lambda: None # :-(
         if errors:
