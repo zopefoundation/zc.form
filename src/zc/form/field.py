@@ -247,12 +247,8 @@ class Union(BaseField):
 
     def bind(self, object):
         clone = super(Union, self).bind(object)
-        # We need to bind the fields too
-        clone_fields = []
-        for field in clone.fields:
-            clone_fields.append(field.bind(object))
-        clone_fields = tuple(clone_fields)
-        clone.fields = clone_fields
+        # We need to bind the fields too, e.g. for Choice fields
+        clone.fields = tuple(field.bind(object) for field in clone.fields)
         return clone
 
     def validField(self, value):
@@ -361,6 +357,17 @@ class Combination(BaseField):
     Traceback (most recent call last):
     ...
     MessageValidationError: (u'${minimum} must be less than or equal to ...
+
+    Binding a Combination field also takes care of binding contained fields:
+
+    >>> context = object()
+    >>> bound_f = f.bind(context)
+    >>> bound_f.context is context
+    True
+    >>> bound_f.fields[0].context is context
+    True
+    >>> bound_f.fields[1].context is context
+    True
     """
 
     interface.implements(interfaces.ICombinationField)
@@ -389,6 +396,13 @@ class Combination(BaseField):
                 f = f.bind(self.context)
                 f.validate(v)
         super(Combination, self)._validate(value)
+
+    def bind(self, object):
+        clone = super(Combination, self).bind(object)
+        # We need to bind the fields too, e.g. for Choice fields
+        clone.fields = tuple(field.bind(object) for field in clone.fields)
+        return clone
+
 
 class QueryTextLineConstraint(BaseField, schema.TextLine):
     def __init__(self, index_getter=None, catalog_name=None, index_name=None):

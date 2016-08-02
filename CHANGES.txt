@@ -5,7 +5,8 @@ Changes
 0.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bind fields that are contained in a ``zc.form.field.Combination`` to fix the
+  ``context`` of those fields.
 
 
 0.4 (2016-01-12)
