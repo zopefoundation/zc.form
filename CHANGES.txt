@@ -2,7 +2,7 @@
 Changes
 =======
 
-0.5 (unreleased)
+0.5 (2016-08-02)
 ----------------
 
 - Bind fields that are contained in a ``zc.form.field.Combination`` to fix the

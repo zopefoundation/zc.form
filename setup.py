@@ -8,7 +8,7 @@ def read(filepath):
 
 setup(
     name="zc.form",
-    version='0.5.dev0',
+    version='0.5',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     namespace_packages=['zc'],
