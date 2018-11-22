@@ -16,12 +16,9 @@ import doctest
 import re
 import unittest
 
-from zope.testing import module
 import zope.component.testing
 import zope.traversing.adapters
 
-from zope.interface import implements
-from zope.schema.interfaces import ValidationError
 from zope.schema import TextLine, Int
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.formlib.textwidgets import TextWidget, IntWidget
@@ -39,7 +36,9 @@ from zope import component
 import zope.schema.interfaces
 import zope.publisher.interfaces.browser
 
-class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
+
+class TestUnionWidget(
+        zope.component.testing.PlacelessSetup, unittest.TestCase):
 
     def setUp(self):
         super(TestUnionWidget, self).setUp()
@@ -53,7 +52,7 @@ class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
         component.provideAdapter(
             zope.traversing.adapters.DefaultTraversable,
             [None],
-            )
+        )
 
     def test_render(self):
         request = TestRequest()
@@ -69,21 +68,21 @@ class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
         self.failUnless('Age' in output)
         self.failUnless('Name' in output)
         self.failUnless(re.search(
-            '''type=['"]radio['"]''', output))
+            r'''type=['"]radio['"]''', output))
         self.failUnless(re.search(
-            '''name=['"]field.identifier['"]''', output))
+            r'''name=['"]field.identifier['"]''', output))
         self.failUnless(re.search(
-            '''id=["']field.identifier-00['"]''', output))
+            r'''id=["']field.identifier-00['"]''', output))
         self.failUnless(re.search(
-            '''id=["']field.identifier-01['"]''', output))
+            r'''id=["']field.identifier-01['"]''', output))
         self.failUnless(re.search(
-            '''name=["']field.identifier.unioned_00['"]''', output))
+            r'''name=["']field.identifier.unioned_00['"]''', output))
         self.failUnless(re.search(
-            '''name=["']field.identifier.unioned_01['"]''', output))
+            r'''name=["']field.identifier.unioned_01['"]''', output))
         self.failIf(re.search(
-            '''id=["']field.identifier-02['"]''', output))
+            r'''id=["']field.identifier-02['"]''', output))
         self.failIf(re.search(
-            '''checked\s*=\s*['"]checked['"]''', output))
+            r'''checked\s*=\s*['"]checked['"]''', output))
         field = Union(
             (TextLine(title=u"Name", min_length=5),
              Int(title=u"Age", min=0)),
@@ -94,9 +93,9 @@ class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
         widget.setPrefix('field')
         output = widget()
         self.failUnless(re.search(
-            '''id=["']field.identifier-02['"]''', output))
+            r'''id=["']field.identifier-02['"]''', output))
         self.failUnless(re.search(
-            '''checked\s*=\s*['"]checked['"]''', output))
+            r'''checked\s*=\s*['"]checked['"]''', output))
 
     def test_use_default_for_not_selected(self):
         # test use_default_for_not_selected = True
@@ -105,10 +104,10 @@ class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
         # value of None
         field = Union(
             (zc.form.field.TextLine(
-                    title=u"New Password", missing_value=u'',
-                    default_getter=lambda x: u'secret password'),
+                title=u"New Password", missing_value=u'',
+                default_getter=lambda x: u'secret password'),
              zc.form.field.Option(
-                    title=u"No Change", value_getter=lambda x: None)),
+                title=u"No Change", value_getter=lambda x: None)),
             title=u"Change Password",
             missing_value=u'',
             use_default_for_not_selected=True,
@@ -135,9 +134,9 @@ class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
     def test_evaluate(self):
         request = TestRequest()
         request.form.update({
-            'field.identifier-marker':'x',
-            'field.identifier.unioned_00':u'Foo Bar',
-            'field.identifier':'0'})
+            'field.identifier-marker': 'x',
+            'field.identifier.unioned_00': u'Foo Bar',
+            'field.identifier': '0'})
         field = Union(
             (TextLine(title=u"Name", min_length=5),
              Int(title=u"Age", min=0)),
@@ -145,7 +144,6 @@ class TestUnionWidget(zope.component.testing.PlacelessSetup, unittest.TestCase):
             __name__='identifier')
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
-        output = widget() # to initialize
         self.assertEquals(widget.loadValueFromRequest(), u'Foo Bar')
 
 
@@ -160,7 +158,7 @@ def pageSetUp(test):
     component.provideAdapter(
         zope.traversing.adapters.DefaultTraversable,
         [None],
-        )
+    )
 
 
 def test_suite():

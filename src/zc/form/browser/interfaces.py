@@ -16,7 +16,7 @@
 $Id: interfaces.py 920 2005-03-10 00:20:26Z benji $"""
 
 from zope import interface
-from zc.form.i18n import _
+
 
 class ISchemaView(interface.Interface):
     "the basic schema view interface suitable for extension and for display"
@@ -166,11 +166,12 @@ class ISchemaView(interface.Interface):
         condition is a TALES expression with 'context', 'adapted', 'nothing',
         'request', and 'modules' available.""")
 
+    # form.pt in this product uses this hook.  This functionality is
+    # exercised by forms in other products.
     extra_script = interface.Attribute(
         """a hook point for schema views to suggest arbitrary
         javascript to be rendered in the form.""")
-        # form.pt in this product uses this hook.  This functionality is
-        # exercised by forms in other products.
+
 
 class IEditView(ISchemaView):
     "the basic edit view interface"
@@ -188,6 +189,7 @@ class IEditView(ISchemaView):
     def changed():
         """A hook.  Override to execute logic *after* changes have been made
         successfully."""
+
 
 class IAddView(ISchemaView):
     "the basic add view interface"
