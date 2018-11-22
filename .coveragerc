@@ -1,0 +1,9 @@
+[run]
+branch = True
+source = zc.form
+
+[report]
+precision = 2
+
+[html]
+directory = htmlcov

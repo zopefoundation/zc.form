@@ -3,7 +3,8 @@ import os.path
 
 
 def read(filepath):
-    return file(os.path.join(*filepath.split('/'))).read()
+    with open(os.path.join(*filepath.split('/'))) as f:
+        return f.read()
 
 
 setup(
@@ -20,11 +21,22 @@ setup(
         read('src/zc/form/README.txt'),
         '.. contents::',
         read('CHANGES.txt'),
-        read('src/zc/form/TODO.txt'),
         read('src/zc/form/browser/combinationwidget.txt'),
         read('src/zc/form/browser/mruwidget.txt'),
         read('src/zc/form/browser/exceptionviews.txt')]),
     license="ZPL 2.1",
+    classifiers=[
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Zope Public License',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Topic :: Internet :: WWW/HTTP',
+        'Framework :: Zope :: 3',
+    ],
     install_requires=[
         'ZODB3',
         'pytz',
@@ -46,12 +58,14 @@ setup(
     ],
     extras_require=dict(
         test=[
+            # 'Webtest',
             'zope.app.appsetup',
             'zope.app.principalannotation',
-            'zope.app.wsgi >= 3.7',
+            'zope.app.wsgi[testlayer] >= 3.7',
             'zope.configuration',
             'zope.container',
             'zope.testing',
+            'zope.testrunner',
             'zope.traversing',
         ]),
     zip_safe=False
