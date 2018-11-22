@@ -14,7 +14,6 @@
 """source input widget with most recently used (MRU) value support"""
 from BTrees import OOBTree
 from zope.formlib.source import SourceInputWidget
-from zope.schema.interfaces import ISourceQueriables, ValidationError
 import cgi
 import persistent.list
 import zc.resourcelibrary
@@ -28,12 +27,12 @@ class MruSourceInputWidget(SourceInputWidget):
     ANNOTATION_KEY = 'zc.form.browser.mruwidget'
 
     def hasInput(self):
-        return self.name+'.displayed' in self.request
+        return self.name + '.displayed' in self.request
 
     def getMostRecentlyUsedTokens(self):
         """Get a sequence of the most recently used tokens (most recent first).
         """
-        key = self.name # TODO should the key be more specific?
+        key = self.name  # TODO should the key be more specific?
         principal = self.request.principal
         annotations = zope.annotation.interfaces.IAnnotations(principal)
 
@@ -75,13 +74,13 @@ class MruSourceInputWidget(SourceInputWidget):
             pass
 
         tokens.insert(0, term.token)
-        del tokens[10:] # TODO should this constant be configurable?
+        del tokens[10:]  # TODO should this constant be configurable?
 
     def queryViewApplied(self):
         """Determine if a query view was used to set the value of the field.
         """
         for name, queryview in self.queryviews:
-            if name+'.apply' in self.request:
+            if name + '.apply' in self.request:
                 return True
 
     def __call__(self):
@@ -94,7 +93,7 @@ class MruSourceInputWidget(SourceInputWidget):
             try:
                 term = self.terms.getTerm(value)
             except LookupError:
-                pass # let the "missing" term value from above be used
+                pass  # let the "missing" term value from above be used
             else:
                 self.addMostRecentlyUsedTerm(term)
 
@@ -102,8 +101,8 @@ class MruSourceInputWidget(SourceInputWidget):
         queries_id = self.name + '.queries'
 
         # should the query views be visible?
-        if (self.request.form.get(queries_id+'.visible') == 'yes'
-        and not self.queryViewApplied()) or not mru_terms:
+        if (self.request.form.get(queries_id + '.visible') == 'yes'
+                and not self.queryViewApplied()) or not mru_terms:
             queries_style = ''
             queries_visible = 'yes'
         else:
@@ -130,9 +129,10 @@ class MruSourceInputWidget(SourceInputWidget):
             result.append('</select>')
 
             result.append('  <input type="button" '
-              'name="%s.mru_expand_button" ' % self.name +
-              'onclick="javascript:zc_mruwidget_toggleQueriesDisplay(\'%s\')"'
-              % queries_id + ' value="...">')
+                          'name="%s.mru_expand_button" ' % self.name +
+                          'onclick="javascript:'
+                          'zc_mruwidget_toggleQueriesDisplay(\'%s\')"'
+                          % queries_id + ' value="...">')
 
         result.append('  <input type="hidden" name="%s.displayed" value="y">'
                       % self.name)
@@ -154,4 +154,3 @@ class MruSourceInputWidget(SourceInputWidget):
         result.append('  </div> <!-- queries -->')
         result.append('</div> <!-- value -->')
         return '\n'.join(result)
-

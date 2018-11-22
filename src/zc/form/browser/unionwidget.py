@@ -71,7 +71,7 @@ class UnionWidget(BaseWidget):
                 widget.setPrefix(self.name)
                 try:
                     return widget.getInputValue()
-                except WidgetInputError, e:
+                except WidgetInputError as e:
                     # recast with our name and title
                     self._error = WidgetInputError(
                         self.context.__name__,
@@ -123,6 +123,7 @@ class UnionWidget(BaseWidget):
                 {'selected': selected, 'identifier': identifier,
                  'widget': widget, 'value': unicode(ix)})
         return self.template(choices=choices)
+
 
 default_template = namedtemplate.NamedTemplateImplementation(
     ViewPageTemplateFile('unionwidget.pt'), UnionWidget)

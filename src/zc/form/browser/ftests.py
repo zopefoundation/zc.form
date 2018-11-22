@@ -14,7 +14,6 @@
 """functional test harness for zc.mruwidget"""
 from zope import interface, component
 import doctest
-import os
 import zc.form.browser
 import zope.app.wsgi.testlayer
 import zope.browser.interfaces
@@ -57,6 +56,7 @@ class ColorTerms(object):
     def getValue(self, token):
         return token.split('_')[0]
 
+
 class SimpleColorSourceQueryView(object):
     interface.implements(zope.formlib.interfaces.ISourceQueryView)
     component.adapts(zope.schema.interfaces.ISource,
@@ -70,9 +70,9 @@ class SimpleColorSourceQueryView(object):
         return '<query view for colors>'
 
     def results(self, name):
-        if not (name+'.search' in self.request):
+        if not (name + '.search' in self.request):
             return None
-        searchstring = self.request[name+'.searchstring']
+        searchstring = self.request[name + '.searchstring']
         return [c for c in colors if searchstring in c]
 
 
@@ -85,11 +85,12 @@ def setUp(test):
 
 
 def test_suite():
-    suite = doctest.DocFileSuite("mruwidget.rst",
-            globs={'AvailableColors': AvailableColors(),
-                   'getRootFolder': ZCFormLayer.getRootFolder},
-            optionflags=doctest.NORMALIZE_WHITESPACE+doctest.ELLIPSIS,
-            setUp=setUp,
-            )
+    suite = doctest.DocFileSuite(
+        "mruwidget.rst",
+        globs={'AvailableColors': AvailableColors(),
+               'getRootFolder': ZCFormLayer.getRootFolder},
+        optionflags=doctest.NORMALIZE_WHITESPACE + doctest.ELLIPSIS,
+        setUp=setUp,
+    )
     suite.layer = ZCFormLayer
     return suite

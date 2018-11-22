@@ -58,7 +58,7 @@ class CombinationWidget(BaseWidget):
         for w in widgets:
             try:
                 val = w.getInputValue()
-            except WidgetInputError, e:
+            except WidgetInputError as e:
                 if isinstance(getattr(e, 'errors'),
                               zope.schema.interfaces.RequiredMissing):  # :-(
                     required_errors.append((w, e))
@@ -71,7 +71,7 @@ class CombinationWidget(BaseWidget):
             errors.extend(required_errors)
         else:  # remove the required errors in the sub widgets
             for w, e in required_errors:
-                w.error = lambda: None # :-(
+                w.error = lambda: None  # :-(
         if errors:
             if len(errors) == 1:
                 errors = errors[0][1]
@@ -105,12 +105,13 @@ class CombinationWidget(BaseWidget):
             for w, v in map(None, self.widgets, value):
                 if not hasInput or v != w.context.missing_value:
                     w.setRenderedValue(v)
-        for w in self.widgets: # XXX quick hack.
+        for w in self.widgets:  # XXX quick hack.
             if zope.schema.interfaces.IBool.providedBy(w.context):
                 w.invert_label = True
             else:
                 w.invert_label = False
         return self.template()
+
 
 default_template = namedtemplate.NamedTemplateImplementation(
     ViewPageTemplateFile('combinationwidget.pt'), CombinationWidget)

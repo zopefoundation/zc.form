@@ -16,12 +16,13 @@
 $Id: field.py 4634 2006-01-06 20:21:15Z fred $
 """
 from zope import interface, i18n, schema, component
-from zope.schema.interfaces import (
-    ValidationError, WrongType, IField, IVocabularyTokenized)
 from zope.interface.exceptions import DoesNotImplement
+from zope.schema.interfaces import IField
+from zope.schema.interfaces import ValidationError
+from zope.schema.interfaces import WrongType
 import zope.catalog.interfaces
-import zope.index.text.queryparser
 import zope.index.text.parsetree
+import zope.index.text.queryparser
 
 from zc.form import interfaces
 from zc.form.i18n import _
@@ -58,7 +59,7 @@ class BaseField(schema.Field):
 
     >>> def secure_password(field, value):
     ...     if len(value) < 8:
-    ...         raise schema.ValidationError, 'Password too short.'
+    ...         raise schema.ValidationError('Password too short.')
     ...
     >>> class IDummy(interface.Interface):
     ...     suggested_password = BaseField(
@@ -219,7 +220,7 @@ class Union(BaseField):
     >>> try:
     ...     f = Union(('I am not a number.', 'I am a free man!'), title=u'Bar')
     ... except DoesNotImplement:
-    ...     print "Not a field"
+    ...     print("Not a field")
     ...
     Not a field
 

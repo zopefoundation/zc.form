@@ -3,7 +3,6 @@ import zc.sourcefactory.basic
 
 
 class USTimeZones(zc.sourcefactory.basic.BasicSourceFactory):
-
     """List of timezones taken from pytz"""
 
     tzs = [tz

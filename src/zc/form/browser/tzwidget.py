@@ -24,13 +24,13 @@ import zope.formlib.interfaces
 import zope.interface.common.idatetime
 import zope.publisher.interfaces.browser
 
-
-ALL_TIMEZONES = frozenset(pytz.all_timezones)
-
 # XXX argh.
 import pytz.tzinfo
 from zope.security.checker import NamesChecker
 from zope.interface.common.idatetime import ITZInfo
+
+ALL_TIMEZONES = frozenset(pytz.all_timezones)
+
 names = set(ITZInfo.names(all=True))
 names.add('zone')
 names.add('localize')
@@ -38,6 +38,7 @@ checker = NamesChecker(names)
 pytz.UTC.__Security_checker__ = checker
 pytz.tzinfo.BaseTzInfo.__Security_checker__ = checker
 # end argh.
+
 
 class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
 
@@ -54,8 +55,9 @@ class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
                 already = set(term.token for term in mru)
                 additional = sorted(t for t in choices if t not in already)
                 mru.extend(zc.form.interfaces.Term(t.replace('_', ' '), t)
-                             for t in additional)
+                           for t in additional)
         return mru
+
 
 class TimeZoneQueryView(object):
     interface.implements(zope.formlib.interfaces.ISourceQueryView)
@@ -70,16 +72,16 @@ class TimeZoneQueryView(object):
     _render = zope.browserpage.ViewPageTemplateFile('timezone_queryview.pt')
 
     def render(self, name):
-        return self._render(field_name=name+'.searchstring',
-                            button_name=name+'.search')
+        return self._render(field_name=name + '.searchstring',
+                            button_name=name + '.search')
 
     def results(self, name):
-        if not (name+'.search' in self.request):
+        if not (name + '.search' in self.request):
             return None
 
-        searchstring = self.request[name+'.searchstring'].lower()
+        searchstring = self.request[name + '.searchstring'].lower()
         timezones = []
-        searchstring = searchstring.strip().lower().replace(' ', '_') # regex
+        searchstring = searchstring.strip().lower().replace(' ', '_')  # regex
         for tz in ALL_TIMEZONES:
             if searchstring in tz.lower():
                 timezones.append(pytz.timezone(tz))

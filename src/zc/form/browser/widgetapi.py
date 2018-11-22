@@ -73,7 +73,7 @@ class BaseWidget(BrowserWidget, InputWidget):
         # value must be valid per the field contraints
         try:
             field.validate(value)
-        except ValidationError, v:
+        except ValidationError as v:
             self._error = WidgetInputError(
                 self.context.__name__, self.context.title, v)
             raise self._error
@@ -91,7 +91,7 @@ class BaseWidget(BrowserWidget, InputWidget):
         if not self._renderedValueSet():
             if self.hasInput():
                 self._data = self.loadValueFromRequest()
-            else: # self._data is self._data_marker but no input in request
+            else:  # self._data is self._data_marker but no input in request
                 self._data = self.context.default
 
     def applyChanges(self, content):
@@ -223,7 +223,7 @@ class BaseVocabularyDisplay(BaseVocabularyWidget):
     _display = True
 
     def render(self, value):
-        if value in (NullValue, None):
+        if value is None:
             # missing single value
             return self.translate(_msg_missing_single_value_display)
         else:
