@@ -58,10 +58,10 @@ setup(
     ],
     extras_require=dict(
         test=[
-            'Webtest',
+            # 'Webtest',
             'zope.app.appsetup',
             'zope.app.principalannotation',
-            'zope.app.wsgi >= 3.7',
+            'zope.app.wsgi[testlayer] >= 3.7',
             'zope.configuration',
             'zope.container',
             'zope.testing',
