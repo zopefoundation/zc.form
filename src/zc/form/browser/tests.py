@@ -166,12 +166,12 @@ def pageSetUp(test):
 def test_suite():
     suite = unittest.makeSuite(TestUnionWidget)
     suite.addTest(doctest.DocFileSuite(
-        'exceptionviews.txt',
+        'exceptionviews.rst',
         setUp=zope.component.testing.setUp,
         tearDown=zope.component.testing.tearDown))
     suite.addTest(
         doctest.DocFileSuite(
-            'combinationwidget.txt',
+            'combinationwidget.rst',
             setUp=pageSetUp,
             tearDown=zope.component.testing.tearDown),)
     return suite

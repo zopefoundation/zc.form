@@ -1,7 +1,8 @@
 include *.py
 include *.txt
+include *.rst
 include buildout.cfg
 recursive-include src *.js
 recursive-include src *.pt
-recursive-include src *.txt
+recursive-include src *.rst
 recursive-include src *.zcml

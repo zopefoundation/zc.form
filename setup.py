@@ -18,12 +18,12 @@ setup(
     author_email='zope-dev@zope.org',
     include_package_data=True,
     long_description='\n\n'.join([
-        read('src/zc/form/README.txt'),
+        read('src/zc/form/README.rst'),
         '.. contents::',
-        read('CHANGES.txt'),
-        read('src/zc/form/browser/combinationwidget.txt'),
-        read('src/zc/form/browser/mruwidget.txt'),
-        read('src/zc/form/browser/exceptionviews.txt')]),
+        read('CHANGES.rst'),
+        read('src/zc/form/browser/combinationwidget.rst'),
+        read('src/zc/form/browser/mruwidget.rst'),
+        read('src/zc/form/browser/exceptionviews.rst')]),
     license="ZPL 2.1",
     classifiers=[
         'Environment :: Web Environment',
