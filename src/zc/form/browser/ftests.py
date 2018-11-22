@@ -85,7 +85,7 @@ def setUp(test):
 
 
 def test_suite():
-    suite = doctest.DocFileSuite("mruwidget.txt",
+    suite = doctest.DocFileSuite("mruwidget.rst",
             globs={'AvailableColors': AvailableColors(),
                    'getRootFolder': ZCFormLayer.getRootFolder},
             optionflags=doctest.NORMALIZE_WHITESPACE+doctest.ELLIPSIS,
