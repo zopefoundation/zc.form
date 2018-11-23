@@ -5,7 +5,10 @@ Changes
 0.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+Bugfixes
+++++++++
+
+- Fix a ``NameError`` in ``BaseVocabularyDisplay.render()``.
 
 
 0.5 (2016-08-02)
