@@ -207,3 +207,107 @@ There's also a display version of the widget::
           </tr>
         </table>
 
+In case of a wrong amount of parameters, the missing_value is used::
+
+    >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)
+    >>> widget.setPrefix('field')
+    >>> widget.setRenderedValue(('10', '2', '3'))
+    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    <input type='hidden' name='field.acceptable_count-marker' value='x' />
+        <table class="combinationFieldWidget">
+          <tr>
+                  <td class="label">
+                    <label for="field.acceptable_count.combination_00">
+                      <span>Minimum</span>
+                    </label>
+                  </td>
+              <td class="field">
+                <div class="widget">
+                </div>
+              </td>
+          </tr>
+          <tr>
+                  <td class="label">
+                    <label for="field.acceptable_count.combination_01">
+                      <span>Maximum</span>
+                    </label>
+                  </td>
+              <td class="field">
+                <div class="widget">
+                </div>
+              </td>
+          </tr>
+        </table>
+
+In case the parameter is not a sequence, the missing_value is used::
+
+    >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)
+    >>> widget.setPrefix('field')
+    >>> widget.setRenderedValue(10)
+    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    <input type='hidden' name='field.acceptable_count-marker' value='x' />
+        <table class="combinationFieldWidget">
+          <tr>
+                  <td class="label">
+                    <label for="field.acceptable_count.combination_00">
+                      <span>Minimum</span>
+                    </label>
+                  </td>
+              <td class="field">
+                <div class="widget">
+                </div>
+              </td>
+          </tr>
+          <tr>
+                  <td class="label">
+                    <label for="field.acceptable_count.combination_01">
+                      <span>Maximum</span>
+                    </label>
+                  </td>
+              <td class="field">
+                <div class="widget">
+                </div>
+              </td>
+          </tr>
+        </table>
+
+The order of label and field are inverted in case of boolean::
+
+    >>> request = TestRequest()
+    >>> from zope.schema import Bool
+    >>> from zope.schema.interfaces import IBool
+    >>> from zope.formlib.boolwidgets import CheckBoxWidget
+    >>> from zope.formlib.widget import DisplayWidget
+    >>> from zope.formlib.interfaces import IDisplayWidget
+    >>> component.provideAdapter(
+    ...     CheckBoxWidget, (IBool, IBrowserRequest), IInputWidget)
+    >>> class IBoolDemo(interface.Interface):
+    ...     choices = Combination(
+    ...         (Bool(title=u'first'),
+    ...          Bool(title=u'second')),
+    ...         title=u'Choices',
+    ...         required=False,)
+
+    >>> widget = CombinationWidget(IBoolDemo['choices'], request)
+    >>> widget.setPrefix('field')
+    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    <input type='hidden' name='field.choices-marker' value='x' />
+        <table class="combinationFieldWidget">
+          <tr>
+                <td></td>
+              <td class="field">
+                <div class="widget"><input class="hiddenType" id="field.choices.combination_00.used" name="field.choices.combination_00.used" type="hidden" value="" /> <input class="checkboxType" id="field.choices.combination_00" name="field.choices.combination_00" type="checkbox" value="on"  />
+                  <span>first</span>
+                </div>
+              </td>
+          </tr>
+          <tr>
+                <td></td>
+              <td class="field">
+                <div class="widget"><input class="hiddenType" id="field.choices.combination_01.used" name="field.choices.combination_01.used" type="hidden" value="" /> <input class="checkboxType" id="field.choices.combination_01" name="field.choices.combination_01" type="checkbox" value="on"  />
+                  <span>second</span>
+                </div>
+              </td>
+          </tr>
+        </table>
+

@@ -81,6 +81,14 @@ class BaseField(schema.Field):
     Traceback (most recent call last):
     ...
     ValidationError: Password too short.
+    >>> class IDummy2(interface.Interface):
+    ...     invalid_default = BaseField(
+    ...         title=u'Field with invalid default',
+    ...         default=u'standard',
+    ...         default_getter=lambda context: u'get default')
+    Traceback (most recent call last):
+    ...
+    TypeError: may not specify both a default and a default_getter
     """
 
     interface.implements(interfaces.IExtendedField)
@@ -377,6 +385,17 @@ class Combination(BaseField):
     True
     >>> bound_f.fields[1].context is context
     True
+
+    Each entry in the combination has to be a schema field
+
+    >>> class IDemo2(interface.Interface):
+    ...     invalid_field = Combination(
+    ...         (schema.Date(title=u'Begin', required=False),
+    ...          dict(title=u'Expire', required=True)),
+    ...         title=u'Invalid field')
+    Traceback (most recent call last):
+    ...
+    DoesNotImplement: An object does not implement interface...
     """
 
     interface.implements(interfaces.ICombinationField)

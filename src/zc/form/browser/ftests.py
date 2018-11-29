@@ -47,8 +47,11 @@ class ColorTerms(object):
 
     def __init__(self, source, request):
         self.request = request
+        self.source = source
 
     def getTerm(self, value):
+        if value not in self.source:
+            raise LookupError
         token = value + '_token'
         title = value.capitalize()
         return Term(title, token)
@@ -89,7 +92,9 @@ def test_suite():
         "mruwidget.rst",
         globs={'AvailableColors': AvailableColors(),
                'getRootFolder': ZCFormLayer.getRootFolder},
-        optionflags=doctest.NORMALIZE_WHITESPACE + doctest.ELLIPSIS,
+        optionflags=(doctest.NORMALIZE_WHITESPACE
+                     + doctest.ELLIPSIS
+                     + doctest.REPORT_NDIFF),
         setUp=setUp,
     )
     suite.layer = ZCFormLayer

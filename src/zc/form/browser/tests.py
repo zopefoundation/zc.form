@@ -26,7 +26,6 @@ from zope.schema.interfaces import ITextLine, IInt
 from zope.formlib.interfaces import IInputWidget
 from zope.publisher.browser import TestRequest
 
-from zope.configuration import xmlconfig
 import zc.form.browser
 from zc.form.field import Union
 import zc.form.field
@@ -107,7 +106,7 @@ class TestUnionWidget(
                 title=u"New Password", missing_value=u'',
                 default_getter=lambda x: u'secret password'),
              zc.form.field.Option(
-                title=u"No Change", value_getter=lambda x: None)),
+                title=u"No Change", value='no change')),
             title=u"Change Password",
             missing_value=u'',
             use_default_for_not_selected=True,
@@ -147,10 +146,12 @@ class TestUnionWidget(
         self.assertEquals(widget.loadValueFromRequest(), u'Foo Bar')
 
 
-def zcml(s, execute=True):
-    context = xmlconfig.file('meta.zcml',
-                             package=zc.form.browser)
-    return xmlconfig.string(s, context, execute=execute)
+class TestInterfaces(unittest.TestCase):
+    """Testing interfaces import."""
+
+    def test_interfaces__import__1(self):
+        """zope.form.browser.interfaces can be imported"""
+        import zc.form.browser.interfaces # noqa: F401
 
 
 def pageSetUp(test):
@@ -163,6 +164,7 @@ def pageSetUp(test):
 
 def test_suite():
     suite = unittest.makeSuite(TestUnionWidget)
+    suite.addTest(unittest.makeSuite(TestInterfaces))
     suite.addTest(doctest.DocFileSuite(
         'exceptionviews.rst',
         setUp=zope.component.testing.setUp,
