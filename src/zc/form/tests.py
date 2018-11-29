@@ -16,4 +16,9 @@ import doctest
 
 
 def test_suite():
-    return doctest.DocTestSuite("zc.form.field")
+    return doctest.DocTestSuite(
+        "zc.form.field",
+        optionflags=(doctest.NORMALIZE_WHITESPACE
+                     + doctest.ELLIPSIS
+                     + doctest.REPORT_NDIFF),
+    )

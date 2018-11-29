@@ -145,6 +145,101 @@ the top, and it is selected::
     </select>
     ...
 
+If we request a value not in the source everything stays the same, but nothing
+is selected::
+
+    >>> request = TestRequest()
+    >>> request.form = {
+    ...     'form.color.query.selection': 'blue_token',
+    ...     'form.color.query.apply': 'Apply',
+    ...     'form.color.displayed': '',
+    ...     }
+    >>> request.setPrincipal(principal)
+    >>> form = DemoInput(Demo(), request)
+    >>> print(form())
+    <...
+    <select name="form.color" id="form.color">
+      <option value="green_token">Green</option>
+      <option value="red_token">Red</option>
+    </select>
+    ...
+
+We can make the query visible::
+
+    >>> request = TestRequest()
+    >>> request.form = {
+    ...     'form.color.query.selection': 'red_token',
+    ...     'form.color.query.apply': 'Apply',
+    ...     'form.color.queries.visible': 'yes',
+    ...     'form.color.query.search': 'yes',
+    ...     'form.color.query.searchstring': 'red',
+    ...     'form.color.displayed': '',
+    ...     }
+    >>> request.setPrincipal(principal)
+    >>> form = DemoInput(Demo(), request)
+    >>> print(form())
+    <...
+    <select name="form.color" id="form.color">
+      <option value="red_token" selected="selected">Red</option>
+      <option value="green_token">Green</option>
+    </select>
+    ...
+    <select name="form.color.query.selection">
+    <option value="red_token">Red</option>
+    </select>
+    <input type="submit" name="form.color.query.apply" value="Apply" />
+    ...
+
+It is not shown if the query is not applied::
+
+    >>> request = TestRequest()
+    >>> request.form = {
+    ...     'form.color.query.selection': 'red_token',
+    ...     'form.color.queries.visible': 'yes',
+    ...     'form.color.query.search': 'yes',
+    ...     'form.color.query.searchstring': 'red',
+    ...     'form.color.displayed': '',
+    ...     }
+    >>> request.setPrincipal(principal)
+    >>> form = DemoInput(Demo(), request)
+    >>> print(form())
+    <...
+    <select name="form.color" id="form.color">
+      <option value="red_token">Red</option>
+      <option value="green_token">Green</option>
+    </select>
+    ...
+    <select name="form.color.query.selection">
+    <option value="red_token">Red</option>
+    </select>
+    <input type="submit" name="form.color.query.apply" value="Apply" />
+    ...
+
+Tokens in the annotation of the principal are ignored if they are not in the
+source::
+
+    >>> from zope.annotation.interfaces import IAnnotations
+    >>> annotations = IAnnotations(principal)
+    >>> annotation = annotations.get('zc.form.browser.mruwidget')
+    >>> tokens = annotation.get('form.color')
+    >>> tokens.append('black_token')
+    >>> tokens
+    ['red_token', 'green_token', 'black_token']
+
+    >>> print(form())
+    <...
+    <select name="form.color" id="form.color">
+      <option value="red_token">Red</option>
+      <option value="green_token">Green</option>
+    </select>
+    ...
+    <select name="form.color.query.selection">
+    <option value="red_token">Red</option>
+    </select>
+    <input type="submit" name="form.color.query.apply" value="Apply" />
+    ...
+
+
 Clean up a bit::
 
     >>> zope.security.management.endInteraction()
