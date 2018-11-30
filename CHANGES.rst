@@ -10,6 +10,9 @@ Bugfixes
 
 - Fix a ``NameError`` in ``BaseVocabularyDisplay.render()``.
 
+- Actually pass a ``missing_value`` set on the ``Combination`` field to the
+  containing fields.
+
 
 0.5 (2016-08-02)
 ----------------
