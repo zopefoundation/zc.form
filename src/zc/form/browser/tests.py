@@ -151,7 +151,7 @@ class TestInterfaces(unittest.TestCase):
 
     def test_interfaces__import__1(self):
         """zope.form.browser.interfaces can be imported"""
-        import zc.form.browser.interfaces # noqa: F401
+        import zc.form.browser.interfaces  # noqa: F401
 
 
 def pageSetUp(test):
@@ -163,15 +163,14 @@ def pageSetUp(test):
 
 
 def test_suite():
-    suite = unittest.makeSuite(TestUnionWidget)
-    suite.addTest(unittest.makeSuite(TestInterfaces))
-    suite.addTest(doctest.DocFileSuite(
-        'exceptionviews.rst',
-        setUp=zope.component.testing.setUp,
-        tearDown=zope.component.testing.tearDown))
-    suite.addTest(
+    return unittest.TestSuite([
+        unittest.defaultTestLoader.loadTestsFromName(__name__),
+        doctest.DocFileSuite(
+            'exceptionviews.rst',
+            setUp=zope.component.testing.setUp,
+            tearDown=zope.component.testing.tearDown),
         doctest.DocFileSuite(
             'combinationwidget.rst',
             setUp=pageSetUp,
-            tearDown=zope.component.testing.tearDown),)
-    return suite
+            tearDown=zope.component.testing.tearDown),
+    ])

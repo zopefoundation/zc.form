@@ -93,8 +93,8 @@ def test_suite():
         globs={'AvailableColors': AvailableColors(),
                'getRootFolder': ZCFormLayer.getRootFolder},
         optionflags=(doctest.NORMALIZE_WHITESPACE
-                     + doctest.ELLIPSIS
-                     + doctest.REPORT_NDIFF),
+                     | doctest.ELLIPSIS
+                     | doctest.REPORT_NDIFF),
         setUp=setUp,
     )
     suite.layer = ZCFormLayer
