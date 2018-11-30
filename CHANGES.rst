@@ -18,6 +18,13 @@ Bugfixes
 - Actually pass a ``missing_value`` set on the ``Combination`` field to the
   containing fields.
 
+Caveats
++++++++
+
+- Installation of ``MruSourceInputWidget`` and ``TimeZoneWidget`` requires the
+  ``[mruwidget]`` extra to break dependency on ``zc.resourcelibrary`` for
+  projects which do not need it.
+
 
 0.5 (2016-08-02)
 ----------------

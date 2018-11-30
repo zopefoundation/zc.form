@@ -44,13 +44,10 @@ setup(
         'Framework :: Zope :: 3',
     ],
     install_requires=[
-        'ZODB3',
         'pytz',
         'setuptools',
         'six',
-        'zc.resourcelibrary',
         'zc.sourcefactory',
-        'zope.annotation',
         'zope.browserpage',
         'zope.cachedescriptors',
         'zope.catalog',
@@ -64,8 +61,13 @@ setup(
         'zope.security',
     ],
     extras_require=dict(
+        mruwidget=[
+            'zope.annotation',
+            'BTrees',
+            'persistent',
+            'zc.resourcelibrary',
+        ],
         test=[
-            # 'Webtest',
             'zope.app.appsetup',
             'zope.app.principalannotation',
             'zope.app.wsgi[testlayer] >= 3.7',
