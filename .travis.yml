@@ -12,7 +12,7 @@ python:
 install:
     - pip install -U pip setuptools
     - pip install -U coverage coveralls
-    - pip install -U -e .[test]
+    - pip install -U -e .[mruwidget,test]
 script:
     - coverage run -m zope.testrunner --tests-pattern [fn]?tests  --test-path=src
 after_success:
