@@ -19,14 +19,20 @@ $Id: exceptionviews.py 3629 2005-10-06 21:01:27Z gary $
 from zope import interface, component, i18n
 from zope.formlib.interfaces import IWidgetInputErrorView
 from zope.publisher.interfaces.browser import IBrowserRequest
-from cgi import escape
 from zope.schema.interfaces import ValidationError
 from zope.formlib.interfaces import ConversionError
 from zope.exceptions.interfaces import UserError
+import six
+
+if six.PY3:
+    from html import escape
+else:  # pragma: no cover
+    from cgi import escape
 
 
+@interface.implementer(IWidgetInputErrorView)
 class AbstractErrorView(object):
-    interface.implements(IWidgetInputErrorView)
+    """Base error view."""
 
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -35,16 +41,19 @@ class AbstractErrorView(object):
         """Convert an invariant error to an html snippet."""
         msg = self.context.args[0]
         msg = i18n.translate(msg, context=self.request, default=msg)
-        return u'<span class="error">%s</span>' % escape(unicode(msg))
+        return u'<span class="error">%s</span>' % escape(six.text_type(msg))
 
 
+@component.adapter(ValidationError, IBrowserRequest)
 class ValidationErrorView(AbstractErrorView):
-    component.adapts(ValidationError, IBrowserRequest)
+    """An error view for ValidationError."""
 
 
+@component.adapter(ConversionError, IBrowserRequest)
 class ConversionErrorView(AbstractErrorView):
-    component.adapts(ConversionError, IBrowserRequest)
+    """An error view for ConversionError."""
 
 
+@component.adapter(UserError, IBrowserRequest)
 class UserErrorView(AbstractErrorView):
-    component.adapts(UserError, IBrowserRequest)
+    """An error view for UserErrorError."""

@@ -59,11 +59,10 @@ class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
         return mru
 
 
+@component.adapter(zc.form.interfaces.AvailableTimeZones,
+                   zope.publisher.interfaces.browser.IBrowserRequest)
+@interface.implementer(zope.formlib.interfaces.ISourceQueryView)
 class TimeZoneQueryView(object):
-    interface.implements(zope.formlib.interfaces.ISourceQueryView)
-
-    component.adapts(zc.form.interfaces.AvailableTimeZones,
-                     zope.publisher.interfaces.browser.IBrowserRequest)
 
     def __init__(self, source, request):
         self.context = source

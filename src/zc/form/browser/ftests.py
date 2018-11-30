@@ -23,27 +23,26 @@ import zope.schema.interfaces
 colors = ['red', 'green', 'cerulean blue']
 
 
+@interface.implementer(zope.schema.interfaces.ISource)
 class AvailableColors(object):
-    interface.implements(zope.schema.interfaces.ISource)
 
     def __contains__(self, value):
         return value in colors
 
 
+@interface.implementer(zope.schema.interfaces.ITitledTokenizedTerm)
 class Term(object):
-    interface.implements(zope.schema.interfaces.ITitledTokenizedTerm)
 
     def __init__(self, title, token):
         self.title = title
         self.token = token
 
 
+@component.adapter(zope.schema.interfaces.ISource,
+                   zope.publisher.interfaces.browser.IBrowserRequest)
+@interface.implementer(zope.browser.interfaces.ITerms)
 class ColorTerms(object):
     """Term and value support needed by query widgets."""
-
-    interface.implements(zope.browser.interfaces.ITerms)
-    component.adapts(zope.schema.interfaces.ISource,
-                     zope.publisher.interfaces.browser.IBrowserRequest)
 
     def __init__(self, source, request):
         self.request = request
@@ -60,10 +59,10 @@ class ColorTerms(object):
         return token.split('_')[0]
 
 
+@component.adapter(zope.schema.interfaces.ISource,
+                   zope.publisher.interfaces.browser.IBrowserRequest)
+@interface.implementer(zope.formlib.interfaces.ISourceQueryView)
 class SimpleColorSourceQueryView(object):
-    interface.implements(zope.formlib.interfaces.ISourceQueryView)
-    component.adapts(zope.schema.interfaces.ISource,
-                     zope.publisher.interfaces.browser.IBrowserRequest)
 
     def __init__(self, source, request):
         self.context = source
@@ -94,6 +93,8 @@ def test_suite():
                'getRootFolder': ZCFormLayer.getRootFolder},
         optionflags=(doctest.NORMALIZE_WHITESPACE
                      | doctest.ELLIPSIS
+                     | doctest.REPORT_ONLY_FIRST_FAILURE
+                     | doctest.IGNORE_EXCEPTION_DETAIL
                      | doctest.REPORT_NDIFF),
         setUp=setUp,
     )

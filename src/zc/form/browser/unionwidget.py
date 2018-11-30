@@ -13,13 +13,14 @@
 ##############################################################################
 """Union widget"""
 
-from widgetapi import BaseWidget
+from .widgetapi import BaseWidget
 from zc.form.i18n import _
 from zope import component
 from zope.browserpage import ViewPageTemplateFile
 from zope.formlib import namedtemplate
 from zope.formlib.interfaces import IInputWidget
 from zope.formlib.interfaces import WidgetInputError
+import six
 import zc.form.interfaces
 
 
@@ -113,7 +114,7 @@ class UnionWidget(BaseWidget):
             widget.setPrefix(self.name)
             choices.append(
                 {'selected': selected, 'identifier': identifier,
-                 'widget': widget, 'value': unicode(ix)})
+                 'widget': widget, 'value': six.text_type(ix)})
         if not field.required:
             ix += 1
             selected = chosen_field is None
@@ -121,7 +122,7 @@ class UnionWidget(BaseWidget):
             widget = NotChosenWidget(self.no_value_label, self.no_value_hint)
             choices.append(
                 {'selected': selected, 'identifier': identifier,
-                 'widget': widget, 'value': unicode(ix)})
+                 'widget': widget, 'value': six.text_type(ix)})
         return self.template(choices=choices)
 
 

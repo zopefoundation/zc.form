@@ -19,6 +19,8 @@ def test_suite():
     return doctest.DocTestSuite(
         "zc.form.field",
         optionflags=(doctest.NORMALIZE_WHITESPACE
+                     | doctest.IGNORE_EXCEPTION_DETAIL
+                     | doctest.REPORT_ONLY_FIRST_FAILURE
                      | doctest.ELLIPSIS
                      | doctest.REPORT_NDIFF),
     )
