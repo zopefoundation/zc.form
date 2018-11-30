@@ -5,6 +5,11 @@ Changes
 0.6 (unreleased)
 ----------------
 
+Features
+++++++++
+
+- Claim support for Python 3.4, 3.5, 3.6, 3.7, PyPy and PyPy3.
+
 Bugfixes
 ++++++++
 

@@ -54,6 +54,7 @@ class MessageValidationError(ValidationError):
         return self.message
 
 
+@interface.implementer(interfaces.IExtendedField)
 class BaseField(schema.Field):
     """Field with a callable as default and a tuple of constraints.
 
@@ -72,10 +73,10 @@ class BaseField(schema.Field):
     True
     >>> f.__name__
     'suggested_password'
-    >>> f.title
-    u'Suggested Password'
-    >>> f.default
-    u'asdf'
+    >>> print(f.title)
+    Suggested Password
+    >>> print(f.default)
+    asdf
     >>> f.validate(u'123456789')
     >>> f.validate(u'asdf')
     Traceback (most recent call last):
@@ -90,9 +91,6 @@ class BaseField(schema.Field):
     ...
     TypeError: may not specify both a default and a default_getter
     """
-
-    interface.implements(interfaces.IExtendedField)
-
     constraints = ()
     _default = default_getter = None
 
@@ -110,23 +108,22 @@ class BaseField(schema.Field):
             for constraint in self.constraints:
                 constraint(self, value)
 
-    @apply
-    def default():
-        def getter(self):
-            if self.default_getter is not None:
-                return self.default_getter(self.context)
-            else:
-                return self._default
+    @property
+    def default(self):
+        if self.default_getter is not None:
+            return self.default_getter(self.context)
+        else:
+            return self._default
 
-        def setter(self, value):
-            assert self.default_getter is None
-            self._default = value
-        return property(getter, setter)
+    @default.setter
+    def default(self, value):
+        assert self.default_getter is None
+        self._default = value
 
 
+@interface.implementer(interfaces.IOptionField)
 class Option(BaseField):
-
-    interface.implements(interfaces.IOptionField)
+    """A field with one predefined value."""
 
     def __init__(self, value=None, value_getter=None,
                  identity_comparison=False, **kw):
@@ -153,6 +150,7 @@ class Option(BaseField):
             return self.value
 
 
+@interface.implementer(interfaces.IUnionField)
 class Union(BaseField):
     """Union field allows a schema field to hold one of many other field types.
 
@@ -199,8 +197,8 @@ class Union(BaseField):
     True
     >>> len(f.fields)
     2
-    >>> f.title
-    u'Cartoon Character'
+    >>> print(f.title)
+    Cartoon Character
     >>> f.validate(u'Goofy')
     >>> f.validField(u'Goofy') is f.fields[0]
     True
@@ -243,9 +241,6 @@ class Union(BaseField):
     >>> bound_f.fields[1].context is context
     True
     """  # noqa
-
-    interface.implements(interfaces.IUnionField)
-
     fields = ()
     use_default_for_not_selected = False
 
@@ -291,7 +286,7 @@ class OrderedCombinationConstraint(object):
     def __call__(self, field, value):
         # can assume that len(value) == len(field.fields)
         last = None
-        for v, f in map(None, value, field.fields):
+        for v, f in zip(value, field.fields):
             if v != f.missing_value:
                 if last is not None:
                     if self.decreasing:
@@ -317,6 +312,7 @@ class OrderedCombinationConstraint(object):
                 last = v
 
 
+@interface.implementer(interfaces.ICombinationField)
 class Combination(BaseField):
     """a combination of two or more fields, all of which may be completed.
 
@@ -344,12 +340,12 @@ class Combination(BaseField):
     True
     >>> isinstance(f.fields[1], schema.Date)
     True
-    >>> f.title
-    u'Publication Range'
-    >>> f.fields[0].title
-    u'Begin'
-    >>> f.fields[1].title
-    u'Expire'
+    >>> print(f.title)
+    Publication Range
+    >>> print(f.fields[0].title)
+    Begin
+    >>> print(f.fields[1].title)
+    Expire
     >>> import datetime
     >>> f.validate((datetime.date(2005, 6, 22), datetime.date(2005, 7, 10)))
     >>> f.validate((None, datetime.date(2005, 7, 10)))
@@ -397,9 +393,6 @@ class Combination(BaseField):
     ...
     DoesNotImplement: An object does not implement interface...
     """
-
-    interface.implements(interfaces.ICombinationField)
-
     fields = constraints = ()
 
     def __init__(self, fields, **kw):
@@ -420,7 +413,7 @@ class Combination(BaseField):
             if len_value != len(self.fields):
                 raise MessageValidationError(
                     _combination_wrong_size_error)
-            for v, f in map(None, value, self.fields):
+            for v, f in zip(value, self.fields):
                 f = f.bind(self.context)
                 f.validate(v)
         super(Combination, self)._validate(value)
@@ -486,16 +479,18 @@ class TextLine(BaseField, schema.TextLine):
     MessageValidationError: (u'Invalid query.', None)
     >>> field.validate(u'cow and not dog')
     >>> field.validate(u'cow -dog')
-    >>> field.validate('cow') # non-unicode fails, as usual with TextLine
+    >>> field.validate(b'cow') # non-unicode fails, as usual with TextLine
     Traceback (most recent call last):
     ...
     WrongType: ('cow', <type 'unicode'>, 'query')
     """
 
 
+@interface.implementer(interfaces.IHTMLSnippet)
 class HTMLSnippet(BaseField, schema.Text):
-    interface.implements(interfaces.IHTMLSnippet)
+    """Simple implementation for HTML snippet."""
 
 
+@interface.implementer(interfaces.IHTMLDocument)
 class HTMLDocument(BaseField, schema.Text):
-    interface.implements(interfaces.IHTMLDocument)
+    """Simple implementation for HTML document."""

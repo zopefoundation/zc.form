@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2001, 2002 Zope Foundation and Contributors.
@@ -16,24 +17,25 @@ import doctest
 import re
 import unittest
 
+from zope import component
+from zope.formlib.interfaces import ConversionError
+from zope.formlib.interfaces import IInputWidget
+from zope.formlib.textwidgets import TextWidget, IntWidget
+from zope.publisher.browser import TestRequest
+from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.schema import TextLine, Int
+from zope.schema.interfaces import ITextLine, IInt
+from zope.schema.interfaces import ValidationError
 import zope.component.testing
+import zope.publisher.interfaces.browser
+import zope.schema.interfaces
 import zope.traversing.adapters
 
-from zope.schema import TextLine, Int
-from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.formlib.textwidgets import TextWidget, IntWidget
-from zope.schema.interfaces import ITextLine, IInt
-from zope.formlib.interfaces import IInputWidget
-from zope.publisher.browser import TestRequest
-
-import zc.form.browser
-from zc.form.field import Union
-import zc.form.field
+from zc.form.browser.exceptionviews import ValidationErrorView
 from zc.form.browser.unionwidget import UnionWidget
-
-from zope import component
-import zope.schema.interfaces
-import zope.publisher.interfaces.browser
+from zc.form.field import Union
+import zc.form.browser
+import zc.form.field
 
 
 class TestUnionWidget(
@@ -63,24 +65,24 @@ class TestUnionWidget(
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
         output = widget()
-        self.failUnless('<table' in output)
-        self.failUnless('Age' in output)
-        self.failUnless('Name' in output)
-        self.failUnless(re.search(
+        self.assertTrue('<table' in output)
+        self.assertTrue('Age' in output)
+        self.assertTrue('Name' in output)
+        self.assertTrue(re.search(
             r'''type=['"]radio['"]''', output))
-        self.failUnless(re.search(
+        self.assertTrue(re.search(
             r'''name=['"]field.identifier['"]''', output))
-        self.failUnless(re.search(
+        self.assertTrue(re.search(
             r'''id=["']field.identifier-00['"]''', output))
-        self.failUnless(re.search(
+        self.assertTrue(re.search(
             r'''id=["']field.identifier-01['"]''', output))
-        self.failUnless(re.search(
+        self.assertTrue(re.search(
             r'''name=["']field.identifier.unioned_00['"]''', output))
-        self.failUnless(re.search(
+        self.assertTrue(re.search(
             r'''name=["']field.identifier.unioned_01['"]''', output))
-        self.failIf(re.search(
+        self.assertFalse(re.search(
             r'''id=["']field.identifier-02['"]''', output))
-        self.failIf(re.search(
+        self.assertFalse(re.search(
             r'''checked\s*=\s*['"]checked['"]''', output))
         field = Union(
             (TextLine(title=u"Name", min_length=5),
@@ -91,9 +93,9 @@ class TestUnionWidget(
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
         output = widget()
-        self.failUnless(re.search(
+        self.assertTrue(re.search(
             r'''id=["']field.identifier-02['"]''', output))
-        self.failUnless(re.search(
+        self.assertTrue(re.search(
             r'''checked\s*=\s*['"]checked['"]''', output))
 
     def test_use_default_for_not_selected(self):
@@ -122,13 +124,13 @@ class TestUnionWidget(
         value_attr_of_textline = re.search(
             '<input.*id="field.identifier.unioned_00".*(value=".*").*></div>',
             normalized_output).groups()[0]
-        self.failUnless('secret password' in value_attr_of_textline)
+        self.assertTrue('secret password' in value_attr_of_textline)
 
         # the radio button of the option field should be selected
         radio_option_field = re.search(
             '<input.*id="field.identifier-01"(.*)/> </td>',
             normalized_output).groups()[0]
-        self.failUnless('checked="checked"' in radio_option_field)
+        self.assertTrue('checked="checked"' in radio_option_field)
 
     def test_evaluate(self):
         request = TestRequest()
@@ -143,7 +145,7 @@ class TestUnionWidget(
             __name__='identifier')
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
-        self.assertEquals(widget.loadValueFromRequest(), u'Foo Bar')
+        self.assertEqual(widget.loadValueFromRequest(), u'Foo Bar')
 
 
 class TestInterfaces(unittest.TestCase):
@@ -154,6 +156,39 @@ class TestInterfaces(unittest.TestCase):
         import zc.form.browser.interfaces  # noqa: F401
 
 
+class TestValidationErrorView(unittest.TestCase):
+    """Testing .exceptionviews.ValidationErrorView."""
+
+    def test_exceptionviews__ValidationErrorView__1(self):
+        """It converts an invariant error to an html snippet."""
+        err = ValidationError("Bad error!  Bad!")
+        view = ValidationErrorView(err, None)
+        self.assertEqual(
+            view.snippet(), '<span class="error">Bad error!  Bad!</span>')
+
+    def test_exceptionviews__ValidationErrorView__2(self):
+        """It converts also unicode an html snippet."""
+        err = ValidationError(u"Fälscher!")
+        view = ValidationErrorView(err, None)
+        self.assertEqual(
+            view.snippet(), u'<span class="error">Fälscher!</span>')
+
+    def test_exceptionviews__ValidationErrorView__3(self):
+        """It quotes HTML characters correctly."""
+        err = ValidationError(u"The <error> & me.")
+        view = ValidationErrorView(err, None)
+        self.assertEqual(
+            view.snippet(),
+            '<span class="error">The &lt;error&gt; &amp; me.</span>')
+
+    def test_exceptionviews__ValidationErrorView__4(self):
+        """It converts the exception argument of an ConversionError as well."""
+        err = ConversionError(ValidationError("not valid"))
+        view = ValidationErrorView(err, None)
+        self.assertEqual(
+            view.snippet(), '<span class="error">not valid</span>')
+
+
 def pageSetUp(test):
     zope.component.testing.setUp(test)
     component.provideAdapter(
@@ -162,15 +197,21 @@ def pageSetUp(test):
     )
 
 
+optionflags = (
+    doctest.NORMALIZE_WHITESPACE
+    + doctest.ELLIPSIS
+    + doctest.REPORT_NDIFF
+    + doctest.IGNORE_EXCEPTION_DETAIL
+    + doctest.REPORT_ONLY_FIRST_FAILURE
+)
+
+
 def test_suite():
     return unittest.TestSuite([
         unittest.defaultTestLoader.loadTestsFromName(__name__),
         doctest.DocFileSuite(
-            'exceptionviews.rst',
-            setUp=zope.component.testing.setUp,
-            tearDown=zope.component.testing.tearDown),
-        doctest.DocFileSuite(
             'combinationwidget.rst',
+            optionflags=optionflags,
             setUp=pageSetUp,
             tearDown=zope.component.testing.tearDown),
     ])

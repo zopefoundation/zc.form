@@ -113,7 +113,7 @@ class CombinationWidget(BaseWidget):
 
     def _set_values_on_widgets(self, values):
         hasInput = self.hasInput()
-        for w, v in map(None, self.widgets, values):
+        for w, v in zip(self.widgets, values):
             if not hasInput or v != w.context.missing_value:
                 w.setRenderedValue(v)
 

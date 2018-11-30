@@ -22,8 +22,8 @@ for the form that uses a source::
 
 And then a class that implements the interface::
 
-    >>> class Demo(object):
-    ...     zope.interface.implements(IDemo)
+    >>> @zope.interface.implementer(IDemo)
+    ... class Demo(object):
     ...
     ...     color = None
 
@@ -44,8 +44,8 @@ interface is displayed::
     >>> import zope.security.management
     >>> import zope.component.hooks
 
-    >>> class DummyPrincipal(object):
-    ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
+    >>> @zope.interface.implementer(zope.security.interfaces.IPrincipal)
+    ... class DummyPrincipal(object):
     ...
     ...     id = "someuser"
     ...     title = "Some User's Name"
@@ -75,7 +75,7 @@ Now we can use an instance of our demo object to see that the form
 pulls the possible values from the vocabulary we've defined above::
 
     >>> form = DemoInput(Demo(), request)
-    >>> print form()
+    >>> print(form())
     <...
     <div class="queries"...>
     <div class="query"...>
@@ -109,7 +109,7 @@ Now, we can select one of the values::
 Process the request and the list of MRU values is in the form::
 
     >>> form = DemoInput(Demo(), request)
-    >>> print form()
+    >>> print(form())
     <...
     <select name="form.color" id="form.color">
       <option value="red_token" selected="selected">Red</option>
@@ -118,7 +118,7 @@ Process the request and the list of MRU values is in the form::
 
 And the query view is hidden because we have an MRU list::
 
-    >>> print form()
+    >>> print(form())
     <...
     <input type="hidden" name="form.color.queries.visible" ... value="no">
     ...
@@ -137,7 +137,7 @@ If we select another value...::
 the top, and it is selected::
 
     >>> form = DemoInput(Demo(), request)
-    >>> print form()
+    >>> print(form())
     <...
     <select name="form.color" id="form.color">
       <option value="green_token" selected="selected">Green</option>

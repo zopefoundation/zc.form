@@ -33,7 +33,7 @@ Rendering the widget returns a table with the subfields::
     >>> widget = CombinationWidget(IDemo['acceptable_count'], request)
     >>> widget.setPrefix('field')
     >>> widget.loadValueFromRequest() # None
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    >>> print(widget())
     <input type='hidden' name='field.acceptable_count-marker' value='x' />
     <table class="combinationFieldWidget">
       <tr>
@@ -76,7 +76,7 @@ the specified value::
     >>> widget.setPrefix('field')
     >>> widget.getInputValue()
     (10, None)
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> print(widget())
     <...
     ...<input class="textType" id="field.acceptable_count.combination_00"
               name="field.acceptable_count.combination_00" size="10" type="text"
@@ -94,7 +94,7 @@ The field is fine with empty values, because it is not required::
     >>> widget = CombinationWidget(IDemo['acceptable_count'], request)
     >>> widget.setPrefix('field')
     >>> widget.getInputValue() # None
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> print(widget())
     <...
     ...<input class="textType" id="field.acceptable_count.combination_00"
               name="field.acceptable_count.combination_00" size="10" type="text"
@@ -115,17 +115,18 @@ are errors::
     >>> request.form['field.acceptable_count.combination_01'] = '10'
     >>> widget = CombinationWidget(IDemo['acceptable_count'], request)
     >>> widget.setPrefix('field')
-    >>> widget.getInputValue() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> widget.getInputValue()
     Traceback (most recent call last):
     WidgetInputError: ('acceptable_count', u'Acceptable Count',
     WidgetInputError('combination_00', u'Minimum',
     RequiredMissing('combination_00')))
     >>> import zope.formlib.interfaces
     >>> import zope.publisher.interfaces.browser
-    >>> class SnippetView(object):
-    ...     interface.implements(zope.formlib.interfaces.IWidgetInputErrorView)
-    ...     component.adapts(zope.formlib.interfaces.WidgetInputError,
-    ...         zope.publisher.interfaces.browser.IBrowserRequest)
+    >>> @interface.implementer(zope.formlib.interfaces.IWidgetInputErrorView)
+    ... @component.adapter(zope.formlib.interfaces.WidgetInputError,
+    ...     zope.publisher.interfaces.browser.IBrowserRequest)
+    ... class SnippetView(object):
+    ...
     ...     def __init__(self, context, request):
     ...         self.context = context
     ...         self.request = request
@@ -133,7 +134,7 @@ are errors::
     ...         return self.context.doc()
     ...
     >>> component.provideAdapter(SnippetView)
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> print(widget())
     <...
     ...<input class="textType" id="field.acceptable_count.combination_00"
               name="field.acceptable_count.combination_00" size="10"
@@ -142,10 +143,10 @@ are errors::
     ...<input class="textType" id="field.acceptable_count.combination_01"
               name="field.acceptable_count.combination_01" size="10"
               type="text" value="10" />...
-    >>> widget.error()
-    u'Required input is missing.'
-    >>> widget.widgets[0].error()
-    u'Required input is missing.'
+    >>> print(widget.error())
+    Required input is missing.
+    >>> print(widget.widgets[0].error())
+    Required input is missing.
 
 Similarly, if the field's constraints are not met, the widget shows errors::
 
@@ -154,20 +155,20 @@ Similarly, if the field's constraints are not met, the widget shows errors::
     >>> request.form['field.acceptable_count.combination_01'] = '10'
     >>> widget = CombinationWidget(IDemo['acceptable_count'], request)
     >>> widget.setPrefix('field')
-    >>> widget.getInputValue() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> widget.getInputValue()
     Traceback (most recent call last):
     WidgetInputError: ('acceptable_count', u'Acceptable Count',
     MessageValidationError(u'${minimum} ...
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> print(widget())
     <...
-    ...<input class="textType" id="field.acceptable_count.combination_00"
+    ...input class="textType" id="field.acceptable_count.combination_00"
               name="field.acceptable_count.combination_00" size="10"
               type="text" value="20" />...
     ...<input class="textType" id="field.acceptable_count.combination_01"
               name="field.acceptable_count.combination_01" size="10"
               type="text" value="10" />...
-    >>> widget.error()
-    u'${minimum} must be less than or equal to ${maximum}.'
+    >>> print(widget.error())
+    ${minimum} must be less than or equal to ${maximum}.
 
 
 There's also a display version of the widget::
@@ -180,7 +181,7 @@ There's also a display version of the widget::
     >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)
     >>> widget.setPrefix('field')
     >>> widget.setRenderedValue(('10', '2'))
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    >>> print(widget())
     <input type='hidden' name='field.acceptable_count-marker' value='x' />
         <table class="combinationFieldWidget">
           <tr>
@@ -214,7 +215,7 @@ In case of a wrong amount of parameters, the missing_value is used::
     >>> widget = CombinationDisplayWidget(field, request)
     >>> widget.setPrefix('field')
     >>> widget.setRenderedValue(('10', '2', '3'))
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    >>> print(widget())
     <input type='hidden' name='field.acceptable_count-marker' value='x' />
         <table class="combinationFieldWidget">
           <tr>
@@ -246,7 +247,7 @@ In case the parameter is not a sequence, the missing_value is used::
     >>> widget = CombinationDisplayWidget(field, request)
     >>> widget.setPrefix('field')
     >>> widget.setRenderedValue(10)
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    >>> print(widget())
     <input type='hidden' name='field.acceptable_count-marker' value='x' />
         <table class="combinationFieldWidget">
           <tr>
@@ -292,7 +293,7 @@ The order of label and field are inverted in case of boolean::
 
     >>> widget = CombinationWidget(IBoolDemo['choices'], request)
     >>> widget.setPrefix('field')
-    >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
+    >>> print(widget())
     <input type='hidden' name='field.choices-marker' value='x' />
         <table class="combinationFieldWidget">
           <tr>

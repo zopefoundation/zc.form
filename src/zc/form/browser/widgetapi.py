@@ -19,7 +19,7 @@ provide a simpler API that derived classes are expected to implement.
 
 from xml.sax.saxutils import quoteattr
 
-from zope.interface import implements
+from zope.interface import implementer
 from zope.schema.interfaces import ValidationError
 
 from zope.formlib.widget import InputWidget
@@ -40,13 +40,13 @@ _msg_missing_multiple_value_edit = _(
     _("widget-missing-multiple-value-for-edit"), "(no value)")
 
 
+@implementer(IBrowserWidget, IInputWidget)
 class BaseWidget(BrowserWidget, InputWidget):
     # Note to previous users of widgetapi:
     # .translate -> ._translate; .__prefix -> ._prefix;  NullValue ->
     # ._data_marker; .__initial_value and .__calculated_value -> replaced
     # with ._data (because zope.formlib.utility.setUpWidget behavior changed
     # for the better)
-    implements(IBrowserWidget, IInputWidget)
 
     _initialized = False
     _error = None

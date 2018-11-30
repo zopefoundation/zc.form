@@ -99,27 +99,26 @@ class IExtendedTextLineField(IExtendedField, zope.schema.interfaces.ITextLine):
     """TextLine field extended with IExtendedField capabilities"""
 
 
+@interface.implementer(zope.schema.interfaces.ISource)
 class AvailableTimeZones(object):
-    interface.implements(zope.schema.interfaces.ISource)
 
     def __contains__(self, value):
         return isinstance(value, datetime.tzinfo)
 
 
+@interface.implementer(zope.schema.interfaces.ITitledTokenizedTerm)
 class Term:
-    interface.implements(zope.schema.interfaces.ITitledTokenizedTerm)
 
     def __init__(self, title, token):
         self.title = title
         self.token = token
 
 
+@component.adapter(AvailableTimeZones,
+                   zope.publisher.interfaces.browser.IBrowserRequest)
+@interface.implementer(zope.browser.interfaces.ITerms)
 class TimeZoneTerms:
     """Term and value support needed by query widgets."""
-
-    interface.implements(zope.browser.interfaces.ITerms)
-    component.adapts(AvailableTimeZones,
-                     zope.publisher.interfaces.browser.IBrowserRequest)
 
     def __init__(self, source, request):
         self.request = request
