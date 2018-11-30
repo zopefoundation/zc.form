@@ -199,10 +199,10 @@ def pageSetUp(test):
 
 optionflags = (
     doctest.NORMALIZE_WHITESPACE
-    + doctest.ELLIPSIS
-    + doctest.REPORT_NDIFF
-    + doctest.IGNORE_EXCEPTION_DETAIL
-    + doctest.REPORT_ONLY_FIRST_FAILURE
+    | doctest.ELLIPSIS
+    | doctest.REPORT_NDIFF
+    | doctest.IGNORE_EXCEPTION_DETAIL
+    | doctest.REPORT_ONLY_FIRST_FAILURE
 )
 
 
