@@ -97,20 +97,25 @@ class CombinationWidget(BaseWidget):
                 len_value = len(value)
             except (TypeError, AttributeError):
                 value = missing_value
+                self._set_values_on_widgets(value)
             else:
                 if len_value != len(field.fields):
                     value = missing_value
+                    self._set_values_on_widgets(value)
         if value is not missing_value:
-            hasInput = self.hasInput()
-            for w, v in map(None, self.widgets, value):
-                if not hasInput or v != w.context.missing_value:
-                    w.setRenderedValue(v)
+            self._set_values_on_widgets(value)
         for w in self.widgets:  # XXX quick hack.
             if zope.schema.interfaces.IBool.providedBy(w.context):
                 w.invert_label = True
             else:
                 w.invert_label = False
         return self.template()
+
+    def _set_values_on_widgets(self, values):
+        hasInput = self.hasInput()
+        for w, v in map(None, self.widgets, values):
+            if not hasInput or v != w.context.missing_value:
+                w.setRenderedValue(v)
 
 
 default_template = namedtemplate.NamedTemplateImplementation(

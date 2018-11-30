@@ -209,7 +209,9 @@ There's also a display version of the widget::
 
 In case of a wrong amount of parameters, the missing_value is used::
 
-    >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)
+    >>> field = IDemo['acceptable_count']
+    >>> field.missing_value=('23', '42')
+    >>> widget = CombinationDisplayWidget(field, request)
     >>> widget.setPrefix('field')
     >>> widget.setRenderedValue(('10', '2', '3'))
     >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
@@ -222,7 +224,7 @@ In case of a wrong amount of parameters, the missing_value is used::
                     </label>
                   </td>
               <td class="field">
-                <div class="widget">
+                <div class="widget">23
                 </div>
               </td>
           </tr>
@@ -233,7 +235,7 @@ In case of a wrong amount of parameters, the missing_value is used::
                     </label>
                   </td>
               <td class="field">
-                <div class="widget">
+                <div class="widget">42
                 </div>
               </td>
           </tr>
@@ -241,7 +243,7 @@ In case of a wrong amount of parameters, the missing_value is used::
 
 In case the parameter is not a sequence, the missing_value is used::
 
-    >>> widget = CombinationDisplayWidget(IDemo['acceptable_count'], request)
+    >>> widget = CombinationDisplayWidget(field, request)
     >>> widget.setPrefix('field')
     >>> widget.setRenderedValue(10)
     >>> print widget() # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE +REPORT_NDIFF
@@ -254,7 +256,7 @@ In case the parameter is not a sequence, the missing_value is used::
                     </label>
                   </td>
               <td class="field">
-                <div class="widget">
+                <div class="widget">23
                 </div>
               </td>
           </tr>
@@ -265,7 +267,7 @@ In case the parameter is not a sequence, the missing_value is used::
                     </label>
                   </td>
               <td class="field">
-                <div class="widget">
+                <div class="widget">42
                 </div>
               </td>
           </tr>
