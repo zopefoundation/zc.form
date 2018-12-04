@@ -7,6 +7,25 @@ def read(filepath):
         return f.read()
 
 
+MRU_REQUIRES = [
+    'zope.annotation',
+    'BTrees',
+    'persistent',
+    'zc.resourcelibrary',
+]
+
+TEST_REQUIRES = [
+    'zope.app.appsetup',
+    'zope.app.principalannotation',
+    'zope.app.wsgi[testlayer] >= 3.7',
+    'zope.configuration',
+    'zope.container',
+    'zope.testing',
+    'zope.testrunner',
+    'zope.traversing',
+]
+
+
 setup(
     name="zc.form",
     version='1.0.dev0',
@@ -60,21 +79,8 @@ setup(
         'zope.security',
     ],
     extras_require=dict(
-        mruwidget=[
-            'zope.annotation',
-            'BTrees',
-            'persistent',
-            'zc.resourcelibrary',
-        ],
-        test=[
-            'zope.app.appsetup',
-            'zope.app.principalannotation',
-            'zope.app.wsgi[testlayer] >= 3.7',
-            'zope.configuration',
-            'zope.container',
-            'zope.testing',
-            'zope.testrunner',
-            'zope.traversing',
-        ]),
+        mruwidget=MRU_REQUIRES,
+        test=MRU_REQUIRES + TEST_REQUIRES,
+    ),
     zip_safe=False
 )
