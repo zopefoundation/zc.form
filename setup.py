@@ -23,7 +23,7 @@ setup(
         read('CHANGES.rst'),
         read('src/zc/form/browser/combinationwidget.rst'),
         read('src/zc/form/browser/mruwidget.rst'),
-        read('src/zc/form/browser/exceptionviews.rst')]),
+    ]),
     license="ZPL 2.1",
     classifiers=[
         'Environment :: Web Environment',
