@@ -223,7 +223,7 @@ class BaseVocabularyDisplay(BaseVocabularyWidget):
     _display = True
 
     def render(self, value):
-        if value is None:
+        if value in (self._data_marker, None):
             # missing single value
             return self.translate(_msg_missing_single_value_display)
         else:
