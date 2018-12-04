@@ -41,6 +41,12 @@ import zc.form.field
 class TestUnionWidget(
         zope.component.testing.PlacelessSetup, unittest.TestCase):
 
+    assertRegex = getattr(unittest.TestCase, 'assertRegex',
+                          unittest.TestCase.assertRegexpMatches)
+
+    assertNotRegex = getattr(unittest.TestCase, 'assertNotRegex',
+                             unittest.TestCase.assertNotRegexpMatches)
+
     def setUp(self):
         super(TestUnionWidget, self).setUp()
         # XXX cheating: should not rely on these. :-/
@@ -65,25 +71,19 @@ class TestUnionWidget(
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
         output = widget()
-        self.assertTrue('<table' in output)
-        self.assertTrue('Age' in output)
-        self.assertTrue('Name' in output)
-        self.assertTrue(re.search(
-            r'''type=['"]radio['"]''', output))
-        self.assertTrue(re.search(
-            r'''name=['"]field.identifier['"]''', output))
-        self.assertTrue(re.search(
-            r'''id=["']field.identifier-00['"]''', output))
-        self.assertTrue(re.search(
-            r'''id=["']field.identifier-01['"]''', output))
-        self.assertTrue(re.search(
-            r'''name=["']field.identifier.unioned_00['"]''', output))
-        self.assertTrue(re.search(
-            r'''name=["']field.identifier.unioned_01['"]''', output))
-        self.assertFalse(re.search(
-            r'''id=["']field.identifier-02['"]''', output))
-        self.assertFalse(re.search(
-            r'''checked\s*=\s*['"]checked['"]''', output))
+        self.assertIn('<table', output)
+        self.assertIn('Age', output)
+        self.assertIn('Name', output)
+        self.assertRegex(output, r'''type=['"]radio['"]''')
+        self.assertRegex(output, r'''name=['"]field.identifier['"]''')
+        self.assertRegex(output, r'''id=["']field.identifier-00['"]''')
+        self.assertRegex(output, r'''id=["']field.identifier-01['"]''')
+        self.assertRegex(
+            output, r'''name=["']field.identifier.unioned_00['"]''')
+        self.assertRegex(
+            output, r'''name=["']field.identifier.unioned_01['"]''')
+        self.assertNotRegex(output, r'''id=["']field.identifier-02['"]''')
+        self.assertNotRegex(output, r'''checked\s*=\s*['"]checked['"]''')
         field = Union(
             (TextLine(title=u"Name", min_length=5),
              Int(title=u"Age", min=0)),
@@ -93,10 +93,8 @@ class TestUnionWidget(
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
         output = widget()
-        self.assertTrue(re.search(
-            r'''id=["']field.identifier-02['"]''', output))
-        self.assertTrue(re.search(
-            r'''checked\s*=\s*['"]checked['"]''', output))
+        self.assertRegex(output, r'''id=["']field.identifier-02['"]''')
+        self.assertRegex(output, r'''checked\s*=\s*['"]checked['"]''')
 
     def test_use_default_for_not_selected(self):
         # test use_default_for_not_selected = True
@@ -124,13 +122,13 @@ class TestUnionWidget(
         value_attr_of_textline = re.search(
             '<input.*id="field.identifier.unioned_00".*(value=".*").*></div>',
             normalized_output).groups()[0]
-        self.assertTrue('secret password' in value_attr_of_textline)
+        self.assertIn('secret password', value_attr_of_textline)
 
         # the radio button of the option field should be selected
         radio_option_field = re.search(
             '<input.*id="field.identifier-01"(.*)/> </td>',
             normalized_output).groups()[0]
-        self.assertTrue('checked="checked"' in radio_option_field)
+        self.assertIn('checked="checked"', radio_option_field)
 
     def test_evaluate(self):
         request = TestRequest()
