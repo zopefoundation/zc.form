@@ -14,13 +14,17 @@
 """source input widget with most recently used (MRU) value support"""
 from BTrees import OOBTree
 from zope.formlib.source import SourceInputWidget
-import cgi
 import persistent.list
 import zc.resourcelibrary
 import zope.annotation.interfaces
 import zope.browser.interfaces
 import zope.component
 import zope.formlib.interfaces
+
+try:
+    from html import escape as html_escape
+except ImportError:  # PY2
+    from cgi import escape as html_escape  # pragma: no cover
 
 
 class MruSourceInputWidget(SourceInputWidget):
@@ -122,9 +126,9 @@ class MruSourceInputWidget(SourceInputWidget):
                 else:
                     selected = ''
                 result.append('  <option value="%s"%s>%s</option>'
-                              % (cgi.escape(mru_term.token),
+                              % (html_escape(mru_term.token),
                                  selected,
-                                 cgi.escape(mru_term.title)))
+                                 html_escape(mru_term.title)))
 
             result.append('</select>')
 
