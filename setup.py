@@ -36,6 +36,8 @@ setup(
     author='Zope Corporation and Contributors',
     author_email='zope-dev@zope.org',
     include_package_data=True,
+    description=(
+        'Extra browser widgets and alternative approaches for zope.formlib.'),
     long_description='\n\n'.join([
         read('README.rst'),
         '.. contents::',
@@ -44,6 +46,7 @@ setup(
         read('src/zc/form/browser/mruwidget.rst'),
     ]),
     license="ZPL 2.1",
+    keywords="zope formlib form widget extra",
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
