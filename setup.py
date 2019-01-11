@@ -37,7 +37,7 @@ setup(
     author_email='zope-dev@zope.org',
     include_package_data=True,
     long_description='\n\n'.join([
-        read('src/zc/form/README.rst'),
+        read('README.rst'),
         '.. contents::',
         read('CHANGES.rst'),
         read('src/zc/form/browser/combinationwidget.rst'),
