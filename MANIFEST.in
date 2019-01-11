@@ -1,7 +1,10 @@
 include *.py
-include *.txt
 include *.rst
+include *.txt
+include .coveragerc
 include buildout.cfg
+include tox.ini
+
 recursive-include src *.js
 recursive-include src *.pt
 recursive-include src *.rst
