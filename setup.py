@@ -84,6 +84,7 @@ setup(
     extras_require=dict(
         mruwidget=MRU_REQUIRES,
         test=MRU_REQUIRES + TEST_REQUIRES,
+        slimtest=TEST_REQUIRES,
     ),
     zip_safe=False
 )
