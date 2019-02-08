@@ -2,6 +2,7 @@
     xmlns='http://namespaces.zope.org/zope'
     xmlns:browser='http://namespaces.zope.org/browser'
     xmlns:event='http://namespaces.zope.org/event'
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain='zc-schema'
 >
 
@@ -49,25 +50,27 @@
       factory=".exceptionviews.UserErrorView"
       />
 
-  <resourceLibrary name="zc.form.mruwidget">
-    <directory source="mruwidget_resources" include="mruwidget.js" />
-  </resourceLibrary>
+  <configure zcml:condition="installed zc.resourcelibrary">
+    <resourceLibrary name="zc.form.mruwidget">
+      <directory source="mruwidget_resources" include="mruwidget.js" />
+    </resourceLibrary>
 
-  <!-- set up the mruwidget
-  For some reason this doesn't work here.  Should investigate. :-/
-  <includeOverrides package="zc.form.browser" file="overrides.zcml" />
-   -->
+    <!-- set up the mruwidget
+    For some reason this doesn't work here.  Should investigate. :-/
+    <includeOverrides package="zc.form.browser" file="overrides.zcml" />
+     -->
 
-  <!-- set up time zone widget -->
-  <view
-      type="zope.publisher.interfaces.browser.IBrowserRequest"
-      for="zope.schema.interfaces.IChoice
-           zc.form.interfaces.AvailableTimeZones"
-      provides="zope.formlib.interfaces.IInputWidget"
-      factory=".tzwidget.TimeZoneWidget"
-      permission="zope.Public"
-      />
+    <!-- set up time zone widget -->
+    <view
+        type="zope.publisher.interfaces.browser.IBrowserRequest"
+        for="zope.schema.interfaces.IChoice
+             zc.form.interfaces.AvailableTimeZones"
+        provides="zope.formlib.interfaces.IInputWidget"
+        factory=".tzwidget.TimeZoneWidget"
+        permission="zope.Public"
+        />
 
-  <adapter factory=".tzwidget.TimeZoneQueryView" />
+    <adapter factory=".tzwidget.TimeZoneQueryView" />
+  </configure>
 
 </configure>

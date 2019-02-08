@@ -14,6 +14,7 @@
 """functional test harness for zc.mruwidget"""
 from zope import interface, component
 import doctest
+import unittest
 import zc.form.browser
 import zope.app.wsgi.testlayer
 import zope.browser.interfaces
@@ -87,16 +88,26 @@ def setUp(test):
 
 
 def test_suite():
-    suite = doctest.DocFileSuite(
-        "mruwidget.rst",
-        globs={'AvailableColors': AvailableColors(),
-               'getRootFolder': ZCFormLayer.getRootFolder},
-        optionflags=(doctest.NORMALIZE_WHITESPACE
-                     | doctest.ELLIPSIS
-                     | doctest.REPORT_ONLY_FIRST_FAILURE
-                     | doctest.IGNORE_EXCEPTION_DETAIL
-                     | doctest.REPORT_NDIFF),
-        setUp=setUp,
-    )
-    suite.layer = ZCFormLayer
-    return suite
+    # This function must return something test case/suite like to keep
+    # zope.testrunner happy.
+    tests = unittest.TestSuite()
+    try:
+        import zc.resourcelibrary  # noqa
+    except ImportError:
+        # We want to skip the mruwidget tests
+        pass
+    else:
+        suite = doctest.DocFileSuite(
+            "mruwidget.rst",
+            globs={'AvailableColors': AvailableColors(),
+                   'getRootFolder': ZCFormLayer.getRootFolder},
+            optionflags=(doctest.NORMALIZE_WHITESPACE
+                         | doctest.ELLIPSIS
+                         | doctest.REPORT_ONLY_FIRST_FAILURE
+                         | doctest.IGNORE_EXCEPTION_DETAIL
+                         | doctest.REPORT_NDIFF),
+            setUp=setUp,
+        )
+        suite.layer = ZCFormLayer
+        tests = suite
+    return tests
