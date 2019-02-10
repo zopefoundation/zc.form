@@ -10,8 +10,8 @@ matrix:
     include:
         - python: "3.7"
           dist: xenial
-        # This tests without [mruwidget] extra
-        - python: "3.7"
+        - name: "test without [mruwidget] extra"
+          python: "3.7"
           dist: xenial
           install:
             - pip install -U pip setuptools
