@@ -5,9 +5,6 @@ Changes
 1.0.1 (unreleased)
 ------------------
 
-Bugfixes
-++++++++
-
 - Fix ZCML configuration issue if the ``[mruwidget]`` extra was not installed.
 
 
