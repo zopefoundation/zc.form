@@ -28,7 +28,7 @@ TEST_REQUIRES = [
 
 setup(
     name="zc.form",
-    version='1.1.dev0',
+    version='1.1',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     namespace_packages=['zc'],

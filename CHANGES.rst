@@ -2,8 +2,8 @@
 Changes
 =======
 
-1.0.1 (unreleased)
-------------------
+1.1 (2019-02-11)
+----------------
 
 - Fix ZCML configuration issue if the ``[mruwidget]`` extra was not installed.
 
