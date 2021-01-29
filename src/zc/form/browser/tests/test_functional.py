@@ -98,7 +98,7 @@ def test_suite():
         pass
     else:
         suite = doctest.DocFileSuite(
-            "mruwidget.rst",
+            "../mruwidget.rst",
             globs={'AvailableColors': AvailableColors(),
                    'getRootFolder': ZCFormLayer.getRootFolder},
             optionflags=(doctest.NORMALIZE_WHITESPACE
