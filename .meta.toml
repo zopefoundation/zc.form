@@ -12,7 +12,7 @@ with-docs = false
 with-sphinx-doctests = false
 
 [coverage]
-fail-under = 63
+fail-under = 83
 
 [tox]
 additional-envlist = [
