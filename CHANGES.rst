@@ -5,7 +5,7 @@ Changes
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add support for Python 3.8 and 3.9.
 
 
 1.1 (2019-02-11)

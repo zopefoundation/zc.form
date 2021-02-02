@@ -42,10 +42,10 @@ class TestUnionWidget(
         zope.component.testing.PlacelessSetup, unittest.TestCase):
 
     assertRegex = getattr(unittest.TestCase, 'assertRegex',
-                          unittest.TestCase.assertRegexpMatches)
+                          unittest.TestCase.assertRegexpMatches)  # PY2
 
     assertNotRegex = getattr(unittest.TestCase, 'assertNotRegex',
-                             unittest.TestCase.assertNotRegexpMatches)
+                             unittest.TestCase.assertNotRegexpMatches)  # PY2
 
     def setUp(self):
         super(TestUnionWidget, self).setUp()
@@ -208,7 +208,7 @@ def test_suite():
     return unittest.TestSuite([
         unittest.defaultTestLoader.loadTestsFromName(__name__),
         doctest.DocFileSuite(
-            'combinationwidget.rst',
+            '../combinationwidget.rst',
             optionflags=optionflags,
             setUp=pageSetUp,
             tearDown=zope.component.testing.tearDown),

@@ -1,0 +1,36 @@
+# Generated from:
+# https://github.com/zopefoundation/meta/tree/master/config/pure-python
+[meta]
+template = "pure-python"
+commit-id = "e1a6d19b7bd98050e5ddfeb73206e1989bc56071"
+
+[python]
+with-appveyor = false
+with-pypy = true
+with-legacy-python = true
+with-docs = false
+with-sphinx-doctests = false
+
+[coverage]
+fail-under = 83
+
+[tox]
+additional-envlist = [
+    "py38-slim",
+    ]
+testenv-additional = [
+    "",
+    "# Test without mruwidget dependencies",
+    "[testenv:slim]",
+    "extras = slimtest",
+    ]
+
+[manifest]
+additional-rules = [
+    "recursive-include src *.js",
+    ]
+
+[github-actions]
+additional-config = [
+    "- [\"3.8\",   \"py38-slim\"]",
+    ]
