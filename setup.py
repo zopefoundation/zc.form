@@ -1,5 +1,7 @@
-from setuptools import setup, find_packages
 import os.path
+
+from setuptools import find_packages
+from setuptools import setup
 
 
 def read(filepath):
@@ -28,13 +30,13 @@ TEST_REQUIRES = [
 
 setup(
     name="zc.form",
-    version='1.2.dev0',
+    version='2.0.dev0',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     namespace_packages=['zc'],
     url='https://github.com/zopefoundation/zc.form',
     author='Zope Foundation and Contributors',
-    author_email='zope-dev@zope.org',
+    author_email='zope-dev@zope.dev',
     include_package_data=True,
     description=(
         'Extra browser widgets and alternative approaches for zope.formlib.'),
@@ -51,14 +53,12 @@ setup(
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Zope Public License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Natural Language :: English',
@@ -66,10 +66,10 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Zope :: 3',
     ],
+    python_requires='>=3.7',
     install_requires=[
         'pytz',
         'setuptools',
-        'six',
         'zc.sourcefactory',
         'zope.browserpage',
         'zope.cachedescriptors',

@@ -11,13 +11,18 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from zc.form.i18n import _
-from zope import interface, component, schema
 import datetime
+
 import pytz
+
 import zope.browser.interfaces
 import zope.publisher.interfaces.browser
 import zope.schema.interfaces
+from zope import component
+from zope import interface
+from zope import schema
+
+from zc.form.i18n import _
 
 
 class IExtendedField(zope.schema.interfaces.IField):
@@ -60,7 +65,7 @@ class IOptionField(IExtendedField):
 
 
 class IUnionField(IExtendedField):
-    u"""A field that may have one of many field types of values.
+    """A field that may have one of many field types of values.
 
     Order is important, in that the first field from left to right that
     validates a value is considered to be the "active" field.
@@ -87,7 +92,7 @@ class IUnionField(IExtendedField):
 
 
 class ICombinationField(IExtendedField):
-    u"""A field that describes a combination of two or more fields"""
+    """A field that describes a combination of two or more fields"""
 
     fields = schema.Tuple(
         title=_("Composite Fields"),
@@ -100,7 +105,7 @@ class IExtendedTextLineField(IExtendedField, zope.schema.interfaces.ITextLine):
 
 
 @interface.implementer(zope.schema.interfaces.ISource)
-class AvailableTimeZones(object):
+class AvailableTimeZones:
 
     def __contains__(self, value):
         return isinstance(value, datetime.tzinfo)

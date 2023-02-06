@@ -13,14 +13,16 @@
 ##############################################################################
 """Combination widget"""
 
-from zc.form.browser.widgetapi import BaseWidget
+import zope.cachedescriptors.property
+import zope.schema.interfaces
 from zope import component
 from zope.browserpage import ViewPageTemplateFile
 from zope.formlib import namedtemplate
-from zope.formlib.interfaces import IInputWidget, IDisplayWidget
+from zope.formlib.interfaces import IDisplayWidget
+from zope.formlib.interfaces import IInputWidget
 from zope.formlib.interfaces import WidgetInputError
-import zope.cachedescriptors.property
-import zope.schema.interfaces
+
+from zc.form.browser.widgetapi import BaseWidget
 
 
 class CombinationWidget(BaseWidget):
@@ -40,7 +42,7 @@ class CombinationWidget(BaseWidget):
         return res
 
     def setPrefix(self, prefix):
-        super(CombinationWidget, self).setPrefix(prefix)
+        super().setPrefix(prefix)
         for w in self.widgets:
             w.setPrefix(self.name + ".")
 

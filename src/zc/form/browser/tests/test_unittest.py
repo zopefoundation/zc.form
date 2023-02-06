@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2001, 2002 Zope Foundation and Contributors.
@@ -17,38 +16,35 @@ import doctest
 import re
 import unittest
 
-from zope import component
-from zope.formlib.interfaces import ConversionError
-from zope.formlib.interfaces import IInputWidget
-from zope.formlib.textwidgets import TextWidget, IntWidget
-from zope.publisher.browser import TestRequest
-from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.schema import TextLine, Int
-from zope.schema.interfaces import ITextLine, IInt
-from zope.schema.interfaces import ValidationError
 import zope.component.testing
 import zope.publisher.interfaces.browser
 import zope.schema.interfaces
 import zope.traversing.adapters
+from zope import component
+from zope.formlib.interfaces import ConversionError
+from zope.formlib.interfaces import IInputWidget
+from zope.formlib.textwidgets import IntWidget
+from zope.formlib.textwidgets import TextWidget
+from zope.publisher.browser import TestRequest
+from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.schema import Int
+from zope.schema import TextLine
+from zope.schema.interfaces import IInt
+from zope.schema.interfaces import ITextLine
+from zope.schema.interfaces import ValidationError
 
+import zc.form.browser
+import zc.form.field
 from zc.form.browser.exceptionviews import ValidationErrorView
 from zc.form.browser.unionwidget import UnionWidget
 from zc.form.field import Union
-import zc.form.browser
-import zc.form.field
 
 
 class TestUnionWidget(
         zope.component.testing.PlacelessSetup, unittest.TestCase):
 
-    assertRegex = getattr(unittest.TestCase, 'assertRegex',
-                          unittest.TestCase.assertRegexpMatches)  # PY2
-
-    assertNotRegex = getattr(unittest.TestCase, 'assertNotRegex',
-                             unittest.TestCase.assertNotRegexpMatches)  # PY2
-
     def setUp(self):
-        super(TestUnionWidget, self).setUp()
+        super().setUp()
         # XXX cheating: should not rely on these. :-/
         component.provideAdapter(
             TextWidget, (ITextLine, IBrowserRequest), IInputWidget)
@@ -64,9 +60,9 @@ class TestUnionWidget(
     def test_render(self):
         request = TestRequest()
         field = Union(
-            (TextLine(title=u"Name", min_length=5),
-             Int(title=u"Age", min=0)),
-            title=u"Simple Identifier",
+            (TextLine(title="Name", min_length=5),
+             Int(title="Age", min=0)),
+            title="Simple Identifier",
             __name__='identifier')
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
@@ -85,9 +81,9 @@ class TestUnionWidget(
         self.assertNotRegex(output, r'''id=["']field.identifier-02['"]''')
         self.assertNotRegex(output, r'''checked\s*=\s*['"]checked['"]''')
         field = Union(
-            (TextLine(title=u"Name", min_length=5),
-             Int(title=u"Age", min=0)),
-            title=u"Simple Identifier",
+            (TextLine(title="Name", min_length=5),
+             Int(title="Age", min=0)),
+            title="Simple Identifier",
             __name__='identifier',
             required=False)
         widget = UnionWidget(field, request)
@@ -103,12 +99,12 @@ class TestUnionWidget(
         # value of None
         field = Union(
             (zc.form.field.TextLine(
-                title=u"New Password", missing_value=u'',
-                default_getter=lambda x: u'secret password'),
+                title="New Password", missing_value='',
+                default_getter=lambda x: 'secret password'),
              zc.form.field.Option(
-                title=u"No Change", value='no change')),
-            title=u"Change Password",
-            missing_value=u'',
+                title="No Change", value='no change')),
+            title="Change Password",
+            missing_value='',
             use_default_for_not_selected=True,
             __name__='identifier')
         widget = UnionWidget(field, request)
@@ -134,16 +130,16 @@ class TestUnionWidget(
         request = TestRequest()
         request.form.update({
             'field.identifier-marker': 'x',
-            'field.identifier.unioned_00': u'Foo Bar',
+            'field.identifier.unioned_00': 'Foo Bar',
             'field.identifier': '0'})
         field = Union(
-            (TextLine(title=u"Name", min_length=5),
-             Int(title=u"Age", min=0)),
-            title=u"Simple Identifier",
+            (TextLine(title="Name", min_length=5),
+             Int(title="Age", min=0)),
+            title="Simple Identifier",
             __name__='identifier')
         widget = UnionWidget(field, request)
         widget.setPrefix('field')
-        self.assertEqual(widget.loadValueFromRequest(), u'Foo Bar')
+        self.assertEqual(widget.loadValueFromRequest(), 'Foo Bar')
 
 
 class TestInterfaces(unittest.TestCase):
@@ -166,14 +162,14 @@ class TestValidationErrorView(unittest.TestCase):
 
     def test_exceptionviews__ValidationErrorView__2(self):
         """It converts also unicode an html snippet."""
-        err = ValidationError(u"Fälscher!")
+        err = ValidationError("Fälscher!")
         view = ValidationErrorView(err, None)
         self.assertEqual(
-            view.snippet(), u'<span class="error">Fälscher!</span>')
+            view.snippet(), '<span class="error">Fälscher!</span>')
 
     def test_exceptionviews__ValidationErrorView__3(self):
         """It quotes HTML characters correctly."""
-        err = ValidationError(u"The <error> & me.")
+        err = ValidationError("The <error> & me.")
         view = ValidationErrorView(err, None)
         self.assertEqual(
             view.snippet(),
