@@ -36,7 +36,7 @@ setup(
     namespace_packages=['zc'],
     url='https://github.com/zopefoundation/zc.form',
     author='Zope Foundation and Contributors',
-    author_email='zope-dev@zope.org',
+    author_email='zope-dev@zope.dev',
     include_package_data=True,
     description=(
         'Extra browser widgets and alternative approaches for zope.formlib.'),
@@ -66,10 +66,10 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Zope :: 3',
     ],
+    python_requires='>=3.7',
     install_requires=[
         'pytz',
         'setuptools',
-        'six',
         'zc.sourcefactory',
         'zope.browserpage',
         'zope.cachedescriptors',

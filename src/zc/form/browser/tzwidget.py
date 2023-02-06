@@ -46,7 +46,7 @@ pytz.tzinfo.BaseTzInfo.__Security_checker__ = checker
 class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
 
     def getMostRecentlyUsedTerms(self):
-        mru = super(TimeZoneWidget, self).getMostRecentlyUsedTerms()
+        mru = super().getMostRecentlyUsedTerms()
         # add ones from locale
         territory = self.request.locale.id.territory
         if territory:
@@ -55,7 +55,7 @@ class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
             except KeyError:
                 pass
             else:
-                already = set(term.token for term in mru)
+                already = {term.token for term in mru}
                 additional = sorted(t for t in choices if t not in already)
                 mru.extend(zc.form.interfaces.Term(t.replace('_', ' '), t)
                            for t in additional)
@@ -65,7 +65,7 @@ class TimeZoneWidget(zc.form.browser.mruwidget.MruSourceInputWidget):
 @component.adapter(zc.form.interfaces.AvailableTimeZones,
                    zope.publisher.interfaces.browser.IBrowserRequest)
 @interface.implementer(zope.formlib.interfaces.ISourceQueryView)
-class TimeZoneQueryView(object):
+class TimeZoneQueryView:
 
     def __init__(self, source, request):
         self.context = source

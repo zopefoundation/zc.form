@@ -161,7 +161,7 @@ class BaseVocabularyWidget(BaseWidget):
         # only allow this to happen for a bound field
         assert field.context is not None
         self.vocabulary = vocabulary
-        super(BaseVocabularyWidget, self).__init__(field, request)
+        super().__init__(field, request)
 
     # Helpers used by the vocabulary widget machinery;
     # these should not be overridden.
@@ -196,7 +196,7 @@ class BaseVocabularyWidget(BaseWidget):
                 value = self.queryview.performAction(value)
             return value
         """
-        return super(BaseVocabularyWidget, self).loadValueFromRequest()
+        return super().loadValueFromRequest()
 
     # Convenience method:
 
@@ -280,7 +280,7 @@ class BaseVocabularyListDisplay(BaseVocabularyMultiDisplay):
     containerElementType = "ol"
 
 
-class BaseQueryView(object):
+class BaseQueryView:
 
     name = None
     widget = None

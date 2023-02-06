@@ -13,8 +13,6 @@
 ##############################################################################
 """Union widget"""
 
-import six
-
 from zope import component
 from zope.browserpage import ViewPageTemplateFile
 from zope.formlib import namedtemplate
@@ -33,7 +31,7 @@ class CompositeOptionWidget(BaseWidget):
         return None
 
 
-class NotChosenWidget(object):
+class NotChosenWidget:
     error = name = None
     required = False
 
@@ -117,7 +115,7 @@ class UnionWidget(BaseWidget):
             widget.setPrefix(self.name)
             choices.append(
                 {'selected': selected, 'identifier': identifier,
-                 'widget': widget, 'value': six.text_type(ix)})
+                 'widget': widget, 'value': str(ix)})
         if not field.required:
             ix += 1
             selected = chosen_field is None
@@ -125,7 +123,7 @@ class UnionWidget(BaseWidget):
             widget = NotChosenWidget(self.no_value_label, self.no_value_hint)
             choices.append(
                 {'selected': selected, 'identifier': identifier,
-                 'widget': widget, 'value': six.text_type(ix)})
+                 'widget': widget, 'value': str(ix)})
         return self.template(choices=choices)
 
 

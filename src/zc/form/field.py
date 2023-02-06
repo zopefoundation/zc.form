@@ -103,11 +103,11 @@ class BaseField(schema.Field):
         if default_getter is not None and 'default' in kw:
             raise TypeError(
                 'may not specify both a default and a default_getter')
-        super(BaseField, self).__init__(**kw)
+        super().__init__(**kw)
         self.default_getter = default_getter
 
     def _validate(self, value):
-        super(BaseField, self)._validate(value)
+        super()._validate(value)
         if value != self.missing_value:
             for constraint in self.constraints:
                 constraint(self, value)
@@ -137,7 +137,7 @@ class Option(BaseField):
         assert (value is None) ^ (value_getter is None)
         assert not kw.get('required')
         kw['required'] = False
-        super(Option, self).__init__(**kw)
+        super().__init__(**kw)
 
     def _validate(self, value):
         if value != self.missing_value:
@@ -257,10 +257,10 @@ class Union(BaseField):
             field.__name__ = "unioned_%02d" % ix
         self.fields = tuple(fields)
         self.use_default_for_not_selected = use_default_for_not_selected
-        super(Union, self).__init__(**kw)
+        super().__init__(**kw)
 
     def bind(self, object):
-        clone = super(Union, self).bind(object)
+        clone = super().bind(object)
         # We need to bind the fields too, e.g. for Choice fields
         clone.fields = tuple(field.bind(object) for field in clone.fields)
         return clone
@@ -281,7 +281,7 @@ class Union(BaseField):
                                          {'value': value})
 
 
-class OrderedCombinationConstraint(object):
+class OrderedCombinationConstraint:
 
     def __init__(self, may_be_equal=True, decreasing=False):
         self.may_be_equal = may_be_equal
@@ -405,7 +405,7 @@ class Combination(BaseField):
                 raise DoesNotImplement(IField)
             field.__name__ = "combination_%02d" % ix
         self.fields = tuple(fields)
-        super(Combination, self).__init__(**kw)
+        super().__init__(**kw)
 
     def _validate(self, value):
         if value != self.missing_value:
@@ -420,10 +420,10 @@ class Combination(BaseField):
             for v, f in zip(value, self.fields):
                 f = f.bind(self.context)
                 f.validate(v)
-        super(Combination, self)._validate(value)
+        super()._validate(value)
 
     def bind(self, object):
-        clone = super(Combination, self).bind(object)
+        clone = super().bind(object)
         # We need to bind the fields too, e.g. for Choice fields
         clone.fields = tuple(field.bind(object) for field in clone.fields)
         return clone

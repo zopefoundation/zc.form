@@ -14,7 +14,7 @@
 import zope.pagetemplate.pagetemplatefile
 
 
-class DummyMacros(object):
+class DummyMacros:
     """Dummy standard macros to make zope.formlib pagetemplates happy."""
 
     def __getitem__(self, key):

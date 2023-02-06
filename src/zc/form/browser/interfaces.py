@@ -121,7 +121,7 @@ class ISchemaView(interface.Interface):
         whether or not the form is actually rendered: check self.halt_rendering
         if you need to perform different behavior in this circumstance."""
 
-    def __call__(template_usage=u'', *args, **kw):
+    def __call__(template_usage='', *args, **kw):
         """a dispatcher to button actions and renderer of the form.
 
         __call__ searches the request for each of the ids in the buttons

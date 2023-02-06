@@ -42,7 +42,7 @@ class CombinationWidget(BaseWidget):
         return res
 
     def setPrefix(self, prefix):
-        super(CombinationWidget, self).setPrefix(prefix)
+        super().setPrefix(prefix)
         for w in self.widgets:
             w.setPrefix(self.name + ".")
 

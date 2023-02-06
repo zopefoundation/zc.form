@@ -29,14 +29,14 @@ colors = ['red', 'green', 'cerulean blue']
 
 
 @interface.implementer(zope.schema.interfaces.ISource)
-class AvailableColors(object):
+class AvailableColors:
 
     def __contains__(self, value):
         return value in colors
 
 
 @interface.implementer(zope.schema.interfaces.ITitledTokenizedTerm)
-class Term(object):
+class Term:
 
     def __init__(self, title, token):
         self.title = title
@@ -46,7 +46,7 @@ class Term(object):
 @component.adapter(zope.schema.interfaces.ISource,
                    zope.publisher.interfaces.browser.IBrowserRequest)
 @interface.implementer(zope.browser.interfaces.ITerms)
-class ColorTerms(object):
+class ColorTerms:
     """Term and value support needed by query widgets."""
 
     def __init__(self, source, request):
@@ -67,7 +67,7 @@ class ColorTerms(object):
 @component.adapter(zope.schema.interfaces.ISource,
                    zope.publisher.interfaces.browser.IBrowserRequest)
 @interface.implementer(zope.formlib.interfaces.ISourceQueryView)
-class SimpleColorSourceQueryView(object):
+class SimpleColorSourceQueryView:
 
     def __init__(self, source, request):
         self.context = source
