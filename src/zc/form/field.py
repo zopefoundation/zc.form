@@ -15,17 +15,21 @@
 
 $Id: field.py 4634 2006-01-06 20:21:15Z fred $
 """
-from zope import interface, i18n, schema, component
+import zope.catalog.interfaces
+import zope.index.text.parsetree
+import zope.index.text.queryparser
+from zope import component
+from zope import i18n
+from zope import interface
+from zope import schema
 from zope.interface.exceptions import DoesNotImplement
 from zope.schema.interfaces import IField
 from zope.schema.interfaces import ValidationError
 from zope.schema.interfaces import WrongType
-import zope.catalog.interfaces
-import zope.index.text.parsetree
-import zope.index.text.queryparser
 
 from zc.form import interfaces
 from zc.form.i18n import _
+
 
 _no_unioned_field_validates = _(
     "No unioned field validates ${value}.")

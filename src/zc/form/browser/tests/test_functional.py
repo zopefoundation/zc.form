@@ -12,14 +12,18 @@
 #
 ##############################################################################
 """functional test harness for zc.mruwidget"""
-from zope import interface, component
 import doctest
 import unittest
-import zc.form.browser
+
 import zope.app.wsgi.testlayer
 import zope.browser.interfaces
 import zope.formlib.interfaces
 import zope.schema.interfaces
+from zope import component
+from zope import interface
+
+import zc.form.browser
+
 
 colors = ['red', 'green', 'cerulean blue']
 

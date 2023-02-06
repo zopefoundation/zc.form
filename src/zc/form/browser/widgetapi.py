@@ -19,15 +19,16 @@ provide a simpler API that derived classes are expected to implement.
 
 from xml.sax.saxutils import quoteattr
 
+from zope.formlib.interfaces import IBrowserWidget
+from zope.formlib.interfaces import IInputWidget
+from zope.formlib.interfaces import WidgetInputError
+from zope.formlib.widget import BrowserWidget
+from zope.formlib.widget import InputWidget
 from zope.interface import implementer
 from zope.schema.interfaces import ValidationError
 
-from zope.formlib.widget import InputWidget
-from zope.formlib.widget import BrowserWidget
-from zope.formlib.interfaces import IBrowserWidget
-from zope.formlib.interfaces import IInputWidget, WidgetInputError
-
 from zc.form.i18n import _
+
 
 _msg_missing_single_value_display = _(
     _("widget-missing-single-value-for-display"), "")

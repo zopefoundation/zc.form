@@ -16,13 +16,17 @@
 $Id: exceptionviews.py 3629 2005-10-06 21:01:27Z gary $
 """
 
-from zope import interface, component, i18n
+import six
+
+from zope import component
+from zope import i18n
+from zope import interface
+from zope.exceptions.interfaces import UserError
+from zope.formlib.interfaces import ConversionError
 from zope.formlib.interfaces import IWidgetInputErrorView
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.schema.interfaces import ValidationError
-from zope.formlib.interfaces import ConversionError
-from zope.exceptions.interfaces import UserError
-import six
+
 
 if six.PY3:
     from html import escape

@@ -13,15 +13,18 @@
 ##############################################################################
 """Union widget"""
 
-from .widgetapi import BaseWidget
-from zc.form.i18n import _
+import six
+
 from zope import component
 from zope.browserpage import ViewPageTemplateFile
 from zope.formlib import namedtemplate
 from zope.formlib.interfaces import IInputWidget
 from zope.formlib.interfaces import WidgetInputError
-import six
+
 import zc.form.interfaces
+from zc.form.i18n import _
+
+from .widgetapi import BaseWidget
 
 
 class CompositeOptionWidget(BaseWidget):

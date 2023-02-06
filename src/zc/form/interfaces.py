@@ -11,13 +11,18 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from zc.form.i18n import _
-from zope import interface, component, schema
 import datetime
+
 import pytz
+
 import zope.browser.interfaces
 import zope.publisher.interfaces.browser
 import zope.schema.interfaces
+from zope import component
+from zope import interface
+from zope import schema
+
+from zc.form.i18n import _
 
 
 class IExtendedField(zope.schema.interfaces.IField):

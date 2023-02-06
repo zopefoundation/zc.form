@@ -12,19 +12,20 @@
 #
 ##############################################################################
 """source input widget with most recently used (MRU) value support"""
-from BTrees import OOBTree
-from zope.formlib.source import SourceInputWidget
 import persistent.list
 import zc.resourcelibrary
 import zope.annotation.interfaces
 import zope.browser.interfaces
 import zope.component
 import zope.formlib.interfaces
+from BTrees import OOBTree
+from zope.formlib.source import SourceInputWidget
+
 
 try:
     from html import escape as html_escape
 except ImportError:  # PY2
-    from cgi import escape as html_escape  # pragma: no cover
+    from cgi import escape as html_escape
 
 
 class MruSourceInputWidget(SourceInputWidget):

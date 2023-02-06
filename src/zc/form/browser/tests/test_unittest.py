@@ -17,25 +17,28 @@ import doctest
 import re
 import unittest
 
-from zope import component
-from zope.formlib.interfaces import ConversionError
-from zope.formlib.interfaces import IInputWidget
-from zope.formlib.textwidgets import TextWidget, IntWidget
-from zope.publisher.browser import TestRequest
-from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.schema import TextLine, Int
-from zope.schema.interfaces import ITextLine, IInt
-from zope.schema.interfaces import ValidationError
 import zope.component.testing
 import zope.publisher.interfaces.browser
 import zope.schema.interfaces
 import zope.traversing.adapters
+from zope import component
+from zope.formlib.interfaces import ConversionError
+from zope.formlib.interfaces import IInputWidget
+from zope.formlib.textwidgets import IntWidget
+from zope.formlib.textwidgets import TextWidget
+from zope.publisher.browser import TestRequest
+from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.schema import Int
+from zope.schema import TextLine
+from zope.schema.interfaces import IInt
+from zope.schema.interfaces import ITextLine
+from zope.schema.interfaces import ValidationError
 
+import zc.form.browser
+import zc.form.field
 from zc.form.browser.exceptionviews import ValidationErrorView
 from zc.form.browser.unionwidget import UnionWidget
 from zc.form.field import Union
-import zc.form.browser
-import zc.form.field
 
 
 class TestUnionWidget(

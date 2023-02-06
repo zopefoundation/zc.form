@@ -15,19 +15,22 @@
 
 $Id: tzwidget.py 3872 2005-11-05 04:41:55Z gary $
 """
-from zope import interface, component
 import pytz
-import zc.form.browser.mruwidget
-import zc.form.interfaces
+# XXX argh.
+import pytz.tzinfo
+
 import zope.browserpage
 import zope.formlib.interfaces
 import zope.interface.common.idatetime
 import zope.publisher.interfaces.browser
-
-# XXX argh.
-import pytz.tzinfo
-from zope.security.checker import NamesChecker
+from zope import component
+from zope import interface
 from zope.interface.common.idatetime import ITZInfo
+from zope.security.checker import NamesChecker
+
+import zc.form.browser.mruwidget
+import zc.form.interfaces
+
 
 ALL_TIMEZONES = frozenset(pytz.all_timezones)
 
