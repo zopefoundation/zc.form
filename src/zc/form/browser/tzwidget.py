@@ -11,10 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""timezone widget
+"""timezone widget"""
 
-$Id: tzwidget.py 3872 2005-11-05 04:41:55Z gary $
-"""
 import pytz
 # XXX argh.
 import pytz.tzinfo
