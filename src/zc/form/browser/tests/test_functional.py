@@ -97,7 +97,7 @@ def test_suite():
     tests = unittest.TestSuite()
     try:
         import zc.resourcelibrary  # noqa
-    except ImportError:
+    except ModuleNotFoundError:
         # We want to skip the mruwidget tests
         pass
     else:
