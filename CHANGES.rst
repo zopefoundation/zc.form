@@ -5,7 +5,7 @@ Changes
 2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Drop support for Python 3.7, 3.9-slim.
 
 
 2.0 (2023-02-06)
