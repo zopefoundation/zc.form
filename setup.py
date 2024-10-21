@@ -19,7 +19,7 @@ MRU_REQUIRES = [
 TEST_REQUIRES = [
     'zope.app.appsetup',
     'zope.app.principalannotation',
-    'zope.app.wsgi[testlayer] >= 3.7',
+    'zope.app.wsgi[testlayer] >= 5.2',
     'zope.configuration',
     'zope.container',
     'zope.testing',
