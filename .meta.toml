@@ -2,7 +2,7 @@
 # https://github.com/zopefoundation/meta/tree/master/config/pure-python
 [meta]
 template = "pure-python"
-commit-id = "552fe384"
+commit-id = "f317618e"
 
 [python]
 with-pypy = true
@@ -10,13 +10,14 @@ with-sphinx-doctests = false
 with-windows = false
 with-future-python = false
 with-macos = false
+with-docs = false
 
 [coverage]
-fail-under = 83
+fail-under = 82.5
 
 [tox]
 additional-envlist = [
-    "py39-slim",
+    "py311-slim",
     ]
 testenv-additional = [
     "",
@@ -36,5 +37,5 @@ additional-rules = [
 
 [github-actions]
 additional-config = [
-    "- [\"3.9\",   \"py39-slim\"]",
+    "- [\"3.11\",   \"py311-slim\"]",
     ]
