@@ -1,6 +1,5 @@
 import os.path
 
-from setuptools import find_packages
 from setuptools import setup
 
 
@@ -23,7 +22,7 @@ TEST_REQUIRES = [
     'zope.configuration',
     'zope.container',
     'zope.testing',
-    'zope.testrunner',
+    'zope.testrunner >= 6.4',
     'zope.traversing',
 ]
 
@@ -31,9 +30,6 @@ TEST_REQUIRES = [
 setup(
     name="zc.form",
     version='3.0.dev0',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
-    namespace_packages=['zc'],
     url='https://github.com/zopefoundation/zc.form',
     author='Zope Foundation and Contributors',
     author_email='zope-dev@zope.dev',
