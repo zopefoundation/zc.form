@@ -29,7 +29,7 @@ TEST_REQUIRES = [
 
 setup(
     name="zc.form",
-    version='3.0.dev0',
+    version='3.0',
     url='https://github.com/zopefoundation/zc.form',
     author='Zope Foundation and Contributors',
     author_email='zope-dev@zope.dev',
