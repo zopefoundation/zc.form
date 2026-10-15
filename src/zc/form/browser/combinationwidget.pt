@@ -33,7 +33,7 @@
                  >Title of this content object.</div>
             <div class="widget"><tal:block replace="structure widget">
               <input type="text" /></tal:block>
-              <span 
+              <span
                 tal:condition="widget/invert_label" i18n:translate=""
                 tal:content="label">label</span>
             </div>

@@ -313,4 +313,3 @@ The order of label and field are inverted in case of boolean::
               </td>
           </tr>
         </table>
-
